@@ -33,6 +33,10 @@ main {
     flex-shrink: 0;
 }
 
+section {
+    display: flex;
+    flex-direction: column;
+}
 
 .valid.modified:not([type=checkbox]) {
     outline: 1px solid #26b050;
