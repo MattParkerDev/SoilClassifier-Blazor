@@ -5,37 +5,38 @@
 <section>
     <h1>Soil Classifier</h1>
     <div>Please enter the below values of your sample to classify it.</div>
-    <div class="inputGroup">
-        <div class="inputContainer">
-            <label>Percentage of fine (&lt;0.075mm) material</label>
-            <input type="text" @bind=finePercentInput @oninput="FieldUpdate" />
-        </div>
-        <div class="inputContainer">
-            <label>Percentage of gravel (&gt;2.36mm) material</label>
-            <input type="text" @bind=gravelPercentInput @oninput="FieldUpdate" />
-        </div>
-        <div class="inputContainer">
-            <label>Plastic Limit (%)</label>
-            <input type="text" @bind=plasticLimitInput @oninput="FieldUpdate" />
-        </div>
-        <div class="inputContainer">
-            <label>Liquid Limit (%)</label>
-            <input type="text" @bind=liquidLimitInput @oninput="FieldUpdate" />
-        </div>
-    </div>
-    <button class="calcButton" @onclick="HandleCalculate">@buttonText</button>
+        <EditForm Model="@soilData" OnValidSubmit="HandleCalculate">
+            <DataAnnotationsValidator />
+            <div class="inputGroup">
+                <div class="inputContainer">
+                    <label for="finePercent">Percentage of fine (&lt;0.075mm) material</label>
+                    <ValidationMessage For="() => soilData.finePercent" />
+                    <InputText id="finePercent" @bind-Value="soilData.finePercent" @oninput="FieldUpdate" />
+                </div>
+                <div class="inputContainer">
+                    <label for="gravelPercent">Percentage of gravel (&gt;2.36mm) material</label>
+                    <ValidationMessage For="() => soilData.gravelPercent" />
+                    <InputText id="gravelPercent" @bind-Value="soilData.gravelPercent" @oninput="FieldUpdate" />
+                </div>
+                <div class="inputContainer">
+                    <label for="plasticLimit">Plastic Limit (%) </label>
+                    <ValidationMessage For="() => soilData.plasticLimit" />
+                    <InputText id="plasticLimit" @bind-Value="soilData.plasticLimit" @oninput="FieldUpdate" />
+                </div>
+                <div class="inputContainer">
+                    <label for="liquidLimit">Liquid Limit (%) </label>
+                    <ValidationMessage For="() => soilData.liquidLimit" />
+                    <InputText id="liquidLimit" @bind-Value="soilData.liquidLimit" @oninput="FieldUpdate" />
+                </div>
+            </div>
+            <button class="calcButton" type="submit">@buttonText</button>
+        </EditForm>
 </section>
 
 
 
 @code {
 
-    
-
-    string finePercentInput;
-    string gravelPercentInput;
-    string plasticLimitInput;
-    string liquidLimitInput;
     string buttonText = "Calculate";
     string result;
 
@@ -46,11 +47,11 @@
 
     void HandleCalculate()
     {
-        double finePercent = Convert.ToDouble(finePercentInput);
-        double gravelPercent = Convert.ToDouble(gravelPercentInput);
+        double finePercent = Convert.ToDouble(soilData.finePercent);
+        double gravelPercent = Convert.ToDouble(soilData.gravelPercent);
         double sandPercent = 100 - gravelPercent - finePercent;
-        double plasticLimit = Convert.ToDouble(plasticLimitInput);
-        double liquidLimit = Convert.ToDouble(liquidLimitInput);
+        double plasticLimit = Convert.ToDouble(soilData.plasticLimit);
+        double liquidLimit = Convert.ToDouble(soilData.liquidLimit);
 
         double plasticityIndex = liquidLimit - plasticLimit;
 
@@ -165,7 +166,7 @@
         {
             switch (gravelPercent)
             {
-                case <= 15:
+                case <= 15 and > 0:
                     trace = trace.Append("gravel").ToArray();
                     break;
 
@@ -186,7 +187,7 @@
         {
             switch (sandPercent)
             {
-                case <= 15:
+                case <= 15 and > 0:
                     trace = trace.Append("sand").ToArray();
                     break;
 
@@ -207,7 +208,7 @@
         {
             switch (finePercent)
             {
-                case <= 5:
+                case <= 5 and > 0:
                     trace = trace.Append(fineMaterial).ToArray();
                     break;
 
@@ -243,7 +244,7 @@
                     switch (finePercent)
                     {
                         // TODO: Add coeficient of Uniformity and Curvature check
-                        case <= 5:
+                        case <= 5 and > 0:
                             groupSymbol = "GP";
                             break;
 
@@ -288,7 +289,7 @@
                     switch (finePercent)
                     {
                         // TODO: Add coeficient of Uniformity and Curvature check
-                        case <= 5:
+                        case <= 5 and >= 0:
                             groupSymbol = "SP";
                             break;
 
@@ -371,4 +372,6 @@
 
         buttonText = result;
     }
+
+    private SoilData soilData = new SoilData();
 }
