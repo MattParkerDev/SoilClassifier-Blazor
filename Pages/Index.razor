@@ -6,7 +6,7 @@
     <div class="mainContainer">
         <h1>Soil Classifier</h1>
         <div>Please enter the below values of your sample to classify it.</div>
-        <EditForm class="blazorForm" Model="@soilData" OnValidSubmit="HandleCalculate">
+        <EditForm class="blazorForm" autocomplete="off" Model="@soilData" OnValidSubmit="HandleCalculate">
             <DataAnnotationsValidator />
             <div class="inputGroup">
                 <div class="inputContainer">
@@ -30,7 +30,8 @@
                     <InputText inputmode="decimal" id="liquidLimit" @bind-Value="soilData.liquidLimit" @oninput="FieldUpdate" />
                 </div>
             </div>
-            <button class="calcButton" type="submit">@buttonText</button>
+            <button class="calcButton" type="submit" style="background-color:@buttonColor;
+                    border-color:@buttonBorderColor">@buttonText</button>
         </EditForm>
     </div>
 </section>
@@ -41,14 +42,22 @@
 
     string buttonText = "Calculate";
     string result;
+    string buttonColor = "limegreen";
+    string buttonBorderColor = "limegreen";
 
     void FieldUpdate()
     {
         buttonText = "Calculate";
+        buttonColor = "limegreen";
+        buttonBorderColor = "limegreen";
     }
 
     void HandleCalculate()
     {
+
+        buttonColor = "white";
+        buttonBorderColor = "navy";
+
         double finePercent = Convert.ToDouble(soilData.finePercent);
         double gravelPercent = Convert.ToDouble(soilData.gravelPercent);
         double sandPercent = 100 - gravelPercent - finePercent;
