@@ -125,7 +125,7 @@ input:focus {
 }
 
 .validation-message {
-    max-width: 170px;
+    max-width: 180px;
 }
 
 .calcButton {

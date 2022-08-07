@@ -7,27 +7,27 @@
         <h1>Soil Classifier</h1>
         <div>Please enter the below values of your sample to classify it.</div>
         <EditForm class="blazorForm" autocomplete="off" Model="@soilData" OnValidSubmit="HandleCalculate">
-            <DataAnnotationsValidator />
+            <Blazored.FluentValidation.FluentValidationValidator @ref="fluentValidationValidator" Options="@(options => options.IncludeRuleSets("Numbers"))" />
             <div class="inputGroup">
                 <div class="inputContainer">
                     <label for="finePercent">Fines (&lt;0.075mm) (%)</label>
                     <ValidationMessage For="() => soilData.finePercent" />
-                    <InputText inputmode="decimal" id="finePercent" @bind-Value="soilData.finePercent" @oninput="FieldUpdate" />
+                    <InputNumber inputmode="decimal" id="finePercent" @bind-Value="soilData.finePercent" @oninput="FieldUpdate" />
                 </div>
                 <div class="inputContainer">
                     <label for="gravelPercent">Gravel (&gt;2.36mm) (%)</label>
                     <ValidationMessage For="() => soilData.gravelPercent" />
-                    <InputText inputmode="decimal" id="gravelPercent" @bind-Value="soilData.gravelPercent" @oninput="FieldUpdate" />
+                    <InputNumber inputmode="decimal" id="gravelPercent" @bind-Value="soilData.gravelPercent" @oninput="FieldUpdate" />
                 </div>
                 <div class="inputContainer">
                     <label for="plasticLimit">Plastic Limit (%) </label>
                     <ValidationMessage For="() => soilData.plasticLimit" />
-                    <InputText inputmode="decimal" id="plasticLimit" @bind-Value="soilData.plasticLimit" @oninput="FieldUpdate" />
+                    <InputNumber inputmode="decimal" id="plasticLimit" @bind-Value="soilData.plasticLimit" @oninput="FieldUpdate" />
                 </div>
                 <div class="inputContainer">
                     <label for="liquidLimit">Liquid Limit (%) </label>
                     <ValidationMessage For="() => soilData.liquidLimit" />
-                    <InputText inputmode="decimal" id="liquidLimit" @bind-Value="soilData.liquidLimit" @oninput="FieldUpdate" />
+                    <InputNumber inputmode="decimal" id="liquidLimit" @bind-Value="soilData.liquidLimit" @oninput="FieldUpdate" />
                 </div>
             </div>
             <button class="calcButton" type="submit" style="background-color:@buttonColor;
@@ -41,9 +41,12 @@
 @code {
 
     string buttonText = "Calculate";
-    string result;
+    string? result;
     string buttonColor = "limegreen";
     string buttonBorderColor = "limegreen";
+
+    private SoilData soilData = new SoilData();
+    private Blazored.FluentValidation.FluentValidationValidator? fluentValidationValidator;
 
     void FieldUpdate()
     {
@@ -255,7 +258,7 @@
                     switch (finePercent)
                     {
                         // TODO: Add coeficient of Uniformity and Curvature check
-                        case <= 5 and > 0:
+                        case <= 5 and >= 0:
                             groupSymbol = "GP";
                             break;
 
@@ -384,5 +387,4 @@
         buttonText = result;
     }
 
-    private SoilData soilData = new SoilData();
 }
