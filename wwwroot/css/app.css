@@ -136,6 +136,7 @@ input:focus {
     background-color: limegreen;
     border-color: limegreen;
     font-size: 1.2rem;
+    color:black;
 }
 
 .calcButton:active {
