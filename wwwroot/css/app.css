@@ -43,6 +43,7 @@ section {
 
 .invalid {
     border-color: red;
+    transition: 100ms ease-in-out border-color;
 }
 
 .validation-message {
@@ -87,7 +88,7 @@ input {
     margin-left: 10px;
     border-radius: 10px;
     width: 90px;
-    transition: 150ms ease-in-out border-color;
+    transition: 100ms ease-in-out border-color;
     text-align:center;
     font-size: 1.1rem;
 }
@@ -95,7 +96,7 @@ input {
 input:focus {
     border-color: black;
     outline: none;
-    transition: 150ms ease-in-out border-color;
+    transition: 100ms ease-in-out border-color;
 }
 
 .inputGroup {
@@ -141,7 +142,7 @@ input:focus {
 }
 
 .calcButton:active {
-    border-color:grey;
+    border-color:grey !important;
 }
 
 .blazorForm {
