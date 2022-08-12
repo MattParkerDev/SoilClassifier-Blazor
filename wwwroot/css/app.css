@@ -41,7 +41,7 @@ section {
     border-color: #26b050;
 }
 
-.invalid {
+.inputContainer input.invalid {
     border-color: red;
     transition: 100ms ease-in-out border-color;
 }
@@ -80,7 +80,7 @@ section {
     }
 
 
-input {
+.inputContainer input {
     border-style: solid;
     border-color: grey;
     padding-bottom: 5px;
@@ -93,7 +93,7 @@ input {
     font-size: 1.1rem;
 }
 
-input:focus {
+.inputContainer input:focus {
     border-color: black;
     outline: none;
     transition: 100ms ease-in-out border-color;
@@ -134,15 +134,12 @@ input:focus {
     margin-top: 10px;
     height: 45px;
     border-radius: 10px;
-    background-color: limegreen;
-    border-color: limegreen;
     font-size: 1.2rem;
-    color:black;
     font-weight: 400;
 }
 
 .calcButton:active {
-    border-color:grey !important;
+    border-color:black !important;
 }
 
 .blazorForm {

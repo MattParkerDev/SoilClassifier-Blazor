@@ -31,7 +31,7 @@
                 </div>
             </div>
             <button class="calcButton" type="submit" style="background-color:@buttonColor;
-                    border-color:@buttonBorderColor">@buttonText</button>
+                    border-color:@buttonBorderColor; color:@buttonTextColor">@buttonText</button>
         </EditForm>
     </div>
 </section>
@@ -42,8 +42,9 @@
 
     string buttonText = "Calculate";
     string? result;
-    string buttonColor = "limegreen";
-    string buttonBorderColor = "limegreen";
+    string buttonColor = "#007aff";
+    string buttonBorderColor = "#007aff";
+    string buttonTextColor = "white";
 
     private SoilData soilData = new SoilData();
     private Blazored.FluentValidation.FluentValidationValidator? fluentValidationValidator;
@@ -51,8 +52,9 @@
     void FieldUpdate()
     {
         buttonText = "Calculate";
-        buttonColor = "limegreen";
-        buttonBorderColor = "limegreen";
+        buttonColor = "#007aff";
+        buttonBorderColor = "#007aff";
+        buttonTextColor = "white";
     }
 
     void HandleCalculate()
@@ -60,6 +62,7 @@
 
         buttonColor = "white";
         buttonBorderColor = "navy";
+        buttonTextColor = "black";
 
         double finePercent = Convert.ToDouble(soilData.finePercent);
         double gravelPercent = Convert.ToDouble(soilData.gravelPercent);
@@ -75,12 +78,10 @@
 
         if (finePercent >= 35)
         {
-            Console.WriteLine("Your sample is fine grained.");
             fineOrCoarse = "fine";
         }
         else
         {
-            Console.WriteLine("Your sample is coarse grained.");
             fineOrCoarse = "coarse";
         }
 
