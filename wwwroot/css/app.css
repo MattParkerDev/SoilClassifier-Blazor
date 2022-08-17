@@ -146,3 +146,12 @@ section {
     display: flex;
     flex-direction: column;
 }
+
+.fileInputContainer {
+    display:flex;
+    flex-direction:column;
+    padding: 20px;
+    border-style: solid;
+    border-radius: 10px;
+    border-color: gray;
+}
