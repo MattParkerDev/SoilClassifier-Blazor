@@ -1,4 +1,5 @@
 ﻿using CsvHelper.Configuration;
+using CsvHelper.Configuration.Attributes;
 
 namespace SoilClassifier_Blazor.Models;
 
@@ -30,7 +31,7 @@ public class SoilSample
     public string? ProjectNumber { get; set; }
 }
 
-public sealed class SampleMap: ClassMap<SoilSample>
+public sealed class SampleMap : ClassMap<SoilSample>
 {
     public SampleMap()
     {

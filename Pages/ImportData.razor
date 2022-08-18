@@ -43,34 +43,35 @@
         }
     }  
     </table>
-    <div>
-        @if (soilSamples != null)
-        {
-            @foreach (var sample in soilSamples)
-            {
-                <p>sample.SampleID</p>
-            }
-        }
-        
-    </div>
 </div>
 
 
 @code {
+
     string status = "Waiting for file";
-    IEnumerable<SoilSample>? soilSamples;
-    private void LoadFiles(InputFileChangeEventArgs e)
+    List<SoilSample>? soilSamples;
+
+    private async Task LoadFiles(InputFileChangeEventArgs e)
     {
         status = "File Loaded";
         IBrowserFile loadedFile = e.File;
-        var memoryStream = new MemoryStream();
-        loadedFile.OpenReadStream().CopyToAsync(memoryStream);
-        // TODO: Fix csv reading
-        using (var reader = new StreamReader(memoryStream))
-        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+
+        using (var memoryStream = new MemoryStream())
         {
-            csv.Context.RegisterClassMap<SampleMap>();
-            soilSamples = csv.GetRecords<SoilSample>().ToList();
+            await loadedFile.OpenReadStream().CopyToAsync(memoryStream);
+            memoryStream.Seek(0, SeekOrigin.Begin);
+
+            using (var reader = new StreamReader(memoryStream))
+            {
+                using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                {
+                    csv.Context.RegisterClassMap<SampleMap>();
+                    soilSamples = csv.GetRecords<SoilSample>().ToList();
+                }
+            }
         }
+
+
+
     }
 }
