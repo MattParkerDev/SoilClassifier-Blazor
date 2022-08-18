@@ -11,37 +11,58 @@
     <button class="btn btn-primary">Import Data</button>
     <div>@status</div>
     <table>
-    <tr>
-        <th>Sample ID</th>
-        <th>Chainage</th>
-        <th>Offset</th>
-        <th>Depth</th>
-        <th>Surface Type</th>
-        <th>53mm</th>
-        <th>19mm</th>
-        <th>4.75mm</th>
-        <th>2.36mm</th>
-        <th>0.425mm</th>
-        <th>0.075mm</th>
-        <th>Moisture Content</th>
-        <th>Plastic Limit</th>
-        <th>Plasticity Index</th>
-        <th>Linear Shrinkage</th>
-        <th>Liquid Limit</th>
-        <th>Color</th>
-        <th>Client Name</th>
-        <th>Project Name</th>
-        <th>Project Number</th>
-    </tr>
-    @if (soilSamples != null)
-    {
-        @foreach (var sample in soilSamples)
+        <tr>
+            <th>Sample ID</th>
+            <th>Chainage</th>
+            <th>Bore Hole No.</th>
+            <th>Offset</th>
+            <th>Depth</th>
+            <th>Surface Type</th>
+            <th>53mm</th>
+            <th>19mm</th>
+            <th>4.75mm</th>
+            <th>2.36mm</th>
+            <th>0.425mm</th>
+            <th>0.075mm</th>
+            <th>Moisture Content</th>
+            <th>Plastic Limit</th>
+            <th>Plasticity Index</th>
+            <th>Linear Shrinkage</th>
+            <th>Liquid Limit</th>
+            <th>Color</th>
+            <th>Client Name</th>
+            <th>Project Name</th>
+            <th>Project Number</th>
+        </tr>
+        @if (soilSamples != null)
         {
-            <tr>
-                <td>@sample.SampleID</td>
-            </tr>
+            @foreach (var sample in soilSamples)
+            {
+                <tr>
+                    <td>@sample.SampleID</td>
+                    <td>@sample.Chainage</td>
+                    <td>@sample.BoreNumber</td>
+                    <td>@sample.Offset</td>
+                    <td>@sample.Depth</td>
+                    <td>@sample.SurfaceType</td>
+                    <td>@sample.Sieve53</td>
+                    <td>@sample.Sieve19</td>
+                    <td>@sample.Sieve475</td>
+                    <td>@sample.Sieve236</td>
+                    <td>@sample.Sieve425</td>
+                    <td>@sample.Sieve075</td>
+                    <td>@sample.MoistureContent</td>
+                    <td>@sample.PlasticLimit</td>
+                    <td>@sample.PlasticityIndex</td>
+                    <td>@sample.LinearShrinkage</td>
+                    <td>@sample.LiquidLimit</td>
+                    <td>@sample.Colour</td>
+                    <td>@sample.ClientName</td>
+                    <td>@sample.ProjectName</td>
+                    <td>@sample.ProjectNumber</td>
+                </tr>
+            }
         }
-    }  
     </table>
 </div>
 
@@ -58,6 +79,7 @@
 
         using (var memoryStream = new MemoryStream())
         {
+            // Blazor InputFile doesnt support synchronous reads, requires async
             await loadedFile.OpenReadStream().CopyToAsync(memoryStream);
             memoryStream.Seek(0, SeekOrigin.Begin);
 
