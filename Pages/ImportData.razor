@@ -33,6 +33,7 @@
             <th>Client Name</th>
             <th>Project Name</th>
             <th>Project Number</th>
+            <th>Soil Classification</th>
         </tr>
         @if (soilSamples != null)
         {
@@ -60,6 +61,7 @@
                     <td>@sample.ClientName</td>
                     <td>@sample.ProjectName</td>
                     <td>@sample.ProjectNumber</td>
+                    <td>@sample.SoilClassification</td>
                 </tr>
             }
         }
@@ -93,7 +95,11 @@
             }
         }
 
-
+        foreach (var sample in soilSamples)
+        {
+            // Calculate finePercent and gravelPercent,
+            // then sample.SoilClassification = HandleCalculate(...)
+        }
 
     }
 }

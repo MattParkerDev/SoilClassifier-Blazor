@@ -29,6 +29,7 @@ public class SoilSample
     public string? ClientName { get; set; }
     public string? ProjectName { get; set; }
     public string? ProjectNumber { get; set; }
+    public string? SoilClassification { get; set; }
 }
 
 public sealed class SampleMap : ClassMap<SoilSample>
