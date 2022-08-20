@@ -36,7 +36,7 @@ public sealed class SampleMap : ClassMap<SoilSample>
 {
     public SampleMap()
     {
-        // TODO: Add all maps
+
         Map(m => m.SampleID).Name("SampleID");
         Map(m => m.Chainage).Name("Chainage (m)");
         Map(m => m.BoreNumber).Name("Bore Hole No.");

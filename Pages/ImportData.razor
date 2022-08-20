@@ -95,11 +95,63 @@
             }
         }
 
+        //TODO: Implement grouped samples
         foreach (var sample in soilSamples)
         {
-            // Calculate finePercent and gravelPercent,
-            // then sample.SoilClassification = HandleCalculate(...)
-        }
+            if (string.IsNullOrEmpty(sample.Sieve53)
+             && string.IsNullOrEmpty(sample.Sieve19)
+             && string.IsNullOrEmpty(sample.Sieve475)
+             && string.IsNullOrEmpty(sample.Sieve236)
+             && string.IsNullOrEmpty(sample.Sieve425)
+             && string.IsNullOrEmpty(sample.Sieve075)
+             && string.IsNullOrEmpty(sample.PlasticLimit)
+             && string.IsNullOrEmpty(sample.LiquidLimit)
+             && string.IsNullOrEmpty(sample.PlasticityIndex)
+             && string.IsNullOrEmpty(sample.LinearShrinkage))
+            {
+                sample.SoilClassification = "";
+            }
+            else
+            {
+                bool validSample = true;
+                double finePercent;
+                double plasticLimit;
+                double liquidLimit;
+                double gravelPercent = 0.0;
+                double sieve236;
 
+                if (!double.TryParse(sample.Sieve236, out sieve236))
+                {
+                    validSample = false;
+                }
+                else
+                {
+                    gravelPercent = 100.0 - sieve236;
+                }
+
+                if (!double.TryParse(sample.Sieve075, out finePercent))
+                {
+                    validSample = false;
+                }
+                if (!double.TryParse(sample.PlasticLimit, out plasticLimit))
+                {
+                    validSample = false;
+                }
+                if (!double.TryParse(sample.LiquidLimit, out liquidLimit))
+                {
+                    validSample = false;
+                }
+
+                if (validSample == false)
+                {
+                    sample.SoilClassification = "Invalid Data";
+                }
+                else
+                {
+                    sample.SoilClassification = Classification(finePercent, gravelPercent,
+                            plasticLimit, liquidLimit);
+                }
+            }
+        }
     }
 }

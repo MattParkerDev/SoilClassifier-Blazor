@@ -60,8 +60,8 @@ namespace SoilClassifier_Blazor
                 .NotEmpty().WithMessage("This field is required.")
                 .LessThanOrEqualTo(100).WithMessage("Enter a number from 0-100")
                 .GreaterThanOrEqualTo(0).WithMessage("Enter a number from 0-100")
-                .GreaterThan(soilData => soilData.plasticLimit)
-                .WithMessage("Liquid Limit must be greater than Plastic Limit");
+                .GreaterThanOrEqualTo(soilData => soilData.plasticLimit)
+                .WithMessage("Liquid Limit must be >= Plastic Limit");
 
             });
             
