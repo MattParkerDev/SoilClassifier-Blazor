@@ -10,33 +10,32 @@
     <InputFile OnChange="@LoadFiles" />
     <button class="btn btn-primary">Import Data</button>
     <div>@status</div>
-    <table>
-        <tr>
-            <th>Sample ID</th>
-            <th>Chainage</th>
-            <th>Bore Hole No.</th>
-            <th>Offset</th>
-            <th>Depth</th>
-            <th>Surface Type</th>
-            <th>53mm</th>
-            <th>19mm</th>
-            <th>4.75mm</th>
-            <th>2.36mm</th>
-            <th>0.425mm</th>
-            <th>0.075mm</th>
-            <th>Moisture Content</th>
-            <th>Plastic Limit</th>
-            <th>Plasticity Index</th>
-            <th>Linear Shrinkage</th>
-            <th>Liquid Limit</th>
-            <th>Color</th>
-            <th>Client Name</th>
-            <th>Project Name</th>
-            <th>Project Number</th>
-            <th>Soil Classification</th>
-        </tr>
-        @if (soilSamples != null)
-        {
+
+    @if (soilSamples != null)
+    {
+        <table>
+            <tr>
+                <th>Sample ID</th>
+                <th>Chainage</th>
+                <th>Bore Hole No.</th>
+                <th>Offset</th>
+                <th>Depth</th>
+                <th>Surface Type</th>
+                <th>53mm</th>
+                <th>19mm</th>
+                <th>4.75mm</th>
+                <th>2.36mm</th>
+                <th>0.425mm</th>
+                <th>0.075mm</th>
+                <th>Moisture %</th>
+                <th>Plastic Limit</th>
+                <th>Plasticity Index</th>
+                <th>Linear Shrinkage</th>
+                <th>Liquid Limit</th>
+                <th>Color</th>
+                <th>Soil Classification</th>
+            </tr>
+
             @foreach (var sample in soilSamples)
             {
                 <tr>
@@ -58,14 +57,11 @@
                     <td>@sample.LinearShrinkage</td>
                     <td>@sample.LiquidLimit</td>
                     <td>@sample.Colour</td>
-                    <td>@sample.ClientName</td>
-                    <td>@sample.ProjectName</td>
-                    <td>@sample.ProjectNumber</td>
                     <td>@sample.SoilClassification</td>
                 </tr>
             }
-        }
-    </table>
+        </table>
+    }
 </div>
 
 

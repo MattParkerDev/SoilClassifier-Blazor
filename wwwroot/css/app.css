@@ -24,7 +24,8 @@ main {
 }
 
 .content {
-    padding-top: 1.1rem;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -154,4 +155,14 @@ section {
     border-style: solid;
     border-radius: 10px;
     border-color: gray;
+}
+
+table, th, td {
+    border: 1px solid lightgrey;
+    border-collapse: collapse;
+    font-size: 0.88rem;
+}
+
+td, th {
+    white-space: nowrap;
 }
