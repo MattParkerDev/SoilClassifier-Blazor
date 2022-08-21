@@ -320,8 +320,8 @@ namespace SoilClassifier_Blazor.Pages
 
 
             string result = "[" + groupSymbol + "] " + String.Join(" ", prefix) + prefixPrimarySeparator +
-                     primary + primarySecondarySeparator + String.Join(" and ", secondary) +
-                     secondaryTraceSeparator + String.Join(" and ", trace);
+                     primary + primarySecondarySeparator + String.Join(" & ", secondary) +
+                     secondaryTraceSeparator + String.Join(" & ", trace);
 
             return result;
         }
