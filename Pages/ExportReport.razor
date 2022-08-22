@@ -1,57 +1,34 @@
 ﻿@page "/exportreport"
+@using System.Diagnostics
+@using QuestPDF.Drawing
+@using QuestPDF.Fluent
+@using QuestPDF
+
+@inject IJSRuntime JS
 @inject HttpClient Http
 
-<PageTitle>Weather forecast</PageTitle>
+<PageTitle>Export Report</PageTitle>
 
-<h1>Weather forecast</h1>
+<h1>Export Report</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
+<p>Click the button to export your report.</p>
 
-@if (forecasts == null)
-{
-    <p><em>Loading...</em></p>
-}
-else
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var forecast in forecasts)
-            {
-                <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
+<button @onclick="ExportPDF">Export Report</button>
 
 @code {
-    private WeatherForecast[]? forecasts;
 
-    protected override async Task OnInitializedAsync()
+    async Task ExportPDF()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
-    }
+        using var ms = new MemoryStream();
+        var font = await Http.GetStreamAsync("assets/calibri.ttf");
+        var bold = await Http.GetStreamAsync("assets/calibrib.ttf");
+        var italic = await Http.GetStreamAsync("assets/calibrii.ttf");
+        FontManager.RegisterFont(font);
+        FontManager.RegisterFont(bold);
+        FontManager.RegisterFont(italic);
+        var document = new SoilReport();
+        var fileBytes = document.GeneratePdf();
 
-    public class WeatherForecast
-    {
-        public DateTime Date { get; set; }
-
-        public int TemperatureC { get; set; }
-
-        public string? Summary { get; set; }
-
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+        await JS.InvokeVoidAsync("BlazorDownloadFile", "report.pdf", "application/pdf", fileBytes);
     }
 }
