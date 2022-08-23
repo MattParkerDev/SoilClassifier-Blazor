@@ -11,7 +11,7 @@
     <button class="btn btn-primary">Import Data</button>
     <div>@status</div>
 
-    @if (soilSamples != null)
+    @if (listState.soilSamples != null)
     {
         <table>
             <tr>
@@ -36,7 +36,7 @@
                 <th>Soil Classification</th>
             </tr>
 
-            @foreach (var sample in soilSamples)
+            @foreach (var sample in listState.soilSamples)
             {
                 <tr>
                     <td>@sample.SampleID</td>
@@ -67,14 +67,15 @@
 
 @code {
 
+    @inject ListState listState;
+
     string status = "Waiting for file";
-    List<SoilSample>? soilSamples;
 
     private async Task LoadFiles(InputFileChangeEventArgs e)
     {
         status = "File Loaded";
         IBrowserFile loadedFile = e.File;
-
+        
         using (var memoryStream = new MemoryStream())
         {
             // Blazor InputFile doesnt support synchronous reads, requires async
@@ -86,13 +87,13 @@
                 using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                 {
                     csv.Context.RegisterClassMap<SampleMap>();
-                    soilSamples = csv.GetRecords<SoilSample>().ToList();
+                    listState.soilSamples = csv.GetRecords<SoilSample>().ToList();
                 }
             }
         }
 
         //TODO: Implement grouped samples
-        foreach (var sample in soilSamples)
+        foreach (var sample in listState.soilSamples)
         {
             if (string.IsNullOrEmpty(sample.Sieve53)
              && string.IsNullOrEmpty(sample.Sieve19)

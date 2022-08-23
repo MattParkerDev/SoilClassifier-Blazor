@@ -4,6 +4,7 @@ using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 using QuestPDF.Elements;
 using System.Reflection;
+using SoilClassifier_Blazor.Shared;
 
 namespace SoilClassifier_Blazor.Pages
 {
@@ -11,8 +12,12 @@ namespace SoilClassifier_Blazor.Pages
     {
         public class SoilReport : IDocument
         {
+            public ListState Model { get; }
+            public SoilReport(ListState listState)
+            {
+                Model = listState;
+            }
             public DocumentMetadata GetMetadata() => DocumentMetadata.Default;
-
 
             public void Compose(IDocumentContainer container)
             {
@@ -27,10 +32,10 @@ namespace SoilClassifier_Blazor.Pages
 
                         page.Footer().AlignCenter().Text(text =>
                         {
-                            text.Span("Page ");
-                            text.CurrentPageNumber();
-                            text.Span(" of ");
-                            text.TotalPages();
+                            text.Span("Page ").FontSize(8);
+                            text.CurrentPageNumber().FontSize(8);
+                            text.Span(" of ").FontSize(8);
+                            text.TotalPages().FontSize(8);
                         });
                     });
             }
@@ -49,14 +54,14 @@ namespace SoilClassifier_Blazor.Pages
                         });
                         row.RelativeItem(1).Column(Column =>
                         {
-                            Column.Item().Text("Laboratory Services").Bold().FontSize(12);
-                            Column.Item().Text("Department").Bold().FontSize(10);
-                            Column.Item().Text("Company Name").Bold().FontSize(10);
+                            Column.Item().Text("Laboratory Services").Bold().FontSize(10);
+                            Column.Item().Text("Department").Bold().FontSize(9);
+                            Column.Item().Text("Company Name").Bold().FontSize(9);
                             Column.Item().Padding(2);
-                            Column.Item().Text("20 Template Drive Suburb").FontSize(9);
-                            Column.Item().Text("Ph (07) 3400 0000").FontSize(9);
+                            Column.Item().Text("20 Template Drive Suburb").FontSize(8);
+                            Column.Item().Text("Ph (07) 3400 0000").FontSize(8);
                         });
-                        row.ConstantItem(60).Height(60).Placeholder();
+                        row.ConstantItem(55).Height(55).Placeholder();
 
                     });
                     column.Item().Row(row =>
@@ -157,69 +162,85 @@ namespace SoilClassifier_Blazor.Pages
 
                     table.Header(header =>
                     {
-                        header.Cell().ColumnSpan(6).Element(CellStyle).AlignCenter().Text("Location").Style(headerStyle);
-                        header.Cell().ColumnSpan(6).Element(CellStyle).AlignCenter().Text("Particle Size Distribution").Style(headerStyle);
-                        header.Cell().RowSpan(3).Element(CellStyle).AlignCenter().AlignBottom().Text("Field Moisture\n\n\n(%)").Style(headerStyle);
-                        header.Cell().ColumnSpan(6).Element(CellStyle).AlignCenter().Text("Plasticity Index").Style(headerStyle);
-                        header.Cell().RowSpan(3).Element(CellStyle).AlignCenter().AlignMiddle().Text("Sample Description").Style(headerStyle);
+                        header.Cell().ColumnSpan(6).Element(BoldCellStyle).AlignCenter().Text("Location").Style(headerStyle);
+                        header.Cell().ColumnSpan(6).Element(BoldCellStyle).AlignCenter().Text("Particle Size Distribution").Style(headerStyle);
+                        header.Cell().RowSpan(3).Element(BoldCellStyle).AlignCenter().AlignBottom().Text("Field Moisture\n\n\n(%)").Style(headerStyle);
+                        header.Cell().ColumnSpan(6).Element(BoldCellStyle).AlignCenter().Text("Plasticity Index").Style(headerStyle);
+                        header.Cell().RowSpan(3).Element(BoldCellStyle).AlignCenter().AlignMiddle().Text("Sample Description").Style(headerStyle);
 
-                        header.Cell().RowSpan(2).Element(CellStyle).AlignCenter().AlignMiddle().Text("Sample Number").Style(subHeaderStyle);
-                        header.Cell().RowSpan(2).Element(CellStyle).AlignCenter().AlignBottom().Text("RSI Chainage\n\n(m)").Style(subHeaderStyle);
-                        header.Cell().RowSpan(2).Element(CellStyle).AlignCenter().AlignBottom().Text("Offset From CL\n\n(m)").Style(subHeaderStyle);
-                        header.Cell().RowSpan(2).Element(CellStyle).AlignCenter().AlignMiddle().Text("Bore Hole No.").Style(subHeaderStyle);
-                        header.Cell().RowSpan(2).Element(CellStyle).AlignCenter().AlignBottom().Text("\nDepth Below Existing Surface\n\n(mm)").Style(subHeaderStyle);
-                        header.Cell().RowSpan(2).Element(CellStyle).AlignCenter().AlignMiddle().Text("Surface Type").Style(subHeaderStyle);
+                        header.Cell().RowSpan(2).Element(BoldCellStyle).AlignCenter().AlignMiddle().Text("Sample Number").Style(subHeaderStyle);
+                        header.Cell().RowSpan(2).Element(BoldCellStyle).AlignCenter().AlignBottom().Text("RSI Chainage\n\n(m)").Style(subHeaderStyle);
+                        header.Cell().RowSpan(2).Element(BoldCellStyle).AlignCenter().AlignBottom().Text("Offset From CL\n\n(m)").Style(subHeaderStyle);
+                        header.Cell().RowSpan(2).Element(BoldCellStyle).AlignCenter().AlignMiddle().Text("Bore Hole No.").Style(subHeaderStyle);
+                        header.Cell().RowSpan(2).Element(BoldCellStyle).AlignCenter().AlignBottom().Text("\nDepth Below Existing Surface\n\n(mm)").Style(subHeaderStyle);
+                        header.Cell().RowSpan(2).Element(BoldCellStyle).AlignCenter().AlignMiddle().Text("Surface Type").Style(subHeaderStyle);
 
-                        header.Cell().ColumnSpan(6).AlignCenter().Text("Percent Passing").Style(headerStyle);
+                        header.Cell().ColumnSpan(6).Element(BoldCellStyle).AlignCenter().Text("Percent Passing").Style(headerStyle);
 
-                        header.Cell().RowSpan(2).Element(CellStyle).AlignCenter().AlignBottom().Text("Plastic Limit\n\n(%)").Style(subHeaderStyle);
-                        header.Cell().RowSpan(2).Element(CellStyle).AlignCenter().AlignBottom().Text("Plasticity Index\n\n(%)").Style(subHeaderStyle);
-                        header.Cell().RowSpan(2).Element(CellStyle).AlignCenter().AlignBottom().Text("Linear Shrinkage\n\n(%)").Style(subHeaderStyle);
-                        header.Cell().RowSpan(2).Element(CellStyle).AlignCenter().AlignBottom().Text("Liquid Limit\n\n(%)").Style(subHeaderStyle);
-                        header.Cell().RowSpan(2).Element(CellStyle).AlignCenter().AlignMiddle().Text("PI Test Remarks").Style(subHeaderStyle);
-                        header.Cell().RowSpan(2).Element(CellStyle).AlignCenter().AlignMiddle().Text("WPI").Style(subHeaderStyle);
+                        header.Cell().RowSpan(2).Element(BoldCellStyle).AlignCenter().AlignBottom().Text("Plastic Limit\n\n(%)").Style(subHeaderStyle);
+                        header.Cell().RowSpan(2).Element(BoldCellStyle).AlignCenter().AlignBottom().Text("Plasticity Index\n\n(%)").Style(subHeaderStyle);
+                        header.Cell().RowSpan(2).Element(BoldCellStyle).AlignCenter().AlignBottom().Text("Linear Shrinkage\n\n(%)").Style(subHeaderStyle);
+                        header.Cell().RowSpan(2).Element(BoldCellStyle).AlignCenter().AlignBottom().Text("Liquid Limit\n\n(%)").Style(subHeaderStyle);
+                        header.Cell().RowSpan(2).Element(BoldCellStyle).AlignCenter().AlignMiddle().Text("PI Test Remarks").Style(subHeaderStyle);
+                        header.Cell().RowSpan(2).Element(BoldCellStyle).AlignCenter().AlignMiddle().Text("WPI").Style(subHeaderStyle);
 
 
-                        header.Cell().Element(CellStyle).AlignCenter().AlignBottom().Text("53\n\n\nmm").Style(subHeaderStyle);
-                        header.Cell().Element(CellStyle).AlignCenter().AlignBottom().Text("19\n\n\nmm").Style(subHeaderStyle);
-                        header.Cell().Element(CellStyle).AlignCenter().AlignBottom().Text("4.75\n\n\nmm").Style(subHeaderStyle);
-                        header.Cell().Element(CellStyle).AlignCenter().AlignBottom().Text("2.36\n\n\nmm").Style(subHeaderStyle);
-                        header.Cell().Element(CellStyle).AlignCenter().AlignBottom().Text("425\n\n\nμm").Style(subHeaderStyle);
-                        header.Cell().Element(CellStyle).AlignCenter().AlignBottom().Text("75\n\n\nμm").Style(subHeaderStyle);
+                        header.Cell().Element(BoldCellStyle).AlignCenter().AlignBottom().Text("53\n\n\nmm").Style(subHeaderStyle);
+                        header.Cell().Element(BoldCellStyle).AlignCenter().AlignBottom().Text("19\n\n\nmm").Style(subHeaderStyle);
+                        header.Cell().Element(BoldCellStyle).AlignCenter().AlignBottom().Text("4.75\n\n\nmm").Style(subHeaderStyle);
+                        header.Cell().Element(BoldCellStyle).AlignCenter().AlignBottom().Text("2.36\n\n\nmm").Style(subHeaderStyle);
+                        header.Cell().Element(BoldCellStyle).AlignCenter().AlignBottom().Text("425\n\n\nμm").Style(subHeaderStyle);
+                        header.Cell().Element(BoldCellStyle).AlignCenter().AlignBottom().Text("75\n\n\nμm").Style(subHeaderStyle);
 
                     });
+                    if (Model.soilSamples != null)
+                    {
+                        foreach (var sample in Model.soilSamples)
+                        {
+                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.SampleID).Style(headerStyle);
+                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.Chainage).Style(headerStyle);
+                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.Offset).Style(headerStyle);
+                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.BoreNumber).Style(headerStyle);
+                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.Depth).Style(headerStyle);
+                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.SurfaceType).Style(headerStyle);
+                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.Sieve53).Style(headerStyle);
+                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.Sieve19).Style(headerStyle);
+                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.Sieve475).Style(headerStyle);
+                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.Sieve236).Style(headerStyle);
+                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.Sieve425).Style(headerStyle);
+                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.Sieve075).Style(headerStyle);
+                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.MoistureContent).Style(headerStyle);
+                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.PlasticLimit).Style(headerStyle);
+                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.PlasticityIndex).Style(headerStyle);
+                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.LinearShrinkage).Style(headerStyle);
+                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.LiquidLimit).Style(headerStyle);
+                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text("").Style(headerStyle);
+                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text("").Style(headerStyle);
+                            if (sample.SoilClassification != "")
+                            {
+                                table.Cell().Element(CellStyle).AlignLeft().PaddingLeft(4).PaddingVertical(2).Text(sample.SoilClassification + "," + sample.Colour + ", moist").Style(headerStyle);
+                            }
+                            else if (sample.SurfaceType == "AC")
+                            {
+                                table.Cell().Element(CellStyle).AlignLeft().PaddingLeft(4).PaddingVertical(2).Text("AC").Style(headerStyle);
+                            }
+                            else
+                            {
+                                table.Cell().Element(CellStyle).AlignLeft().PaddingLeft(4).PaddingVertical(2).Text("").Style(headerStyle);
+                            }
+                            
 
-                    //foreach (var item in Model.Items)
-                    //{
-                    table.Cell().Element(CellStyle).AlignCenter().Text("MP99-1").Style(headerStyle);
-                    table.Cell().Element(CellStyle).AlignCenter().Text("235").Style(headerStyle);
-                    table.Cell().Element(CellStyle).AlignCenter().Text("1.5 R").Style(headerStyle);
-                    table.Cell().Element(CellStyle).AlignCenter().Text("1").Style(headerStyle);
-                    table.Cell().Element(CellStyle).AlignCenter().Text("0-60").Style(headerStyle);
-                    table.Cell().Element(CellStyle).AlignCenter().Text("").Style(headerStyle);
-                    table.Cell().Element(CellStyle).AlignCenter().Text("100").Style(headerStyle);
-                    table.Cell().Element(CellStyle).AlignCenter().Text("85").Style(headerStyle);
-                    table.Cell().Element(CellStyle).AlignCenter().Text("65").Style(headerStyle);
-                    table.Cell().Element(CellStyle).AlignCenter().Text("40").Style(headerStyle);
-                    table.Cell().Element(CellStyle).AlignCenter().Text("20").Style(headerStyle);
-                    table.Cell().Element(CellStyle).AlignCenter().Text("15").Style(headerStyle);
-                    table.Cell().Element(CellStyle).AlignCenter().Text("5.7").Style(headerStyle);
-                    table.Cell().Element(CellStyle).AlignCenter().Text("18").Style(headerStyle);
-                    table.Cell().Element(CellStyle).AlignCenter().Text("30").Style(headerStyle);
-                    table.Cell().Element(CellStyle).AlignCenter().Text("13.5").Style(headerStyle);
-                    table.Cell().Element(CellStyle).AlignCenter().Text("48").Style(headerStyle);
-                    table.Cell().Element(CellStyle).AlignCenter().Text("").Style(headerStyle);
-                    table.Cell().Element(CellStyle).AlignCenter().Text("").Style(headerStyle);
-                    table.Cell().Element(CellStyle).AlignCenter().Text("(GP-GM) sandy GRAVEL with silt, brown, moist").Style(headerStyle);
-
-                    //}
-                    static IContainer CellStyle(IContainer container) => container.Border(1).BorderColor(Colors.Black);
+                        }
+                    }
+                    
+                    static IContainer CellStyle(IContainer container) => container.Border((float)0.5).BorderColor(Colors.Black);
+                    static IContainer BoldCellStyle(IContainer container) => container.Border((float)1).BorderColor(Colors.Black);
                 });
             }
 
             void ComposeComments(IContainer container)
             {
-                container.ShowEntire().Padding(10).Column(column =>
+                container.Column(column =>
                 {
                     column.Item().Row(row =>
                     {

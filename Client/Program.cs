@@ -4,6 +4,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using FluentValidation;
 using SoilClassifier_Blazor;
+using SoilClassifier_Blazor.Shared;
 
 namespace SoilClassifier_Blazor
 {
@@ -15,6 +16,7 @@ namespace SoilClassifier_Blazor
             builder.RootComponents.Add<App>("#app");
             builder.RootComponents.Add<HeadOutlet>("head::after");
 
+            builder.Services.AddSingleton<ListState>();
             builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
             await builder.Build().RunAsync();

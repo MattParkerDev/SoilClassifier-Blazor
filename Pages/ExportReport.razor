@@ -6,6 +6,7 @@
 
 @inject IJSRuntime JS
 @inject HttpClient Http
+@inject ListState listState
 
 <PageTitle>Export Report</PageTitle>
 
@@ -28,8 +29,9 @@ else
 
 
 @code {
+    
     bool _loading = false;
-
+    
     async Task ExportPDF()
     {
         _loading = true;
@@ -37,12 +39,12 @@ else
         using var bold = await Http.GetStreamAsync("assets/arialbd.ttf");
         using var italic = await Http.GetStreamAsync("assets/ariali.ttf");
         using var boldItalic = await Http.GetStreamAsync("assets/arialbi.ttf");
-
+        
         FontManager.RegisterFont(font);
         FontManager.RegisterFont(bold);
         FontManager.RegisterFont(italic);
         FontManager.RegisterFont(boldItalic);
-        var document = new SoilReport();
+        var document = new SoilReport(listState);
         var fileBytes = document.GeneratePdf();
 
         await JS.InvokeVoidAsync("BlazorDownloadFile", "report.pdf", "application/pdf", fileBytes);
