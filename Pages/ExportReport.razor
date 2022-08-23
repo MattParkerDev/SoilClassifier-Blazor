@@ -19,18 +19,10 @@
 
     async Task ExportPDF()
     {
-        using var calibri = await Http.GetStreamAsync("assets/calibri.ttf");
-        using var calibriBold = await Http.GetStreamAsync("assets/calibrib.ttf");
-        using var calibriItalic = await Http.GetStreamAsync("assets/calibrii.ttf");
-
         using var font = await Http.GetStreamAsync("assets/arial.ttf");
         using var bold = await Http.GetStreamAsync("assets/arialbd.ttf");
         using var italic = await Http.GetStreamAsync("assets/ariali.ttf");
         using var boldItalic = await Http.GetStreamAsync("assets/arialbi.ttf");
-
-        FontManager.RegisterFont(calibri);
-        FontManager.RegisterFont(calibriBold);
-        FontManager.RegisterFont(calibriItalic);
 
         FontManager.RegisterFont(font);
         FontManager.RegisterFont(bold);

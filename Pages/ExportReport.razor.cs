@@ -20,6 +20,7 @@ namespace SoilClassifier_Blazor.Pages
                     .Page(page =>
                     {
                         page.Margin(20);
+                        page.DefaultTextStyle(x => x.FontFamily("Arial"));
                         page.Size(PageSizes.A4.Landscape());
                         page.Header().Element(ComposeHeader);
                         page.Content().Element(ComposeContent);
