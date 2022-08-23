@@ -57,20 +57,53 @@ namespace SoilClassifier_Blazor.Pages
                             Column.Item().Text("Ph (07) 3400 0000").FontSize(9);
                         });
                         row.ConstantItem(60).Height(60).Placeholder();
+
                     });
                     column.Item().Row(row =>
                     {
                         row.RelativeItem(2).Column(Column =>
                         {
-                            Column.Item().Text("Test Procedures: AS1289 2.1.1, 3.1.2, 3.2.1, 3.3.1, 3.4.1, 3.6.1").Bold().FontSize(10);
+                            Column.Item().Text("Test Procedures: AS1289 2.1.1, 3.1.2, 3.2.1, 3.3.1, 3.4.1, 3.6.1").Bold().FontSize(9);
                         });
                         row.RelativeItem(2).Column(Column =>
                         {
-                            Column.Item().Text("Work Package No. MP99").Bold().FontSize(10);
+                            Column.Item().Text("Work Package No. MP99").Bold().FontSize(9);
                         });
                         row.RelativeItem(1).Column(Column =>
                         {
-                            Column.Item().Text("Report No. WR 1234").Bold().FontSize(10);
+                            Column.Item().Text("Report No. WR 1234").Bold().FontSize(9);
+                        });
+                    });
+
+                    column.Item().Border(1).PaddingVertical(2).PaddingLeft(5).PaddingRight(5).Row(row =>
+                    {
+                        row.RelativeItem((float)2.8).Column(Column =>
+                        {
+                            Column.Item().Text("Client: Engineering Department").FontSize(9);
+                            Column.Item().Text("Project: Elizabeth Street, Brisbane City").Bold().FontSize(10);
+                            Column.Item().Text("Limits: Edward Street to Albert Street").FontSize(9);
+                            Column.Item().Text("Chainage measured from: Edward Street").FontSize(9);
+                        });
+
+                        row.RelativeItem((float)1.9).AlignBottom().Column(Column =>
+                        {
+                            Column.Item().Text("Notes:").FontSize(9);
+                        });
+                        //TODO: Fix Sampled by and Date spacing and dynamic Column size
+                        row.RelativeItem((float)1.6).Column(Column =>
+                        {
+                            Column.Item().Row(row =>
+                            {
+                                row.AutoItem().Text("Sampled by : AB, BC").FontSize(9);
+                                row.AutoItem().PaddingLeft(5).Text("Date: 21/07/22").FontSize(9);
+                            });
+                            Column.Item().Row(row =>
+                            {
+                                row.AutoItem().AlignLeft().Text("Prepared by: CD").FontSize(9);
+                                row.AutoItem().AlignRight().PaddingLeft(5).Text("Date: 02/08/22").FontSize(9);
+                            });
+
+                            Column.Item().Text("\nGrouped Samples: 2,5,17  8,12").FontSize(9);
                         });
                     });
                 });
@@ -82,7 +115,6 @@ namespace SoilClassifier_Blazor.Pages
                 container.Column(column =>
                 {
                     //column.Spacing(20);
-                    column.Item().Text("Content");
                     column.Item().Element(ComposeTable);
                     column.Item().PaddingTop(25).Element(ComposeComments);
                 });
