@@ -79,60 +79,109 @@ namespace SoilClassifier_Blazor.Pages
 
             void ComposeContent(IContainer container)
             {
-                container.PaddingVertical(40).Column(column =>
+                container.Column(column =>
                 {
-                    column.Spacing(20);
-
-                    column.Item().Row(row =>
-                    {
-                        row.RelativeItem();
-                        row.ConstantItem(50);
-                        row.RelativeItem();
-                    });
+                    //column.Spacing(20);
                     column.Item().Text("Content");
                     column.Item().Element(ComposeTable);
-
-                    column.Item().PaddingRight(5).AlignRight().Text("Total Price").SemiBold();
                     column.Item().PaddingTop(25).Element(ComposeComments);
                 });
             }
 
             void ComposeTable(IContainer container)
             {
-                var headerStyle = TextStyle.Default.SemiBold();
+                var headerStyle = TextStyle.Default.SemiBold().FontSize(8);
+                var subHeaderStyle = TextStyle.Default.FontSize(8);
 
                 container.Table(table =>
                 {
+
                     table.ColumnsDefinition(columns =>
                     {
+                        columns.ConstantColumn(40);
+                        columns.ConstantColumn(40);
+                        columns.ConstantColumn(40);
+                        columns.ConstantColumn(30);
+                        columns.ConstantColumn(35);
+                        columns.ConstantColumn(32);
+
+                        columns.ConstantColumn(22);
+                        columns.ConstantColumn(22);
+                        columns.ConstantColumn(22);
+                        columns.ConstantColumn(22);
+                        columns.ConstantColumn(22);
+                        columns.ConstantColumn(22);
+
+                        columns.ConstantColumn(35);
+                        columns.ConstantColumn(35);
+                        columns.ConstantColumn(35);
+                        columns.ConstantColumn(38);
+                        columns.ConstantColumn(35);
+                        columns.ConstantColumn(35);
                         columns.ConstantColumn(25);
-                        columns.RelativeColumn(3);
                         columns.RelativeColumn();
-                        columns.RelativeColumn();
-                        columns.RelativeColumn();
+
                     });
 
                     table.Header(header =>
                     {
-                        header.Cell().Text("#");
-                        header.Cell().Text("Product").Style(headerStyle);
-                        header.Cell().AlignRight().Text("Unit price").Style(headerStyle);
-                        header.Cell().AlignRight().Text("Quantity").Style(headerStyle);
-                        header.Cell().AlignRight().Text("Total").Style(headerStyle);
+                        header.Cell().ColumnSpan(6).Element(CellStyle).AlignCenter().Text("Location").Style(headerStyle);
+                        header.Cell().ColumnSpan(6).Element(CellStyle).AlignCenter().Text("Particle Size Distribution").Style(headerStyle);
+                        header.Cell().RowSpan(3).Element(CellStyle).AlignCenter().AlignBottom().Text("Field Moisture\n\n\n(%)").Style(headerStyle);
+                        header.Cell().ColumnSpan(6).Element(CellStyle).AlignCenter().Text("Plasticity Index").Style(headerStyle);
+                        header.Cell().RowSpan(3).Element(CellStyle).AlignCenter().AlignMiddle().Text("Sample Description").Style(headerStyle);
 
-                        header.Cell().ColumnSpan(5).PaddingTop(5).BorderBottom(1).BorderColor(Colors.Black);
+                        header.Cell().RowSpan(2).Element(CellStyle).AlignCenter().AlignMiddle().Text("Sample Number").Style(subHeaderStyle);
+                        header.Cell().RowSpan(2).Element(CellStyle).AlignCenter().AlignBottom().Text("RSI Chainage\n\n(m)").Style(subHeaderStyle);
+                        header.Cell().RowSpan(2).Element(CellStyle).AlignCenter().AlignBottom().Text("Offset From CL\n\n(m)").Style(subHeaderStyle);
+                        header.Cell().RowSpan(2).Element(CellStyle).AlignCenter().AlignMiddle().Text("Bore Hole No.").Style(subHeaderStyle);
+                        header.Cell().RowSpan(2).Element(CellStyle).AlignCenter().AlignBottom().Text("\nDepth Below Existing Surface\n\n(mm)").Style(subHeaderStyle);
+                        header.Cell().RowSpan(2).Element(CellStyle).AlignCenter().AlignMiddle().Text("Surface Type").Style(subHeaderStyle);
+
+                        header.Cell().ColumnSpan(6).AlignCenter().Text("Percent Passing").Style(headerStyle);
+
+                        header.Cell().RowSpan(2).Element(CellStyle).AlignCenter().AlignBottom().Text("Plastic Limit\n\n(%)").Style(subHeaderStyle);
+                        header.Cell().RowSpan(2).Element(CellStyle).AlignCenter().AlignBottom().Text("Plasticity Index\n\n(%)").Style(subHeaderStyle);
+                        header.Cell().RowSpan(2).Element(CellStyle).AlignCenter().AlignBottom().Text("Linear Shrinkage\n\n(%)").Style(subHeaderStyle);
+                        header.Cell().RowSpan(2).Element(CellStyle).AlignCenter().AlignBottom().Text("Liquid Limit\n\n(%)").Style(subHeaderStyle);
+                        header.Cell().RowSpan(2).Element(CellStyle).AlignCenter().AlignMiddle().Text("PI Test Remarks").Style(subHeaderStyle);
+                        header.Cell().RowSpan(2).Element(CellStyle).AlignCenter().AlignMiddle().Text("WPI").Style(subHeaderStyle);
+
+
+                        header.Cell().Element(CellStyle).AlignCenter().AlignBottom().Text("53\n\n\nmm").Style(subHeaderStyle);
+                        header.Cell().Element(CellStyle).AlignCenter().AlignBottom().Text("19\n\n\nmm").Style(subHeaderStyle);
+                        header.Cell().Element(CellStyle).AlignCenter().AlignBottom().Text("4.75\n\n\nmm").Style(subHeaderStyle);
+                        header.Cell().Element(CellStyle).AlignCenter().AlignBottom().Text("2.36\n\n\nmm").Style(subHeaderStyle);
+                        header.Cell().Element(CellStyle).AlignCenter().AlignBottom().Text("425\n\n\nμm").Style(subHeaderStyle);
+                        header.Cell().Element(CellStyle).AlignCenter().AlignBottom().Text("75\n\n\nμm").Style(subHeaderStyle);
+
                     });
 
                     //foreach (var item in Model.Items)
                     //{
-                    table.Cell().Element(CellStyle).Text("1");
-                    table.Cell().Element(CellStyle).Text("name");
-                    table.Cell().Element(CellStyle).AlignRight().Text("Price");
-                    table.Cell().Element(CellStyle).AlignRight().Text("Quantity");
-                    table.Cell().Element(CellStyle).AlignRight().Text("Total");
+                    table.Cell().Element(CellStyle).AlignCenter().Text("MP99-1").Style(headerStyle);
+                    table.Cell().Element(CellStyle).AlignCenter().Text("235").Style(headerStyle);
+                    table.Cell().Element(CellStyle).AlignCenter().Text("1.5 R").Style(headerStyle);
+                    table.Cell().Element(CellStyle).AlignCenter().Text("1").Style(headerStyle);
+                    table.Cell().Element(CellStyle).AlignCenter().Text("0-60").Style(headerStyle);
+                    table.Cell().Element(CellStyle).AlignCenter().Text("").Style(headerStyle);
+                    table.Cell().Element(CellStyle).AlignCenter().Text("100").Style(headerStyle);
+                    table.Cell().Element(CellStyle).AlignCenter().Text("85").Style(headerStyle);
+                    table.Cell().Element(CellStyle).AlignCenter().Text("65").Style(headerStyle);
+                    table.Cell().Element(CellStyle).AlignCenter().Text("40").Style(headerStyle);
+                    table.Cell().Element(CellStyle).AlignCenter().Text("20").Style(headerStyle);
+                    table.Cell().Element(CellStyle).AlignCenter().Text("15").Style(headerStyle);
+                    table.Cell().Element(CellStyle).AlignCenter().Text("5.7").Style(headerStyle);
+                    table.Cell().Element(CellStyle).AlignCenter().Text("18").Style(headerStyle);
+                    table.Cell().Element(CellStyle).AlignCenter().Text("30").Style(headerStyle);
+                    table.Cell().Element(CellStyle).AlignCenter().Text("13.5").Style(headerStyle);
+                    table.Cell().Element(CellStyle).AlignCenter().Text("48").Style(headerStyle);
+                    table.Cell().Element(CellStyle).AlignCenter().Text("").Style(headerStyle);
+                    table.Cell().Element(CellStyle).AlignCenter().Text("").Style(headerStyle);
+                    table.Cell().Element(CellStyle).AlignCenter().Text("(GP-GM) sandy GRAVEL with silt, brown, moist").Style(headerStyle);
 
-                    static IContainer CellStyle(IContainer container) => container.BorderBottom(1).BorderColor(Colors.Grey.Lighten2).PaddingVertical(5);
                     //}
+                    static IContainer CellStyle(IContainer container) => container.Border(1).BorderColor(Colors.Black);
                 });
             }
 
