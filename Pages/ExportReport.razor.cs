@@ -27,9 +27,9 @@ namespace SoilClassifier_Blazor.Pages
 
                         page.Footer().AlignCenter().Text(text =>
                         {
-                            text.Span("Page ").FontFamily("Arial");
+                            text.Span("Page ");
                             text.CurrentPageNumber();
-                            text.Span(" of ").FontFamily("Arial");
+                            text.Span(" of ");
                             text.TotalPages();
                         });
                     });
@@ -43,18 +43,18 @@ namespace SoilClassifier_Blazor.Pages
                         row.RelativeItem(2).Column(Column =>
                         {
                             Column
-                                .Item().Text("Pavement and Subgrade Evaluation Report").FontFamily("Arial")
+                                .Item().Text("Pavement and Subgrade Evaluation Report")
                                 .FontSize(18).SemiBold().FontColor(Colors.Black);
 
                         });
                         row.RelativeItem(1).Column(Column =>
                         {
-                            Column.Item().Text("Laboratory Services").Bold().FontSize(12).FontFamily("Arial");
-                            Column.Item().Text("Department").FontFamily("Arial").Bold().FontSize(10);
-                            Column.Item().Text("Company Name").FontFamily("Arial").Bold().FontSize(10);
+                            Column.Item().Text("Laboratory Services").Bold().FontSize(12);
+                            Column.Item().Text("Department").Bold().FontSize(10);
+                            Column.Item().Text("Company Name").Bold().FontSize(10);
                             Column.Item().Padding(2);
-                            Column.Item().Text("20 Template Drive Suburb").FontFamily("Arial").FontSize(9);
-                            Column.Item().Text("Ph (07) 3400 0000").FontFamily("Arial").FontSize(9);
+                            Column.Item().Text("20 Template Drive Suburb").FontSize(9);
+                            Column.Item().Text("Ph (07) 3400 0000").FontSize(9);
                         });
                         row.ConstantItem(60).Height(60).Placeholder();
                     });
@@ -62,15 +62,15 @@ namespace SoilClassifier_Blazor.Pages
                     {
                         row.RelativeItem(2).Column(Column =>
                         {
-                            Column.Item().Text("Test Procedures: AS1289 2.1.1, 3.1.2, 3.2.1, 3.3.1, 3.4.1, 3.6.1").FontFamily("Arial").Bold().FontSize(10);
+                            Column.Item().Text("Test Procedures: AS1289 2.1.1, 3.1.2, 3.2.1, 3.3.1, 3.4.1, 3.6.1").Bold().FontSize(10);
                         });
                         row.RelativeItem(2).Column(Column =>
                         {
-                            Column.Item().Text("Work Package No. MP99").FontFamily("Arial").Bold().FontSize(10);
+                            Column.Item().Text("Work Package No. MP99").Bold().FontSize(10);
                         });
                         row.RelativeItem(1).Column(Column =>
                         {
-                            Column.Item().Text("Report No. WR 1234").FontFamily("Arial").Bold().FontSize(10);
+                            Column.Item().Text("Report No. WR 1234").Bold().FontSize(10);
                         });
                     });
                 });
@@ -89,10 +89,10 @@ namespace SoilClassifier_Blazor.Pages
                         row.ConstantItem(50);
                         row.RelativeItem();
                     });
-                    column.Item().Text("Content").FontFamily("Arial");
+                    column.Item().Text("Content");
                     column.Item().Element(ComposeTable);
 
-                    column.Item().PaddingRight(5).AlignRight().Text("Total Price").FontFamily("Arial").SemiBold();
+                    column.Item().PaddingRight(5).AlignRight().Text("Total Price").SemiBold();
                     column.Item().PaddingTop(25).Element(ComposeComments);
                 });
             }
@@ -114,22 +114,22 @@ namespace SoilClassifier_Blazor.Pages
 
                     table.Header(header =>
                     {
-                        header.Cell().Text("#").FontFamily("Arial");
-                        header.Cell().Text("Product").FontFamily("Arial").Style(headerStyle);
-                        header.Cell().AlignRight().Text("Unit price").FontFamily("Arial").Style(headerStyle);
-                        header.Cell().AlignRight().Text("Quantity").FontFamily("Arial").Style(headerStyle);
-                        header.Cell().AlignRight().Text("Total").FontFamily("Arial").Style(headerStyle);
+                        header.Cell().Text("#");
+                        header.Cell().Text("Product").Style(headerStyle);
+                        header.Cell().AlignRight().Text("Unit price").Style(headerStyle);
+                        header.Cell().AlignRight().Text("Quantity").Style(headerStyle);
+                        header.Cell().AlignRight().Text("Total").Style(headerStyle);
 
                         header.Cell().ColumnSpan(5).PaddingTop(5).BorderBottom(1).BorderColor(Colors.Black);
                     });
 
                     //foreach (var item in Model.Items)
                     //{
-                    table.Cell().Element(CellStyle).Text("1").FontFamily("Arial");
-                    table.Cell().Element(CellStyle).Text("name").FontFamily("Arial");
-                    table.Cell().Element(CellStyle).AlignRight().Text("Price").FontFamily("Arial");
-                    table.Cell().Element(CellStyle).AlignRight().Text("Quantity").FontFamily("Arial");
-                    table.Cell().Element(CellStyle).AlignRight().Text("Total").FontFamily("Arial");
+                    table.Cell().Element(CellStyle).Text("1");
+                    table.Cell().Element(CellStyle).Text("name");
+                    table.Cell().Element(CellStyle).AlignRight().Text("Price");
+                    table.Cell().Element(CellStyle).AlignRight().Text("Quantity");
+                    table.Cell().Element(CellStyle).AlignRight().Text("Total");
 
                     static IContainer CellStyle(IContainer container) => container.BorderBottom(1).BorderColor(Colors.Grey.Lighten2).PaddingVertical(5);
                     //}
@@ -144,39 +144,39 @@ namespace SoilClassifier_Blazor.Pages
                     {
                         row.RelativeItem().Column(column =>
                         {
-                            column.Item().Text("Notes:").FontFamily("Arial").Italic().FontSize(8);
+                            column.Item().Text("Notes:").Italic().FontSize(8);
                         });
                         row.RelativeItem(18).Column(column =>
                         {
-                            column.Item().Text("1. Plasticity Index remarks NP = Non Plastic, SC Slipped in cup, CR = Linear Shrinkage crumbled CL = Linear Shrinkage curled").FontFamily("Arial").Italic().FontSize(8);
-                            column.Item().Text("2. Atterberg samples were oven dried and dry sieved during preparation").Italic().FontSize(8).FontFamily("Arial");
-                            column.Item().Text("3. Surface Type; CON = Concrete, AC = Asphalt, AR = Auger Refusal, CTB = Cement Treated Base").Italic().FontSize(8).FontFamily("Arial");
-                            column.Item().Text("4. Sampling Details as reported are not covered by this facilities scope of accreditation or NATA endorsement").FontFamily("Arial").Italic().FontSize(8);
-                            column.Item().Text("5. Test results reported herein relate only to the tested sample identified in this report").FontFamily("Arial").Italic().FontSize(8);
+                            column.Item().Text("1. Plasticity Index remarks NP = Non Plastic, SC Slipped in cup, CR = Linear Shrinkage crumbled CL = Linear Shrinkage curled").Italic().FontSize(8);
+                            column.Item().Text("2. Atterberg samples were oven dried and dry sieved during preparation").Italic().FontSize(8);
+                            column.Item().Text("3. Surface Type; CON = Concrete, AC = Asphalt, AR = Auger Refusal, CTB = Cement Treated Base").Italic().FontSize(8);
+                            column.Item().Text("4. Sampling Details as reported are not covered by this facilities scope of accreditation or NATA endorsement").Italic().FontSize(8);
+                            column.Item().Text("5. Test results reported herein relate only to the tested sample identified in this report").Italic().FontSize(8);
                         });
                         row.RelativeItem(8).AlignBottom().Column(column =>
                         {
                             column.Item().AlignRight().Width(40).Height(40).Placeholder();
-                            column.Item().Text("NATA Accreditation Number: ").FontFamily("Arial").FontSize(8);
-                            column.Item().Text("Accredited for compliance with ISO/IEC 17025 - Testing").FontFamily("Arial").Bold().FontSize(8);
+                            column.Item().Text("NATA Accreditation Number: ").FontSize(8);
+                            column.Item().Text("Accredited for compliance with ISO/IEC 17025 - Testing").Bold().FontSize(8);
                         });
                     });
                     column.Item().PaddingTop(10).Row(row =>
                     {
                         row.RelativeItem().AlignCenter().Column(column =>
                         {
-                            column.Item().Text("Authorised Signatory: John Smith").FontFamily("Arial").Bold().FontSize(10);
+                            column.Item().Text("Authorised Signatory: John Smith").Bold().FontSize(10);
                         });
                         row.RelativeItem(1).AlignCenter().Column(column =>
                         {
-                            column.Item().Text("Date: 13/07/2022").FontFamily("Arial").Bold().FontSize(10);
+                            column.Item().Text("Date: 13/07/2022").Bold().FontSize(10);
                         });
                     });
                     column.Item().Background(Colors.Grey.Lighten1).Row(row =>
                     {
                         row.RelativeItem().Column(column =>
                         {
-                            column.Item().AlignCenter().Text("Company Name").FontFamily("Arial").Bold().FontColor(Colors.White);
+                            column.Item().AlignCenter().Text("Company Name").Bold().FontColor(Colors.White);
                         });
                     });
                     column.Spacing(5);
