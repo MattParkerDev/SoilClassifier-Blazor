@@ -13,12 +13,26 @@
 
 <p>Click the button to export your report.</p>
 
-<button @onclick="ExportPDF">Export Report</button>
+@if (_loading == false)
+{
+    <button @onclick="ExportPDF">Export Report</button>
+}
+else
+{
+    <div style="display:flex; justify-content:center; align-items:center; gap:10px">
+        <div class="spinner-border" role="status"></div>
+        <span style="font-size:1.3rem">Generating...</span>
+    </div>
+    
+}
+
 
 @code {
+    bool _loading = false;
 
     async Task ExportPDF()
     {
+        _loading = true;
         using var font = await Http.GetStreamAsync("assets/arial.ttf");
         using var bold = await Http.GetStreamAsync("assets/arialbd.ttf");
         using var italic = await Http.GetStreamAsync("assets/ariali.ttf");
@@ -32,5 +46,6 @@
         var fileBytes = document.GeneratePdf();
 
         await JS.InvokeVoidAsync("BlazorDownloadFile", "report.pdf", "application/pdf", fileBytes);
+        _loading = false;
     }
 }
