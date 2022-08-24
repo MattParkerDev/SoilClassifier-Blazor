@@ -130,7 +130,13 @@
         var document = new SoilReport(listState);
         var fileBytes = document.GeneratePdf();
 
-        await JS.InvokeVoidAsync("BlazorDownloadFile", "report.pdf", "application/pdf", fileBytes);
+        var fileProjectName = "";
+        if (listState.ProjectName != null)
+        {
+            fileProjectName = listState.ProjectName.Replace(",", "");
+        }
+        await JS.InvokeVoidAsync("BlazorDownloadFile", $"LAB - Report - {fileProjectName} - PE - {listState.ProjectNumber}.pdf", "application/pdf", fileBytes);
+
         _loading = false;
     }
 
