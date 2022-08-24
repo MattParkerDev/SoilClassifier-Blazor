@@ -213,3 +213,14 @@ td, th {
     border-color: red;
     transition: 100ms ease-in-out border-color; 
 }
+
+.importDataWarning {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 6px;
+    padding-bottom: 8px;
+    color: red;
+    font-size: 1.2rem;
+    font-weight: 400;
+}

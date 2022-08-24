@@ -11,9 +11,17 @@
 <PageTitle>Export Report</PageTitle>
 
 <h1>Export Report</h1>
-
-<p>Please enter details about the project.</p>
-<button class="btn btn-primary" @onclick="LoadDemoData">Load Demo Data</button>
+@if (listState.soilSamples != null)
+{
+    <p>Please enter details about the project.</p>
+    <button class="btn btn-primary" @onclick="LoadDemoData">Load Demo Data</button>
+}
+else
+{
+    <div class="importDataWarning">
+        Please import data first
+    </div>
+}
 
 <EditForm class="blazorForm" autocomplete="off" Model="@listState" OnValidSubmit="ExportPDF">
     <FluentValidationValidator @ref="fluentValidationValidator" />
@@ -90,10 +98,14 @@
             <InputText id="Notes" @bind-Value="listState.Notes" />
         </div>
     </div>
-    <button class="calcButton" type="submit" style="background-color:@buttonColor;
+    @if (listState.soilSamples != null)
+    {
+        <button class="calcButton" type="submit" style="background-color:@buttonColor;
                     border-color:@buttonBorderColor; color:@buttonTextColor">
-        @buttonText
-    </button>
+            @buttonText
+        </button>
+    }
+
 </EditForm>
 
 @if (_loading == true)
