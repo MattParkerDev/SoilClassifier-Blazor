@@ -121,7 +121,7 @@ namespace SoilClassifier_Blazor.Pages
                 {
                     //column.Spacing(20);
                     column.Item().Element(ComposeTable);
-                    column.Item().PaddingTop(25).Element(ComposeComments);
+                    column.Item().PaddingTop(10).Element(ComposeComments);
                 });
             }
 
@@ -263,7 +263,7 @@ namespace SoilClassifier_Blazor.Pages
                             column.Item().Text("Accredited for compliance with ISO/IEC 17025 - Testing").Bold().FontSize(8);
                         });
                     });
-                    column.Item().PaddingTop(10).Row(row =>
+                    column.Item().PaddingTop(3).Row(row =>
                     {
                         row.RelativeItem().AlignCenter().Column(column =>
                         {
