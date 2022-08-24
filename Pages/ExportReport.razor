@@ -12,24 +12,106 @@
 
 <h1>Export Report</h1>
 
-<p>Click the button to export your report.</p>
+<p>Please enter details about the project.</p>
 
-@if (_loading == false)
+<EditForm class="blazorForm" autocomplete="off" Model="@listState" OnValidSubmit="ExportPDF">
+    <FluentValidationValidator @ref="fluentValidationValidator" />
+
+    <div class="reportInputGroup">
+        <div class="reportInputContainer">
+            <label for="ProjectName">Street Name and Suburb</label>
+            <ValidationMessage For="() => listState.ProjectName" />
+            <InputText id="ProjectName" @bind-Value="listState.ProjectName" />
+        </div>
+        <div class="reportInputContainer">
+            <label for="ProjectNumber">Work Package Number</label>
+            <ValidationMessage For="() => listState.ProjectNumber" />
+            <InputText id="ProjectNumber" @bind-Value="listState.ProjectNumber" />
+        </div>
+        <div class="reportInputContainer">
+            <label for="ReportNumber">Report Number (WR)</label>
+            <ValidationMessage For="() => listState.ReportNumber" />
+            <InputText id="ReportNumber" @bind-Value="listState.ReportNumber" />
+        </div>   
+        <div class="reportInputContainer">
+            <label for="ClientName">Client Name</label>
+            <ValidationMessage For="() => listState.ClientName" />
+            <InputText id="ClientName" @bind-Value="listState.ClientName" />
+        </div>
+        <div class="reportInputContainer">
+            <label for="Limits">Limits</label>
+            <ValidationMessage For="() => listState.Limits" />
+            <InputText id="Limits" @bind-Value="listState.Limits" />
+        </div>
+        <div class="reportInputContainer">
+            <label for="ChainageMeasuredFrom">Chainage Measured From</label>
+            <ValidationMessage For="() => listState.ChainageMeasuredFrom" />
+            <InputText id="ChainageMeasuredFrom" @bind-Value="listState.ChainageMeasuredFrom" />
+        </div>
+        <div class="reportInputContainer">
+            <label for="SampledBy">Sampled By</label>
+            <ValidationMessage For="() => listState.SampledBy" />
+            <InputText id="SampledBy" @bind-Value="listState.SampledBy" />
+        </div>
+        <div class="reportInputContainer">
+            <label for="SampledDate">Sampled Date</label>
+            <ValidationMessage For="() => listState.SampledDate" />
+            <InputText id="SampledDate" @bind-Value="listState.SampledDate" />
+        </div>
+        <div class="reportInputContainer">
+            <label for="PreparedBy">Prepared By</label>
+            <ValidationMessage For="() => listState.PreparedBy" />
+            <InputText id="PreparedBy" @bind-Value="listState.PreparedBy" />
+        </div>
+        <div class="reportInputContainer">
+            <label for="PreparedDate">Prepared Date</label>
+            <ValidationMessage For="() => listState.PreparedDate" />
+            <InputText id="PreparedDate" @bind-Value="listState.PreparedDate" />
+        </div>
+        <div class="reportInputContainer">
+            <label for="GroupedSamples">Grouped Samples</label>
+            <ValidationMessage For="() => listState.GroupedSamples" />
+            <InputText id="GroupedSamples" @bind-Value="listState.GroupedSamples" />
+        </div>
+        <div class="reportInputContainer">
+            <label for="SignatoryName">Signatory</label>
+            <ValidationMessage For="() => listState.SignatoryName" />
+            <InputText id="SignatoryName" @bind-Value="listState.SignatoryName" />
+        </div>
+        <div class="reportInputContainer">
+            <label for="NataNumber">Nata Accreditation Number</label>
+            <ValidationMessage For="() => listState.NataNumber" />
+            <InputText id="NataNumber" @bind-Value="listState.NataNumber" />
+        </div>
+        <div class="reportInputContainer">
+            <label for="Notes">Notes</label>
+            <ValidationMessage For="() => listState.Notes" />
+            <InputText id="Notes" @bind-Value="listState.Notes" />
+        </div>
+    </div>
+    <button class="calcButton" type="submit" style="background-color:@buttonColor;
+                    border-color:@buttonBorderColor; color:@buttonTextColor">
+        @buttonText
+    </button>
+</EditForm>
+
+@if (_loading == true)
 {
-    <button @onclick="ExportPDF">Export Report</button>
-}
-else
-{
-    <div style="display:flex; justify-content:center; align-items:center; gap:10px">
+    <div style="display:flex; justify-content:center; align-items:center; gap:10px; padding-top:8px">
         <div class="spinner-border" role="status"></div>
         <span style="font-size:1.3rem">Generating...</span>
     </div>
-    
 }
 
 
 @code {
     
+    string buttonText = "Export Report";
+    string buttonColor = "#007aff";
+    string buttonBorderColor = "#007aff";
+    string buttonTextColor = "white";
+
+    private FluentValidationValidator? fluentValidationValidator;
     bool _loading = false;
     
     async Task ExportPDF()

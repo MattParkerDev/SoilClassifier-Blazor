@@ -42,8 +42,7 @@ namespace SoilClassifier_Blazor
                 RuleFor(soilData => soilData.finePercent)
                 .NotEmpty().WithMessage("This field is required.")
                 .LessThanOrEqualTo(100).WithMessage("Enter a number from 0-100")
-                .GreaterThanOrEqualTo(0).WithMessage("Enter a number from 0-100")
-                ;
+                .GreaterThanOrEqualTo(0).WithMessage("Enter a number from 0-100");
 
                 RuleFor(soilData => soilData.gravelPercent)
                 .NotEmpty().WithMessage("This field is required.")

@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using Blazored.FluentValidation
 
 <PageTitle>Soil Classifier</PageTitle>
 
@@ -7,7 +8,8 @@
         <h1>Soil Classifier</h1>
         <div>Please enter the below values of your sample to classify it.</div>
         <EditForm class="blazorForm" autocomplete="off" Model="@soilData" OnValidSubmit="HandleCalculate">
-            <Blazored.FluentValidation.FluentValidationValidator @ref="fluentValidationValidator" Options="@(options => options.IncludeRuleSets("Numbers"))" />
+            <FluentValidationValidator @ref="fluentValidationValidator" Options="@(options => options.IncludeRuleSets("Numbers"))" />
+            
             <div class="inputGroup">
                 <div class="inputContainer">
                     <label for="finePercent">Fines (&lt;0.075mm) (%)</label>
@@ -47,7 +49,7 @@
     string buttonTextColor = "white";
 
     private SoilData soilData = new SoilData();
-    private Blazored.FluentValidation.FluentValidationValidator? fluentValidationValidator;
+    private FluentValidationValidator? fluentValidationValidator;
 
     void FieldUpdate()
     {

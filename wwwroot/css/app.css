@@ -166,3 +166,50 @@ table, th, td {
 td, th {
     white-space: nowrap;
 }
+
+.reportInputContainer input {
+    border-style: solid;
+    border-color: grey;
+    padding-bottom: 5px;
+    padding-top: 5px;
+    margin-left: 10px;
+    border-radius: 10px;
+    width: 250px;
+    transition: 100ms ease-in-out border-color;
+    text-align:center;
+    font-size: 0.9rem;
+}
+
+.reportInputContainer input:focus {
+    border-color: black;
+    outline: none;
+    transition: 100ms ease-in-out border-color;
+}
+
+.reportInputGroup {
+    display: flex;
+    flex-direction: column;
+    background-color: lightgray;
+    border-radius: 10px;
+    max-width: 700px;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.reportInputContainer {
+    margin: 2px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.reportInputContainer label {
+    margin-right: 10px;
+    font-weight: 600;
+}
+
+.reportInputContainer input.invalid {
+    border-color: red;
+    transition: 100ms ease-in-out border-color; 
+}
