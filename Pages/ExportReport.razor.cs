@@ -72,11 +72,11 @@ namespace SoilClassifier_Blazor.Pages
                         });
                         row.RelativeItem(2).Column(Column =>
                         {
-                            Column.Item().Text("Work Package No. MP99").Bold().FontSize(9);
+                            Column.Item().Text($"Work Package No. {Model.ProjectNumber}").Bold().FontSize(9);
                         });
                         row.RelativeItem(1).Column(Column =>
                         {
-                            Column.Item().Text("Report No. WR 1234").Bold().FontSize(9);
+                            Column.Item().Text($"Report No. WR {Model.ReportNumber}").Bold().FontSize(9);
                         });
                     });
 
@@ -84,31 +84,31 @@ namespace SoilClassifier_Blazor.Pages
                     {
                         row.RelativeItem((float)2.8).Column(Column =>
                         {
-                            Column.Item().Text("Client: Engineering Department").FontSize(9);
-                            Column.Item().Text("Project: Elizabeth Street, Brisbane City").Bold().FontSize(10);
-                            Column.Item().Text("Limits: Edward Street to Albert Street").FontSize(9);
-                            Column.Item().Text("Chainage measured from: Edward Street").FontSize(9);
+                            Column.Item().Text($"Client: {Model.ClientName}").FontSize(9);
+                            Column.Item().Text($"Project: {Model.ProjectName}").Bold().FontSize(10);
+                            Column.Item().Text($"Limits: {Model.Limits}").FontSize(9);
+                            Column.Item().Text($"Chainage measured from: {Model.ChainageMeasuredFrom}").FontSize(9);
                         });
 
                         row.RelativeItem((float)1.9).AlignBottom().Column(Column =>
                         {
-                            Column.Item().Text("Notes:").FontSize(9);
+                            Column.Item().Text($"Notes: {Model.Notes}").FontSize(9);
                         });
                         //TODO: Fix Sampled by and Date spacing and dynamic Column size
                         row.RelativeItem((float)1.6).Column(Column =>
                         {
                             Column.Item().Row(row =>
                             {
-                                row.AutoItem().Text("Sampled by : AB, BC").FontSize(9);
-                                row.AutoItem().PaddingLeft(5).Text("Date: 21/07/22").FontSize(9);
+                                row.AutoItem().Text($"Sampled by: {Model.SampledBy}").FontSize(9);
+                                row.AutoItem().PaddingLeft(5).Text($"Date: {Model.SampledDate}").FontSize(9);
                             });
                             Column.Item().Row(row =>
                             {
-                                row.AutoItem().AlignLeft().Text("Prepared by: CD").FontSize(9);
-                                row.AutoItem().AlignRight().PaddingLeft(5).Text("Date: 02/08/22").FontSize(9);
+                                row.AutoItem().AlignLeft().Text($"Prepared by: {Model.PreparedBy}").FontSize(9);
+                                row.AutoItem().AlignRight().PaddingLeft(5).Text($"Date: {Model.PreparedDate}").FontSize(9);
                             });
 
-                            Column.Item().Text("\nGrouped Samples: 2,5,17  8,12").FontSize(9);
+                            Column.Item().Text($"\nGrouped Samples: {Model.GroupedSamples}").FontSize(9);
                         });
                     });
                 });
@@ -259,7 +259,7 @@ namespace SoilClassifier_Blazor.Pages
                         row.RelativeItem(8).AlignBottom().Column(column =>
                         {
                             column.Item().AlignRight().Width(40).Height(40).Placeholder();
-                            column.Item().Text("NATA Accreditation Number: ").FontSize(8);
+                            column.Item().Text($"NATA Accreditation Number: {Model.NataNumber}").FontSize(8);
                             column.Item().Text("Accredited for compliance with ISO/IEC 17025 - Testing").Bold().FontSize(8);
                         });
                     });
@@ -267,11 +267,11 @@ namespace SoilClassifier_Blazor.Pages
                     {
                         row.RelativeItem().AlignCenter().Column(column =>
                         {
-                            column.Item().Text("Authorised Signatory: John Smith").Bold().FontSize(10);
+                            column.Item().Text($"Authorised Signatory: {Model.SignatoryName}").Bold().FontSize(10);
                         });
                         row.RelativeItem(1).AlignCenter().Column(column =>
                         {
-                            column.Item().Text("Date: 13/07/2022").Bold().FontSize(10);
+                            column.Item().Text($"Date: {Model.PreparedDate}").Bold().FontSize(10);
                         });
                     });
                     column.Item().Background(Colors.Grey.Lighten1).Row(row =>
