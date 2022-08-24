@@ -4,11 +4,13 @@
 @using CsvHelper
 @using System.Globalization
 
+@inject HttpClient Http
+
 <PageTitle>Soil Classifier Import</PageTitle>
 <div class="fileInputContainer">
     <h1>Import Data</h1>
     <InputFile OnChange="@LoadFiles" />
-    <button class="btn btn-primary">Import Data</button>
+    <button class="btn btn-primary" @onclick="LoadDemoData">Load Demo Data</button>
     <div>@status</div>
 
     @if (listState.soilSamples != null)
@@ -91,62 +93,82 @@
                 }
             }
         }
+        HandleSamples();
+    }
 
-        //TODO: Implement grouped samples
-        foreach (var sample in listState.soilSamples)
+    private async Task LoadDemoData()
+    {
+        using var memoryStream = await Http.GetStreamAsync("assets/DemoData.csv");
+        using (var reader = new StreamReader(memoryStream))
         {
-            if (string.IsNullOrEmpty(sample.Sieve53)
-             && string.IsNullOrEmpty(sample.Sieve19)
-             && string.IsNullOrEmpty(sample.Sieve475)
-             && string.IsNullOrEmpty(sample.Sieve236)
-             && string.IsNullOrEmpty(sample.Sieve425)
-             && string.IsNullOrEmpty(sample.Sieve075)
-             && string.IsNullOrEmpty(sample.PlasticLimit)
-             && string.IsNullOrEmpty(sample.LiquidLimit)
-             && string.IsNullOrEmpty(sample.PlasticityIndex)
-             && string.IsNullOrEmpty(sample.LinearShrinkage))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
-                sample.SoilClassification = "";
+                csv.Context.RegisterClassMap<SampleMap>();
+                listState.soilSamples = csv.GetRecords<SoilSample>().ToList();
             }
-            else
+        }
+        HandleSamples();
+    }
+    private void HandleSamples()
+    {
+        if (listState.soilSamples != null)
+        {
+            //TODO: Implement grouped samples
+            foreach (var sample in listState.soilSamples)
             {
-                bool validSample = true;
-                double finePercent;
-                double plasticLimit;
-                double liquidLimit;
-                double gravelPercent = 0.0;
-                double sieve236;
-
-                if (!double.TryParse(sample.Sieve236, out sieve236))
+                if (string.IsNullOrEmpty(sample.Sieve53)
+                 && string.IsNullOrEmpty(sample.Sieve19)
+                 && string.IsNullOrEmpty(sample.Sieve475)
+                 && string.IsNullOrEmpty(sample.Sieve236)
+                 && string.IsNullOrEmpty(sample.Sieve425)
+                 && string.IsNullOrEmpty(sample.Sieve075)
+                 && string.IsNullOrEmpty(sample.PlasticLimit)
+                 && string.IsNullOrEmpty(sample.LiquidLimit)
+                 && string.IsNullOrEmpty(sample.PlasticityIndex)
+                 && string.IsNullOrEmpty(sample.LinearShrinkage))
                 {
-                    validSample = false;
+                    sample.SoilClassification = "";
                 }
                 else
                 {
-                    gravelPercent = 100.0 - sieve236;
-                }
+                    bool validSample = true;
+                    double finePercent;
+                    double plasticLimit;
+                    double liquidLimit;
+                    double gravelPercent = 0.0;
+                    double sieve236;
 
-                if (!double.TryParse(sample.Sieve075, out finePercent))
-                {
-                    validSample = false;
-                }
-                if (!double.TryParse(sample.PlasticLimit, out plasticLimit))
-                {
-                    validSample = false;
-                }
-                if (!double.TryParse(sample.LiquidLimit, out liquidLimit))
-                {
-                    validSample = false;
-                }
+                    if (!double.TryParse(sample.Sieve236, out sieve236))
+                    {
+                        validSample = false;
+                    }
+                    else
+                    {
+                        gravelPercent = 100.0 - sieve236;
+                    }
 
-                if (validSample == false)
-                {
-                    sample.SoilClassification = "Invalid Data";
-                }
-                else
-                {
-                    sample.SoilClassification = Classification(finePercent, gravelPercent,
-                            plasticLimit, liquidLimit);
+                    if (!double.TryParse(sample.Sieve075, out finePercent))
+                    {
+                        validSample = false;
+                    }
+                    if (!double.TryParse(sample.PlasticLimit, out plasticLimit))
+                    {
+                        validSample = false;
+                    }
+                    if (!double.TryParse(sample.LiquidLimit, out liquidLimit))
+                    {
+                        validSample = false;
+                    }
+
+                    if (validSample == false)
+                    {
+                        sample.SoilClassification = "Invalid Data";
+                    }
+                    else
+                    {
+                        sample.SoilClassification = Classification(finePercent, gravelPercent,
+                                plasticLimit, liquidLimit);
+                    }
                 }
             }
         }

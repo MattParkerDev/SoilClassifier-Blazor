@@ -1,0 +1,23 @@
+SampleID,Chainage (m),Bore Hole No.,Offset,Depth Below Exst Surface (mm),Surface Type,Est. Max Size(mm),53 mm,19 mm,4.75 mm,2.36 mm,0.425 mm,0.075 mm,Moisture Content (%),Plastic Limit (%),Plasticity Index (%),Linear Shrinkage (),Liquid Limit (%),Soil Classification,From,ClientName,ProjectName,ProjectCode
+MP99-1,20,1,2.0 L,0-80,AC,,,,,,,,,,,,,,,Engineering Department,Elizabeth Street,MP99
+MP99-2,20,1,2.0 L,80-350,,,100,83,49,43,26,11,5.2,16,1,0,17,grey brown,,Engineering Department,Elizabeth Street,MP99
+MP99-3,20,1,2.0 L,350-1000,,,,100,99,92,75,58,16.7,21,30,12.5,51,brown,,Engineering Department,Elizabeth Street,MP99
+MP99-4,55,2,1.0 R,0-50,AC,,,,,,,,,,,,,,,Engineering Department,Elizabeth Street,MP99
+MP99-5,55,2,1.0 R,50-320,,,,,,,,,6.5,,,,,,,Engineering Department,Elizabeth Street,MP99
+MP99-6,55,2,1.0 R,320-1000,,,,100,96,91,79,65,21.2,18,40,15.5,58,brown,,Engineering Department,Elizabeth Street,MP99
+MP99-7,102,3,3.5 L,0-60,AC,,,,,,,,,,,,,,,Engineering Department,Elizabeth Street,MP99
+MP99-8,102,3,3.5 L,60-270,,,100,84,52,46,26,9,8.2,15,2,1.5,17,yellow brown,,Engineering Department,Elizabeth Street,MP99
+MP99-9,102,3,3.5 L,270-1000,,,,100,95,89,80,69,25.2,20,41,16.5,61,brown,,Engineering Department,Elizabeth Street,MP99
+MP99-10,147,4,4.0 R,0-40,AC,,,,,,,,,,,,,,,Engineering Department,Elizabeth Street,MP99
+MP99-11,147,4,4.0 R,40-310,,,,,,,,,5.3,,,,,,,Engineering Department,Elizabeth Street,MP99
+MP99-12,147,4,4.0 R,310-420,,,,100,86,79,58,24,10.4,14,6,3,20,yellow brown,,Engineering Department,Elizabeth Street,MP99
+MP99-13,147,4,4.0 R,420-770,,,,100,93,84,58,42,25.7,12,18,10,30,brown,,Engineering Department,Elizabeth Street,MP99
+MP99-14,147,4,4.0 R,770-1000,,,,100,87,62,36,23,17.9,20,27,22,47,pale brown,,Engineering Department,Elizabeth Street,MP99
+MP99-15,170,5,2.5 L,0-60,AC,,,,,,,,,,,,,,,Engineering Department,Elizabeth Street,MP99
+MP99-16,170,5,2.5 L,60-150,,,,,,,,,6.5,,,,,,,Engineering Department,Elizabeth Street,MP99
+MP99-17,170,5,2.5 L,150-300,,,100,96,80,71,48,20,9.1,14,3,1,17,yellow brown,,Engineering Department,Elizabeth Street,MP99
+MP99-18,170,5,2.5 L,300-301,AR,,,,,,,,,,,,,,,Engineering Department,Elizabeth Street,MP99
+MP99-19,201,6,5.5 L,0-60,AC,,,,,,,,,,,,,,,Engineering Department,Elizabeth Street,MP99
+MP99-20,201,6,5.5 L,60-170,,,100,79,44,40,29,10,5.9,5,5,2,10,yellow brown,,Engineering Department,Elizabeth Street,MP99
+MP99-21,201,6,5.5 L,170-320,,,,96,76,65,47,13,6.9,18,4,5,22,yellow brown,,Engineering Department,Elizabeth Street,MP99
+MP99-22,201,6,5.5 L,320-1000,,,,100,94,67,33,29,15,10,30,20,40,brown,,Engineering Department,Elizabeth Street,MP99
