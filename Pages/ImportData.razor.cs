@@ -319,7 +319,7 @@ namespace SoilClassifier_Blazor.Pages
             }
 
 
-            string result = "[" + groupSymbol + "] " + String.Join(" ", prefix) + prefixPrimarySeparator +
+            string result = "(" + groupSymbol + ") " + String.Join(" ", prefix) + prefixPrimarySeparator +
                      primary + primarySecondarySeparator + String.Join(" & ", secondary) +
                      secondaryTraceSeparator + String.Join(" & ", trace);
 
