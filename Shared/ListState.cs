@@ -19,6 +19,7 @@ namespace SoilClassifier_Blazor.Shared
         public string? Notes { get; set; }
         public string? SignatoryName { get; set; }
         public string? NataNumber { get; set; }
+        public byte[]? NataLogo { get; set; }
 
     }
 }

@@ -93,6 +93,8 @@
                 }
             }
         }
+        var imageData = await Http.GetByteArrayAsync("assets/NATA.jpg");
+        listState.NataLogo = imageData;
         HandleSamples();
     }
 
@@ -107,6 +109,8 @@
                 listState.soilSamples = csv.GetRecords<SoilSample>().ToList();
             }
         }
+        var imageData = await Http.GetByteArrayAsync("assets/NATA.jpg");
+        listState.NataLogo = imageData;
         HandleSamples();
     }
     private void HandleSamples()

@@ -258,7 +258,10 @@ namespace SoilClassifier_Blazor.Pages
                         });
                         row.RelativeItem(8).AlignBottom().Column(column =>
                         {
-                            column.Item().AlignRight().Width(40).Height(40).Placeholder();
+                            if (Model.NataLogo != null)
+                            {
+                                column.Item().AlignRight().Width(40).Image(Model.NataLogo);
+                            }
                             column.Item().Text($"NATA Accreditation Number: {Model.NataNumber}").FontSize(8);
                             column.Item().Text("Accredited for compliance with ISO/IEC 17025 - Testing").Bold().FontSize(8);
                         });
