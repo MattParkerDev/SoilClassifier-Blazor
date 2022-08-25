@@ -5,6 +5,7 @@ namespace SoilClassifier_Blazor.Shared
     public class ListState
     {
         public List<SoilSample>? soilSamples { get; set; }
+        public List<BoreHole>? BoreHoles { get; set; }
         public string? ProjectName { get; set; }
         public string? ProjectNumber { get; set; }
         public string? ReportNumber { get; set; }

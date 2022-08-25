@@ -139,6 +139,12 @@ else
         FontManager.RegisterFont(bold);
         FontManager.RegisterFont(italic);
         FontManager.RegisterFont(boldItalic);
+
+        // TODO: Handle Grouped Samples
+
+        // TODO: Handle sorting data into Boreholes
+        SortBores();
+
         var document = new SoilReport(listState);
         var fileBytes = document.GeneratePdf();
 
@@ -168,5 +174,10 @@ else
         listState.Notes = "";
         listState.SignatoryName = "John Smith";
         listState.NataNumber = "1234";
+    }
+
+    private void SortBores()
+    {
+        
     }
 }
