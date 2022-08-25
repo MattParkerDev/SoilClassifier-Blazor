@@ -121,7 +121,8 @@ namespace SoilClassifier_Blazor.Pages
                 {
                     //column.Spacing(20);
                     column.Item().Element(ComposeTable);
-                    column.Item().PaddingTop(10).Element(ComposeComments);
+                    column.Item().ShowEntire().PaddingTop(10).Element(ComposeComments);
+                    column.Item().ShowEntire().Element(ComposeGraphs);
                 });
             }
 
@@ -285,6 +286,85 @@ namespace SoilClassifier_Blazor.Pages
                         });
                     });
                     column.Spacing(5);
+                });
+            }
+            void ComposeGraphs(IContainer container)
+            {
+                container.Row(row =>
+                {
+                    for (var i = 0; i < 3; i++)
+                    {
+                        row.RelativeItem().Border(1).PaddingBottom(20).Column(column =>
+                        {
+                            column.Item().AlignCenter().PaddingTop(10).Text("Bore Hole BH1").FontSize(10).Bold();
+                            column.Item().AlignCenter().Text("Chainage 247m").FontSize(9);
+                            column.Item().AlignCenter().PaddingBottom(10).Text("Offset 2.5m R").FontSize(9);
+                            column.Item().Row(row =>
+                            {
+                                row.ConstantItem(48).BorderRight((float)0.5).Column(column =>
+                                {
+                                    column.Spacing(16);
+                                    column.Item().AlignRight().Text("0 -").FontSize(9);
+                                    column.Item().AlignRight().Text("100 -").FontSize(9);
+                                    column.Item().AlignRight().Text("200 -").FontSize(9);
+                                    column.Item().AlignRight().Text("300 -").FontSize(9);
+                                    column.Item().AlignRight().Text("400 -").FontSize(9);
+                                    column.Item().AlignRight().Text("500 -").FontSize(9);
+                                    column.Item().AlignRight().Text("600 -").FontSize(9);
+                                    column.Item().AlignRight().Text("700 -").FontSize(9);
+                                    column.Item().AlignRight().Text("800 -").FontSize(9);
+                                    column.Item().AlignRight().Text("900 -").FontSize(9);
+                                    column.Item().AlignRight().Text("1000 -").FontSize(9);
+                                });
+                                row.ConstantItem(35).Column(column =>
+                                {
+                                    column.Spacing(16);
+                                    column.Item().AlignRight().Text("8 -").FontSize(9).FontColor(Colors.Red.Medium);
+                                    column.Item().AlignRight().Text("7 -").FontSize(9).FontColor(Colors.Red.Medium);
+                                    column.Item().AlignRight().Text("12 -").FontSize(9).FontColor(Colors.Red.Medium);
+                                    column.Item().AlignRight().Text("6 -").FontSize(9).FontColor(Colors.Red.Medium);
+                                    column.Item().AlignRight().Text("4 -").FontSize(9).FontColor(Colors.Red.Medium);
+                                    column.Item().AlignRight().Text("4 -").FontSize(9).FontColor(Colors.Red.Medium);
+                                    column.Item().AlignRight().Text("5 -").FontSize(9).FontColor(Colors.Red.Medium);
+                                    column.Item().AlignRight().Text("4 -").FontSize(9).FontColor(Colors.Red.Medium);
+                                    column.Item().AlignRight().Text("6 -").FontSize(9).FontColor(Colors.Red.Medium);
+                                    column.Item().AlignRight().Text("7 -").FontSize(9).FontColor(Colors.Red.Medium);
+                                    column.Item().AlignRight().Text("6 -").FontSize(9).FontColor(Colors.Red.Medium);
+                                });
+                                row.ConstantItem(180).Column(column =>
+                                {
+                                    //for (var i = 0; i < 6; i++)
+                                    //{
+                                    column.Item().PaddingTop(6).Row(row =>
+                                    {
+                                        row.ConstantItem(45).Background(Colors.Black).Border((float)0.7).Height(50);
+                                        row.ConstantItem(35).AlignMiddle().PaddingLeft(5).Text("7.1%").FontSize(8);
+                                        row.ConstantItem(95).AlignMiddle().PaddingLeft(5).Text("(GM) sandy GRAVEL with silt, brown, moist").FontSize(7);
+                                    });
+                                    //}
+                                    column.Item().Row(row =>
+                                    {
+                                        row.ConstantItem(45).Background("fdca99").Border((float)0.7).Height(100);
+                                        row.ConstantItem(35).AlignMiddle().PaddingLeft(5).Text("7.1%").FontSize(8);
+                                        row.ConstantItem(95).AlignMiddle().PaddingLeft(5).Text("(GM) sandy GRAVEL with silt, brown, moist").FontSize(7);
+                                    });
+                                    column.Item().Row(row =>
+                                    {
+                                        row.ConstantItem(45).Background("973104").Border((float)0.7).Height(35);
+                                        row.ConstantItem(35).AlignMiddle().PaddingLeft(5).Text("7.1%").FontSize(8);
+                                        row.ConstantItem(95).AlignMiddle().PaddingLeft(5).Text("(GM) sandy GRAVEL with silt, brown, moist").FontSize(7);
+                                    });
+                                    column.Item().Row(row =>
+                                    {
+                                        row.ConstantItem(45).Background("666697").Border((float)0.7).Height(97);
+                                        row.ConstantItem(35).AlignMiddle().PaddingLeft(5).Text("7.1%").FontSize(8);
+                                        row.ConstantItem(95).AlignMiddle().PaddingLeft(5).Text("(GM) sandy GRAVEL with silt, brown, moist").FontSize(7);
+                                    });
+
+                                });
+                            });
+                        });
+                    }
                 });
             }
         }
