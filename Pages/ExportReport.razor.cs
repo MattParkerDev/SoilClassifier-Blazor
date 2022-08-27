@@ -122,7 +122,7 @@ namespace SoilClassifier_Blazor.Pages
                     //column.Spacing(20);
                     column.Item().Element(ComposeTable);
                     column.Item().ShowEntire().PaddingTop(10).Element(ComposeComments);
-                    column.Item().ShowEntire().Element(ComposeGraphs);
+                    column.Item().Element(ComposeGraphs);
                 });
             }
 
@@ -290,15 +290,16 @@ namespace SoilClassifier_Blazor.Pages
             }
             void ComposeGraphs(IContainer container)
             {
-                container.Row(row =>
+                container.Grid(grid =>
                 {
-                    for (var i = 0; i < 3; i++)
+                    grid.Columns(3);
+                    foreach (var boreHole in Model.BoreHoleList)
                     {
-                        row.RelativeItem().Border(1).PaddingBottom(20).Column(column =>
+                        grid.Item().ShowEntire().Border(1).PaddingBottom(20).Column(column =>
                         {
-                            column.Item().AlignCenter().PaddingTop(10).Text("Bore Hole BH1").FontSize(10).Bold();
-                            column.Item().AlignCenter().Text("Chainage 247m").FontSize(9);
-                            column.Item().AlignCenter().PaddingBottom(10).Text("Offset 2.5m R").FontSize(9);
+                            column.Item().AlignCenter().PaddingTop(10).Text($"Bore Hole {boreHole.BoreNumber}").FontSize(10).Bold();
+                            column.Item().AlignCenter().Text($"Chainage {boreHole.Chainage} m").FontSize(9);
+                            column.Item().AlignCenter().PaddingBottom(10).Text($"Offset {boreHole.Offset}").FontSize(9);
                             column.Item().Row(row =>
                             {
                                 row.ConstantItem(48).BorderRight((float)0.5).Column(column =>
@@ -333,34 +334,39 @@ namespace SoilClassifier_Blazor.Pages
                                 });
                                 row.ConstantItem(180).Column(column =>
                                 {
-                                    //for (var i = 0; i < 6; i++)
-                                    //{
-                                    column.Item().PaddingTop(6).Row(row =>
+                                    column.Item().PaddingTop(7);
+                                    foreach (var layer in boreHole.LayerList)
                                     {
-                                        row.ConstantItem(45).Background(Colors.Black).Border((float)0.7).Height(50);
-                                        row.ConstantItem(35).AlignMiddle().PaddingLeft(5).Text("7.1%").FontSize(8);
-                                        row.ConstantItem(95).AlignMiddle().PaddingLeft(5).Text("(GM) sandy GRAVEL with silt, brown, moist").FontSize(7);
-                                    });
-                                    //}
-                                    column.Item().Row(row =>
-                                    {
-                                        row.ConstantItem(45).Background("fdca99").Border((float)0.7).Height(100);
-                                        row.ConstantItem(35).AlignMiddle().PaddingLeft(5).Text("7.1%").FontSize(8);
-                                        row.ConstantItem(95).AlignMiddle().PaddingLeft(5).Text("(GM) sandy GRAVEL with silt, brown, moist").FontSize(7);
-                                    });
-                                    column.Item().Row(row =>
-                                    {
-                                        row.ConstantItem(45).Background("973104").Border((float)0.7).Height(35);
-                                        row.ConstantItem(35).AlignMiddle().PaddingLeft(5).Text("7.1%").FontSize(8);
-                                        row.ConstantItem(95).AlignMiddle().PaddingLeft(5).Text("(GM) sandy GRAVEL with silt, brown, moist").FontSize(7);
-                                    });
-                                    column.Item().Row(row =>
-                                    {
-                                        row.ConstantItem(45).Background("666697").Border((float)0.7).Height(97);
-                                        row.ConstantItem(35).AlignMiddle().PaddingLeft(5).Text("7.1%").FontSize(8);
-                                        row.ConstantItem(95).AlignMiddle().PaddingLeft(5).Text("(GM) sandy GRAVEL with silt, brown, moist").FontSize(7);
-                                    });
+                                        column.Item().Row(row =>
+                                        {
+                                            row.ConstantItem(45).Background(layer.GraphColor).Border((float)0.7).Height(layer.Height/1000*280);
+                                            
+                                            if (layer.SurfaceType == "AC")
+                                            {
+                                                row.ConstantItem(35).AlignMiddle().Text("  AC").FontSize(8);
+                                            } else if (layer.SurfaceType == "AR")
+                                            {
+                                                row.ConstantItem(35).AlignMiddle().Text("  AR").FontSize(8);
+                                            } else if (layer.SurfaceType == "Service")
+                                            {
+                                                row.ConstantItem(35).AlignMiddle().Text("  Service").FontSize(8);
+                                            } else if (layer.MoistureContent != "")
+                                            {
+                                                row.ConstantItem(35).AlignMiddle().Text($"- {layer.MoistureContent}%").FontSize(8);
+                                            } else if (layer.MoistureContent == "")
+                                            {
+                                                row.ConstantItem(35).AlignMiddle().Text("").FontSize(8);
+                                            }
 
+                                            if (layer.SoilClassification == "")
+                                            {
+                                                row.ConstantItem(95).AlignMiddle().PaddingLeft(5).Text("").FontSize(7);
+                                            } else
+                                            {
+                                                row.ConstantItem(95).AlignMiddle().PaddingLeft(5).Text($"{layer.SoilClassification}, {layer.SoilColor}, moist").FontSize(7);
+                                            }
+                                        });
+                                    }
                                 });
                             });
                         });
