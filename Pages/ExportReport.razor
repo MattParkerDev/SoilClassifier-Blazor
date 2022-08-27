@@ -182,6 +182,18 @@ else
         //TODO: Consider A/B Holes
         //TODO: Different Colors for each layer
         //TODO: Input DCP Values
+
+        var graphColors = new Dictionary<int, string>()
+        {
+            {1, "973104"},
+            {2, "fdca99"},
+            {3, "973104"},
+            {4, "666697"},
+            {5, "4c1902"},
+            {6, "973104"},
+            {7, "666697"}
+        };
+
         var groupBoresQuery =
             from sample in listState.soilSamples
             group sample by sample.BoreNumber into newGroup
@@ -189,20 +201,24 @@ else
             select newGroup;
         foreach (var group in groupBoresQuery)
         {
-            Console.WriteLine(group.Key);
+            //Console.WriteLine(group.Key);
             var hasRun = false;
+            int count = 1;
             var tempBoreHole = new BoreHole();
             tempBoreHole.BoreNumber = group.Key;
 
             foreach (var sample in group)
             {
-                Console.WriteLine(sample.Depth);
+                //Console.WriteLine(sample.Depth);
                 if (!hasRun)
                 {
                     tempBoreHole.Chainage = sample.Chainage;
                     tempBoreHole.Offset = sample.Offset;
                     hasRun = true;
                 }
+
+
+
                 var tempLayer = new Layer();
                 tempLayer.GraphColor = "fdca99";
                 if (sample.Depth != null)
@@ -212,6 +228,16 @@ else
                 }
                 tempLayer.SurfaceType = sample.SurfaceType;
                 tempLayer.MoistureContent = sample.MoistureContent;
+
+                if (sample.SurfaceType == "AC")
+                {
+                    tempLayer.GraphColor = "000000";
+                    count += 1;
+                } else
+                {
+                    tempLayer.GraphColor = graphColors[count];
+                    count += 1;
+                }
                 tempLayer.SoilColor = sample.Colour;
                 tempLayer.SoilClassification = sample.SoilClassification;
                 tempBoreHole.LayerList.Add(tempLayer);      
