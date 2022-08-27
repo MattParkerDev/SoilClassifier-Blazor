@@ -5,9 +5,9 @@ MP99-3,20,1,2.0 L,350-1000,,,,100,99,92,75,58,16.7,21,30,12.5,51,brown,,Engineer
 MP99-4,55,2,1.0 R,0-50,AC,,,,,,,,,,,,,,,Engineering Department,Elizabeth Street,MP99
 MP99-5,55,2,1.0 R,50-320,,,,,,,,,6.5,,,,,,,Engineering Department,Elizabeth Street,MP99
 MP99-6,55,2,1.0 R,320-1000,,,,100,96,91,79,65,21.2,18,40,15.5,58,brown,,Engineering Department,Elizabeth Street,MP99
-MP99-7,102,3,3.5 L,0-60,AC,,,,,,,,,,,,,,,Engineering Department,Elizabeth Street,MP99
-MP99-8,102,3,3.5 L,60-270,,,100,84,52,46,26,9,8.2,15,2,1.5,17,yellow brown,,Engineering Department,Elizabeth Street,MP99
-MP99-9,102,3,3.5 L,270-1000,,,,100,95,89,80,69,25.2,20,41,16.5,61,brown,,Engineering Department,Elizabeth Street,MP99
+MP99-7,102,3,3.5 L,0-180,AC,,,,,,,,,,,,,,,Engineering Department,Elizabeth Street,MP99
+MP99-8,102,3,3.5 L,180-450,,,100,84,52,46,26,9,8.2,15,2,1.5,17,yellow brown,,Engineering Department,Elizabeth Street,MP99
+MP99-9,102,3,3.5 L,450-1000,,,,100,95,89,80,69,25.2,20,41,16.5,61,brown,,Engineering Department,Elizabeth Street,MP99
 MP99-10,147,4,4.0 R,0-40,AC,,,,,,,,,,,,,,,Engineering Department,Elizabeth Street,MP99
 MP99-11,147,4,4.0 R,40-310,,,,,,,,,5.3,,,,,,,Engineering Department,Elizabeth Street,MP99
 MP99-12,147,4,4.0 R,310-420,,,,100,86,79,58,24,10.4,14,6,3,20,yellow brown,,Engineering Department,Elizabeth Street,MP99
