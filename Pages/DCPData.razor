@@ -1,0 +1,21 @@
+﻿@page "/dcpdata"
+
+@inject ListState listState
+
+
+@if (listState.soilSamples == null)
+{
+    <h4>Please import data before entering DCP Values</h4>
+}
+else
+{
+    //foreach Borehole in BoreHoleList
+    foreach (var boreHole in listState.BoreHoleList)
+    {
+    <h3>Component</h3>
+    }
+}
+
+@code {
+
+}
