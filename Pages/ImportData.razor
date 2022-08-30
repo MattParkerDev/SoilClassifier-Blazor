@@ -6,6 +6,8 @@
 
 @inject HttpClient Http
 
+@inject ListState listState
+
 <PageTitle>Soil Classifier Import</PageTitle>
 <div class="fileInputContainer">
     <h1>Import Data</h1>
@@ -69,15 +71,13 @@
 
 @code {
 
-    @inject ListState listState;
-
     string status = "Waiting for file";
 
     private async Task LoadFiles(InputFileChangeEventArgs e)
     {
         status = "File Loaded";
         IBrowserFile loadedFile = e.File;
-        
+
         using (var memoryStream = new MemoryStream())
         {
             // Blazor InputFile doesnt support synchronous reads, requires async
@@ -185,6 +185,7 @@
         //TODO: Consider A/B Holes
         //TODO: Input DCP Values
         //TODO: Catch layout exception if sample depths are not correct
+        listState.BoreHoleList.Clear();
 
         var graphColors = new Dictionary<int, string>()
         {

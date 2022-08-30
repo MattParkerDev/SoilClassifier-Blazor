@@ -12,74 +12,83 @@
 }
 else
 {
-    foreach (var boreHole in listState.BoreHoleList)
-    {
-        <h4>BH @boreHole.BoreNumber</h4>
-        var _depthList = new List<int>();
-        void GenerateDepths()
+    <div class="DCPContainer">
+        @foreach (var boreHole in listState.BoreHoleList)
         {
-            var tempList = new List<int>();
-            var firstHundred = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(boreHole.DCPStartingDepth) / 100.0) * 100);
-            if (firstHundred != Convert.ToInt32(boreHole.DCPStartingDepth))
+            var _depthList = new List<int>();
+            void GenerateDepths()
             {
-                tempList.Add(Convert.ToInt32(boreHole.DCPStartingDepth));
+                var tempList = new List<int>();
+                var firstHundred = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(boreHole.DCPStartingDepth) / 100.0) * 100);
+                if (firstHundred != Convert.ToInt32(boreHole.DCPStartingDepth))
+                {
+                    tempList.Add(Convert.ToInt32(boreHole.DCPStartingDepth));
+                }
+                var lastHundred = Convert.ToInt32(Math.Floor(Convert.ToDouble(boreHole.DCPEndingDepth) / 100.0) * 100);
+                for (int i = firstHundred; i <= lastHundred; i += 100)
+                {
+                    tempList.Add(i);
+                }
+                if (lastHundred != Convert.ToInt32(boreHole.DCPEndingDepth))
+                {
+                    tempList.Add(Convert.ToInt32(boreHole.DCPEndingDepth));
+                }
+                boreHole.DCPDepths = tempList;
             }
-            var lastHundred = Convert.ToInt32(Math.Floor(Convert.ToDouble(boreHole.DCPEndingDepth) / 100.0) * 100);
-            for (int i = firstHundred; i <= lastHundred; i+=100)
-            {
-                tempList.Add(i);
-            }
-            if (lastHundred != Convert.ToInt32(boreHole.DCPEndingDepth))
-            {
-                tempList.Add(Convert.ToInt32(boreHole.DCPEndingDepth));
-            }
-            boreHole.DCPDepths = tempList;
+
+            <div class="boreContainer">
+                <h4>BH @boreHole.BoreNumber</h4>
+                <EditForm class="blazorForm" autocomplete="off" Model="@boreHole" OnValidSubmit="GenerateDepths">
+                    <DataAnnotationsValidator />
+
+                    <ValidationMessage For="() => boreHole.DCPStartingDepth" />
+                    <InputNumber inputmode="decimal" @bind-Value="boreHole.DCPStartingDepth" />
+
+                    <ValidationMessage For="() => boreHole.DCPEndingDepth" />
+                    <InputNumber inputmode="decimal" @bind-Value="boreHole.DCPEndingDepth" />
+                    <button class="calcButton" type="submit">
+                        Save
+                    </button>
+                </EditForm>
+
+                <EditForm class="blazorForm" autocomplete="off" Model="boreHole" OnValidSubmit="CalculateCBR">
+                    <FluentValidationValidator @ref="fluentValidationValidator" />
+
+                    @if (boreHole.DCPDepths.Count != 0)
+                    {
+                        <div class="DCPInputGroup">
+                            <div class="DCPInputContainer">
+                                <label style="margin-right: 35px;">Depth</label>
+                                <label style="margin-right: 10px;"># of blows</label>
+                            </div>
+                            @foreach (var depth in boreHole.DCPDepths)
+                            {
+                                <div class="DCPInputContainer">
+                                    <label for="DCPDepth">@depth</label>
+                                    <ValidationMessage For="() => boreHole.BoreNumber" />
+                                    <InputNumber inputmode="decimal" id="DCPDepth" @bind-Value="@DCPValue" />
+                                </div>
+                            }
+                        </div>
+                    }
+
+
+
+                    <button class="calcButton" type="submit">
+                        Save
+                    </button>
+                </EditForm>
+            </div>
+
         }
-
-
-        <EditForm class="blazorForm" autocomplete="off" Model="@boreHole" OnValidSubmit="GenerateDepths">
-            <DataAnnotationsValidator/>
-            
-            <ValidationMessage For="() => boreHole.DCPStartingDepth" />
-            <InputNumber inputmode="decimal" @bind-Value="boreHole.DCPStartingDepth" />
-
-            <ValidationMessage For="() => boreHole.DCPEndingDepth" />
-            <InputNumber inputmode="decimal" @bind-Value="boreHole.DCPEndingDepth" />
-            <button class="calcButton" type="submit">
-                Save
-            </button>
-        </EditForm>
-
-        <EditForm class="blazorForm" autocomplete="off" Model="boreHole" OnValidSubmit="CalculateCBR">
-            <FluentValidationValidator @ref="fluentValidationValidator" />
-
-            @foreach (var depth in boreHole.DCPDepths)
-            {
-                <div class="inputGroup">
-                    <div class="inputContainer">
-                        <label for="DCPDepth">@depth</label>
-                        <ValidationMessage For="() => boreHole.BoreNumber" />
-                        <InputNumber inputmode="decimal" id="DCPDepth" @bind-Value="@DCPValue" />
-                    </div>
-                </div>
-            }
-
-            <button class="calcButton" type="submit">
-                Save
-            </button>
-        </EditForm>
-
-    }
-    //ask for starting and ending dcp depth
-    // logic to generate list from eg 280, 300, 400, ... , 1000
-    // foreach in list ^ input with a label of ^ depth
+    </div>
 }
 
 @code {
 
     private FluentValidationValidator? fluentValidationValidator;
-    int DCPValue;
-    
+    int? DCPValue;
+
 
     void CalculateCBR()
     {
