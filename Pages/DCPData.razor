@@ -38,17 +38,21 @@ else
 
             <div class="boreContainer">
                 <h4>BH @boreHole.BoreNumber</h4>
-                <EditForm class="blazorForm" autocomplete="off" Model="@boreHole" OnValidSubmit="GenerateDepths">
+                <EditForm style="display:flex; flex-direction:column;" autocomplete="off" Model="@boreHole" OnValidSubmit="GenerateDepths">
                     <DataAnnotationsValidator />
+                    @*TODO: Input validation >0*@
+                        <ValidationMessage For="() => boreHole.DCPStartingDepth" />
+                        <ValidationMessage For="() => boreHole.DCPEndingDepth" />
+                    <div style="display:flex; flex-direction:row">
+                        <InputNumber class="depthRangeInput" inputmode="decimal" @bind-Value="boreHole.DCPStartingDepth" />
 
-                    <ValidationMessage For="() => boreHole.DCPStartingDepth" />
-                    <InputNumber inputmode="decimal" @bind-Value="boreHole.DCPStartingDepth" />
+                        <InputNumber class="depthRangeInput" inputmode="decimal" @bind-Value="boreHole.DCPEndingDepth" />
+                        <button class="depthRangeButton" type="submit">
+                            Apply
+                        </button>
+                    </div>
 
-                    <ValidationMessage For="() => boreHole.DCPEndingDepth" />
-                    <InputNumber inputmode="decimal" @bind-Value="boreHole.DCPEndingDepth" />
-                    <button class="calcButton" type="submit">
-                        Save
-                    </button>
+
                 </EditForm>
 
                 <EditForm class="blazorForm" autocomplete="off" Model="boreHole" OnValidSubmit="CalculateCBR">
@@ -70,13 +74,13 @@ else
                                 </div>
                             }
                         </div>
+                    <button class="calcButton" type="submit">
+                        Save
+                    </button>
                     }
 
 
 
-                    <button class="calcButton" type="submit">
-                        Save
-                    </button>
                 </EditForm>
             </div>
 

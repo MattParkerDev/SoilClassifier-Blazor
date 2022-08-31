@@ -209,7 +209,7 @@ td, th {
     font-weight: 600;
 }
 
-.reportInputContainer input.invalid {
+input.invalid {
     border-color: red;
     transition: 100ms ease-in-out border-color; 
 }
@@ -235,7 +235,8 @@ td, th {
     display: flex;
     flex-direction: column;
     flex: 0 0 300px;
-    padding: 30px;
+    max-width: 200px;
+    margin: 30px;
 }
 
 .DCPInputGroup {
@@ -243,7 +244,6 @@ td, th {
     flex-direction: column;
     background-color: lightgray;
     border-radius: 10px;
-    max-width: 550px;
     margin-top: 10px;
     padding: 10px;
 }
@@ -281,4 +281,27 @@ td, th {
     margin-right: 30px;
     font-weight: 600;
     text-align: center;
+}
+
+.depthRangeInput {
+    width: 34%;
+    height: 35px;
+    border-style: solid;
+    border-radius: 0px;
+    padding: 5px;
+    margin-right: -2px;
+    border-color: grey;
+}
+
+.depthRangeInput:focus-visible {
+    outline: none;
+    border-color: black;
+    transition: 100ms ease-in-out border-color;
+}
+
+.depthRangeButton {
+    width: 34%;
+    height: 35px;
+    border-style: solid;
+    background-color: lightgray;
 }
