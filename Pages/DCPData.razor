@@ -2,6 +2,7 @@
 
 @using Blazored.FluentValidation;
 @using FluentValidation
+@using SoilClassifier_Blazor.Models
 
 @inject ListState listState
 
@@ -17,7 +18,6 @@ else
     <div class="DCPContainer">
         @foreach (var boreHole in listState.BoreHoleList)
         {
-            var _depthList = new List<int>();
             void GenerateDepths()
             {
                 var tempList = new List<int>();
@@ -35,49 +35,54 @@ else
                 {
                     tempList.Add(Convert.ToInt32(boreHole.DCPEndingDepth));
                 }
-                boreHole.DCPDepths = tempList;
+                boreHole.DCPData.Clear();
+                foreach (var depth in tempList)
+                {
+                    var tempLayer = new DCPLayer();
+                    tempLayer.Depth = depth;
+                    boreHole.DCPData.Add(tempLayer);
+                }
             }
 
             <div class="boreContainer">
                 <h4>BH @boreHole.BoreNumber</h4>
                 <EditForm style="display:flex; flex-direction:column;" autocomplete="off" Model="@boreHole" OnValidSubmit="GenerateDepths">
                     <DataAnnotationsValidator />
-                    @*TODO: Input validation >0*@
+                    @*TODO: Dynamic Input validation >0*@
                     <ValidationMessage For="() => boreHole.DCPStartingDepth" />
                     <ValidationMessage For="() => boreHole.DCPEndingDepth" />
-                    
+
                     <div style="display:flex; flex-direction:row">
                         <InputNumber class="depthRangeInput" inputmode="decimal" placeholder="0" @bind-Value="boreHole.DCPStartingDepth" />
-
                         <InputNumber class="depthRangeInput" inputmode="decimal" placeholder="1000" @bind-Value="boreHole.DCPEndingDepth" />
                         <button class="depthRangeButton" type="submit">
                             Apply
                         </button>
                     </div>
-
-
                 </EditForm>
 
                 <EditForm class="blazorForm" autocomplete="off" Model="boreHole" OnValidSubmit="CalculateCBR">
                     <FluentValidationValidator @ref="fluentValidationValidator" />
 
-                    @if (boreHole.DCPDepths.Count != 0)
+                    @if (boreHole.DCPData.Count != 0)
                     {
                         <div class="DCPInputGroup">
                             <div class="DCPInputContainer">
-                                <label style="margin-right: 35px;">Depth</label>
-                                <label style="margin-right: 10px;"># of blows</label>
+                                <label>Depth</label>
+                                <label># of blows</label>
+                                <label>CBR</label>
                             </div>
-                            @foreach (var depth in boreHole.DCPDepths)
+                            @foreach (var layer in boreHole.DCPData)
                             {
                                 <div class="DCPInputContainer">
-                                    <label for="DCPDepth">@depth</label>
-                                    <ValidationMessage For="() => boreHole.BoreNumber" />
-                                    <InputNumber inputmode="decimal" id="DCPDepth" @bind-Value="@DCPValue" />
+                                    <label style="width:40px; text-align:right" for="DCPDepth">@layer.Depth</label>
+                                    <ValidationMessage For="() => layer.Blows" />
+                                    <InputNumber inputmode="decimal" id="DCPDepth" @bind-Value="@layer.Blows" />
+                                    <label style="width:30px">@layer.CBR</label>
                                 </div>
                             }
                         </div>
-                        <button class="calcButton" type="submit">
+                        <button class="calcButton" style="background-color:#007aff; color:white; border-color:#007aff" type="submit">
                             Save
                         </button>
                     }
@@ -94,11 +99,17 @@ else
 @code {
 
     private FluentValidationValidator? fluentValidationValidator;
-    int? DCPValue;
-
 
     void CalculateCBR()
     {
-
+        // Currently evaluates all boreholes at once on submit of a single borehole,
+        // monitor for performance impact
+        foreach (var boreHole in listState.BoreHoleList)
+        {
+            foreach (var layer in boreHole.DCPData)
+            {
+                layer.CBR = layer.Blows * 2;
+            }
+        }
     }
 }
