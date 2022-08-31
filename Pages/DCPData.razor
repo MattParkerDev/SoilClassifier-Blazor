@@ -12,6 +12,8 @@
 }
 else
 {
+    <h1>DCP Data</h1>
+    <p>Please enter start and end depths in mm for each borehole, then values for each depth.</p>
     <div class="DCPContainer">
         @foreach (var boreHole in listState.BoreHoleList)
         {
@@ -41,12 +43,13 @@ else
                 <EditForm style="display:flex; flex-direction:column;" autocomplete="off" Model="@boreHole" OnValidSubmit="GenerateDepths">
                     <DataAnnotationsValidator />
                     @*TODO: Input validation >0*@
-                        <ValidationMessage For="() => boreHole.DCPStartingDepth" />
-                        <ValidationMessage For="() => boreHole.DCPEndingDepth" />
+                    <ValidationMessage For="() => boreHole.DCPStartingDepth" />
+                    <ValidationMessage For="() => boreHole.DCPEndingDepth" />
+                    
                     <div style="display:flex; flex-direction:row">
-                        <InputNumber class="depthRangeInput" inputmode="decimal" @bind-Value="boreHole.DCPStartingDepth" />
+                        <InputNumber class="depthRangeInput" inputmode="decimal" placeholder="0" @bind-Value="boreHole.DCPStartingDepth" />
 
-                        <InputNumber class="depthRangeInput" inputmode="decimal" @bind-Value="boreHole.DCPEndingDepth" />
+                        <InputNumber class="depthRangeInput" inputmode="decimal" placeholder="1000" @bind-Value="boreHole.DCPEndingDepth" />
                         <button class="depthRangeButton" type="submit">
                             Apply
                         </button>
@@ -74,9 +77,9 @@ else
                                 </div>
                             }
                         </div>
-                    <button class="calcButton" type="submit">
-                        Save
-                    </button>
+                        <button class="calcButton" type="submit">
+                            Save
+                        </button>
                     }
 
 

@@ -293,6 +293,11 @@ input.invalid {
     border-color: grey;
 }
 
+.depthRangeInput::placeholder {
+    color: #bbbbbb;
+    opacity: 1;
+}
+
 .depthRangeInput:focus-visible {
     outline: none;
     border-color: black;
@@ -303,5 +308,6 @@ input.invalid {
     width: 34%;
     height: 35px;
     border-style: solid;
+    border-color: black;
     background-color: lightgray;
 }
