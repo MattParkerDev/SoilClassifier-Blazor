@@ -66,6 +66,7 @@ else
 
                     @if (boreHole.DCPData.Count != 0)
                     {
+                        var count = 0;
                         <div class="DCPInputGroup">
                             <div class="DCPInputContainer">
                                 <label>Depth</label>
@@ -77,9 +78,17 @@ else
                                 <div class="DCPInputContainer">
                                     <label style="width:40px; text-align:right" for="DCPDepth">@layer.Depth</label>
                                     <ValidationMessage For="() => layer.Blows" />
+                                    @if (count == 0)
+                                    {
+                                        <InputNumber disabled inputmode="decimal" id="DCPDepth" @bind-Value="@layer.Blows" />
+                                    }
+                                    else
+                                    {
                                     <InputNumber inputmode="decimal" id="DCPDepth" @bind-Value="@layer.Blows" />
+                                    }
                                     <label style="width:30px">@layer.CBR</label>
                                 </div>
+                                count++;
                             }
                         </div>
                         <button class="calcButton" style="background-color:#007aff; color:white; border-color:#007aff" type="submit">
