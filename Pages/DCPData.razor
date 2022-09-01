@@ -115,9 +115,23 @@ else
         // monitor for performance impact
         foreach (var boreHole in listState.BoreHoleList)
         {
-            foreach (var layer in boreHole.DCPData)
+            for (var i = 0; i < boreHole.DCPData.Count(); i++)
             {
-                layer.CBR = layer.Blows * 2;
+                if (i != 0 && boreHole.DCPData[i].Blows != null)
+                {
+                    var distance = boreHole.DCPData[i].Depth - boreHole.DCPData[i - 1].Depth;
+                    double? mmPerBlow = Convert.ToDouble(distance) / Convert.ToDouble(boreHole.DCPData[i].Blows);
+                    double tempCBR = 83.048 * Math.Pow(Convert.ToDouble(mmPerBlow), -0.7191);
+                    tempCBR = Math.Round(2 * tempCBR, MidpointRounding.AwayFromZero) / 2;
+                    if (tempCBR > 25)
+                    {
+                        boreHole.DCPData[i].CBR = ">25";
+                    }
+                    else
+                    {
+                        boreHole.DCPData[i].CBR = Convert.ToString(tempCBR);
+                    }
+                }
             }
         }
     }

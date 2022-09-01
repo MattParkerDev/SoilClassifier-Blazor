@@ -4,6 +4,6 @@
     {
         public int Depth { get; set; }
         public int? Blows { get; set; }
-        public int? CBR { get; set; }
+        public string? CBR { get; set; }
     }
 }
