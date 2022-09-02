@@ -21,11 +21,13 @@ else
             void GenerateDepths()
             {
                 var tempList = new List<int>();
+                
                 var firstHundred = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(boreHole.DCPStartingDepth) / 100.0) * 100);
                 if (firstHundred != Convert.ToInt32(boreHole.DCPStartingDepth))
                 {
                     tempList.Add(Convert.ToInt32(boreHole.DCPStartingDepth));
                 }
+
                 var lastHundred = Convert.ToInt32(Math.Floor(Convert.ToDouble(boreHole.DCPEndingDepth) / 100.0) * 100);
                 for (int i = firstHundred; i <= lastHundred; i += 100)
                 {
@@ -35,6 +37,7 @@ else
                 {
                     tempList.Add(Convert.ToInt32(boreHole.DCPEndingDepth));
                 }
+
                 boreHole.DCPData.Clear();
                 foreach (var depth in tempList)
                 {
@@ -115,11 +118,11 @@ else
         // monitor for performance impact
         foreach (var boreHole in listState.BoreHoleList)
         {
-            for (var i = 0; i < boreHole.DCPData.Count(); i++)
+            for (var i = 1; i < boreHole.DCPData.Count(); i++)
             {
-                if (i != 0 && boreHole.DCPData[i].Blows != null)
+                if (boreHole.DCPData[i].Blows != null)
                 {
-                    var distance = boreHole.DCPData[i].Depth - boreHole.DCPData[i - 1].Depth;
+                    int distance = boreHole.DCPData[i].Depth - boreHole.DCPData[i - 1].Depth;
                     double? mmPerBlow = Convert.ToDouble(distance) / Convert.ToDouble(boreHole.DCPData[i].Blows);
                     double tempCBR = 83.048 * Math.Pow(Convert.ToDouble(mmPerBlow), -0.7191);
                     tempCBR = Math.Round(2 * tempCBR, MidpointRounding.AwayFromZero) / 2;

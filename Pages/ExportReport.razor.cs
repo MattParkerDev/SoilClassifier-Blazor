@@ -5,6 +5,7 @@ using QuestPDF.Infrastructure;
 using QuestPDF.Elements;
 using System.Reflection;
 using SoilClassifier_Blazor.Shared;
+using SoilClassifier_Blazor.Models;
 
 namespace SoilClassifier_Blazor.Pages
 {
@@ -319,18 +320,12 @@ namespace SoilClassifier_Blazor.Pages
                                 });
                                 row.ConstantItem(35).Column(column =>
                                 {
-                                    column.Spacing(16);
-                                    column.Item().AlignRight().Text("8 -").FontSize(9).FontColor(Colors.Red.Medium);
-                                    column.Item().AlignRight().Text("7 -").FontSize(9).FontColor(Colors.Red.Medium);
-                                    column.Item().AlignRight().Text("12 -").FontSize(9).FontColor(Colors.Red.Medium);
-                                    column.Item().AlignRight().Text("6 -").FontSize(9).FontColor(Colors.Red.Medium);
-                                    column.Item().AlignRight().Text("4 -").FontSize(9).FontColor(Colors.Red.Medium);
-                                    column.Item().AlignRight().Text("4 -").FontSize(9).FontColor(Colors.Red.Medium);
-                                    column.Item().AlignRight().Text("5 -").FontSize(9).FontColor(Colors.Red.Medium);
-                                    column.Item().AlignRight().Text("4 -").FontSize(9).FontColor(Colors.Red.Medium);
-                                    column.Item().AlignRight().Text("6 -").FontSize(9).FontColor(Colors.Red.Medium);
-                                    column.Item().AlignRight().Text("7 -").FontSize(9).FontColor(Colors.Red.Medium);
-                                    column.Item().AlignRight().Text("6 -").FontSize(9).FontColor(Colors.Red.Medium);
+                                    foreach (var layer in boreHole.DCPData)
+                                    {
+                                        //TODO: Handle 20mm refusal translation overlap
+                                        float translation = Convert.ToSingle(layer.Depth) / 100 * 28;
+                                        column.Item().Unconstrained().Width(35).AlignRight().TranslateY(translation).Text($"{layer.CBR} -").FontSize(9).FontColor(Colors.Red.Medium);
+                                    }
                                 });
                                 row.ConstantItem(180).Column(column =>
                                 {
