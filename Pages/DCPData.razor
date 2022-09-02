@@ -15,41 +15,18 @@ else
 {
     <h1>DCP Data</h1>
     <p>Please enter start and end depths in mm for each borehole, then values for each depth.</p>
+    <button class="btn btn-primary" @onclick="LoadDemoData">Load Demo Data</button>
     <div class="DCPContainer">
         @foreach (var boreHole in listState.BoreHoleList)
         {
-            void GenerateDepths()
+            @*void GenerateDepths()
             {
-                var tempList = new List<int>();
                 
-                var firstHundred = Convert.ToInt32(Math.Ceiling(Convert.ToDouble(boreHole.DCPStartingDepth) / 100.0) * 100);
-                if (firstHundred != Convert.ToInt32(boreHole.DCPStartingDepth))
-                {
-                    tempList.Add(Convert.ToInt32(boreHole.DCPStartingDepth));
-                }
-
-                var lastHundred = Convert.ToInt32(Math.Floor(Convert.ToDouble(boreHole.DCPEndingDepth) / 100.0) * 100);
-                for (int i = firstHundred; i <= lastHundred; i += 100)
-                {
-                    tempList.Add(i);
-                }
-                if (lastHundred != Convert.ToInt32(boreHole.DCPEndingDepth))
-                {
-                    tempList.Add(Convert.ToInt32(boreHole.DCPEndingDepth));
-                }
-
-                boreHole.DCPData.Clear();
-                foreach (var depth in tempList)
-                {
-                    var tempLayer = new DCPLayer();
-                    tempLayer.Depth = depth;
-                    boreHole.DCPData.Add(tempLayer);
-                }
-            }
+            }*@
 
             <div class="boreContainer">
                 <h4>BH @boreHole.BoreNumber</h4>
-                <EditForm style="display:flex; flex-direction:column;" autocomplete="off" Model="@boreHole" OnValidSubmit="GenerateDepths">
+                <EditForm style="display:flex; flex-direction:column;" autocomplete="off" Model="@boreHole" OnValidSubmit="boreHole.GenerateDepths">
                     <DataAnnotationsValidator />
                     @*TODO: Dynamic Input validation >0*@
                     <ValidationMessage For="() => boreHole.DCPStartingDepth" />
@@ -136,6 +113,21 @@ else
                     }
                 }
             }
+        }
+    }
+    void LoadDemoData()
+    {
+        foreach (var boreHole in listState.BoreHoleList)
+        {
+            boreHole.DCPStartingDepth = 100;
+            boreHole.DCPEndingDepth = 1000;
+            boreHole.GenerateDepths();
+            var randomGen = new Random();
+            for (var i = 1; i < boreHole.DCPData.Count(); i++)
+            {
+                boreHole.DCPData[i].Blows = randomGen.Next(1, 22);
+            }
+            CalculateCBR();
         }
     }
 }
