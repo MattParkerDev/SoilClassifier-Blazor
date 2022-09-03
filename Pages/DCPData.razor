@@ -19,11 +19,6 @@ else
     <div class="DCPContainer">
         @foreach (var boreHole in listState.BoreHoleList)
         {
-            @*void GenerateDepths()
-            {
-                
-            }*@
-
             <div class="boreContainer">
                 <h4>BH @boreHole.BoreNumber</h4>
                 <EditForm style="display:flex; flex-direction:column;" autocomplete="off" Model="@boreHole" OnValidSubmit="boreHole.GenerateDepths">

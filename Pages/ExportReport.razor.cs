@@ -334,31 +334,36 @@ namespace SoilClassifier_Blazor.Pages
                                     {
                                         column.Item().Row(row =>
                                         {
-                                            row.ConstantItem(45).Background(layer.GraphColor).Border((float)0.7).Height(layer.Height/1000*280);
+                                            float height = Convert.ToSingle(layer.Height) / (float)1000 * (float)280;
                                             
+                                            row.ConstantItem(45).MaxHeight(height).MinHeight(height).Background(layer.GraphColor).Border((float)0.7).Height(height);
+
+                                            var moistureLabel = "";
                                             if (layer.SurfaceType == "AC")
                                             {
-                                                row.ConstantItem(35).AlignMiddle().Text("  AC").FontSize(8);
+                                                moistureLabel = "  AC";
                                             } else if (layer.SurfaceType == "AR")
                                             {
-                                                row.ConstantItem(35).AlignMiddle().Text("  AR").FontSize(8);
+                                                moistureLabel = "  AR";
                                             } else if (layer.SurfaceType == "Service")
                                             {
-                                                row.ConstantItem(35).AlignMiddle().Text("  Service").FontSize(8);
+                                                moistureLabel = "  Service";
                                             } else if (layer.MoistureContent != "")
                                             {
-                                                row.ConstantItem(35).AlignMiddle().Text($"- {layer.MoistureContent}%").FontSize(8);
-                                            } else if (layer.MoistureContent == "")
-                                            {
-                                                row.ConstantItem(35).AlignMiddle().Text("").FontSize(8);
+                                                moistureLabel = "- " + layer.MoistureContent + "%";
                                             }
+
+                                            // TODO: Review 50px width for label
+                                            // TODO: Fix edge case causing 1px gap on some layers
+                                            row.ConstantItem(35).AlignMiddle().Unconstrained().Width(50).Height(20).TranslateY(-11).AlignMiddle().Text(moistureLabel).FontSize(8);
+
 
                                             if (layer.SoilClassification == "")
                                             {
                                                 row.ConstantItem(95).AlignMiddle().PaddingLeft(5).Text("").FontSize(7);
                                             } else
                                             {
-                                                row.ConstantItem(95).AlignMiddle().PaddingLeft(5).Text($"{layer.SoilClassification}, {layer.SoilColor}, moist").FontSize(7);
+                                                row.ConstantItem(95).AlignMiddle().Unconstrained().Width(95).Height(30).TranslateY(-15).AlignMiddle().Text($"{layer.SoilClassification}, {layer.SoilColor}, moist").FontSize(7);
                                             }
                                         });
                                     }
