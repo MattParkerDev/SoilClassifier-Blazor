@@ -337,7 +337,7 @@ namespace SoilClassifier_Blazor.Pages
                                             float height = Convert.ToSingle(layer.Height) / (float)1000 * (float)280;
                                             
                                             row.ConstantItem(45).MaxHeight(height).MinHeight(height).Background(layer.GraphColor).Border((float)0.7).Height(height);
-
+                                            var translation = -11;
                                             var moistureLabel = "";
                                             if (layer.SurfaceType == "AC")
                                             {
@@ -345,22 +345,23 @@ namespace SoilClassifier_Blazor.Pages
                                             } else if (layer.SurfaceType == "AR")
                                             {
                                                 moistureLabel = "  AR";
+                                                translation = -6;
                                             } else if (layer.SurfaceType == "Service")
                                             {
                                                 moistureLabel = "  Service";
+                                                translation = -6;
                                             } else if (layer.MoistureContent != "")
                                             {
                                                 moistureLabel = "- " + layer.MoistureContent + "%";
                                             }
 
                                             // TODO: Review 50px width for label
-                                            // TODO: Fix edge case causing 1px gap on some layers
-                                            row.ConstantItem(35).AlignMiddle().Unconstrained().Width(50).Height(20).TranslateY(-11).AlignMiddle().Text(moistureLabel).FontSize(8);
+                                            row.ConstantItem(35).AlignMiddle().Unconstrained().Width(50).Height(20).TranslateY(translation).AlignMiddle().Text(moistureLabel).FontSize(8);
 
 
                                             if (layer.SoilClassification == "")
                                             {
-                                                row.ConstantItem(95).AlignMiddle().PaddingLeft(5).Text("").FontSize(7);
+                                                row.ConstantItem(95).AlignMiddle().Unconstrained().PaddingLeft(5).Text("").FontSize(7);
                                             } else
                                             {
                                                 row.ConstantItem(95).AlignMiddle().Unconstrained().Width(95).Height(30).TranslateY(-15).AlignMiddle().Text($"{layer.SoilClassification}, {layer.SoilColor}, moist").FontSize(7);
