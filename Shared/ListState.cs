@@ -6,6 +6,7 @@ namespace SoilClassifier_Blazor.Shared
     {
         public List<SoilSample>? soilSamples { get; set; }
         public List<BoreHole> BoreHoleList { get; set; } = new List<BoreHole>();
+        public List<GroupedSample> GroupedSamples { get; set; } = new List<GroupedSample>();
         public string? ProjectName { get; set; }
         public string? ProjectNumber { get; set; }
         public string? ReportNumber { get; set; }
@@ -16,7 +17,7 @@ namespace SoilClassifier_Blazor.Shared
         public string? SampledDate { get; set; }
         public string? PreparedBy { get; set; }
         public string? PreparedDate { get; set; }
-        public string? GroupedSamples { get; set; }
+        public string? GroupedSamplesString { get; set; }
         public string? Notes { get; set; }
         public string? SignatoryName { get; set; }
         public string? NataNumber { get; set; }

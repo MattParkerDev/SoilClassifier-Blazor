@@ -16,8 +16,28 @@
         <div class="backgroundModal" @onclick="GroupedModalStateToggle" />
 
         <div class="groupedSamplesModal">
-            <h4>Grouped Samples</h4>
-            <button class="btn btn-primary" @onclick="GroupedModalStateToggle">Save</button>
+            <h2>Grouped Samples</h2>
+            <div style="display:flex; flex-direction:row; gap:25px; font-weight:600; justify-content:space-between; width:100%">
+                <span>Base Sample</span>
+                <span>Matched Samples</span>
+            </div>
+
+            <EditForm class="blazorForm" style="display:flex; flex-direction:column;" autocomplete="off" Model="@listState.GroupedSamples" OnValidSubmit="OpenVisualSamples">
+
+                @foreach (var group in listState.GroupedSamples)
+                {
+                    <div style="display:flex; flex-direction:row;">
+                        <InputNumber class="groupedSampleInput" style="margin-right:80px; height: 40px;" inputmode="decimal" id="BaseSample" @bind-Value="@group.BaseSample" />
+                        @foreach (var sample in group.MatchedSamples)
+                        {
+                            <InputNumber class="groupedSampleInput"  inputmode="decimal" id="MatchedSample" @bind-Value="@sample.SingleMatchedSample" />
+                        }
+                        <button class="btn btn-primary" style="height: 40px; width: 40px; margin:1px;" @onclick="() => group.MatchedSamples.Add(new MatchedSample())">+</button>
+                    </div>
+                }
+                <button class="btn btn-primary" style="margin: 1px; margin-bottom:20px; height:40px; width:40px;" @onclick="AddGroup">+</button>
+                <button class="btn btn-primary" type="submit" @onclick="GroupedModalStateToggle">Save</button>
+            </EditForm>
         </div>
     </div>
 }
@@ -37,7 +57,7 @@
 
     <div>@status</div>
 
-    
+
 
     @if (listState.soilSamples != null)
     {
@@ -105,6 +125,13 @@
     private void OpenVisualSamples()
     {
 
+    }
+
+    private void AddGroup()
+    {
+        var groupedSample = new GroupedSample();
+        groupedSample.MatchedSamples.Add(new MatchedSample());
+        listState.GroupedSamples.Add(groupedSample);
     }
 
     private async Task LoadFiles(InputFileChangeEventArgs e)

@@ -109,7 +109,7 @@ namespace SoilClassifier_Blazor.Pages
                                 row.AutoItem().AlignRight().PaddingLeft(5).Text($"Date: {Model.PreparedDate}").FontSize(9);
                             });
 
-                            Column.Item().Text($"\nGrouped Samples: {Model.GroupedSamples}").FontSize(9);
+                            Column.Item().Text($"\nGrouped Samples: {Model.GroupedSamplesString}").FontSize(9);
                         });
                     });
                 });

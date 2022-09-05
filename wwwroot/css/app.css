@@ -346,3 +346,27 @@ input.invalid {
     border-color: aliceblue;
     border-radius: 10px;
 }
+
+.groupedSampleInput {
+    border-style: solid;
+    border-color: grey;
+    padding-bottom: 2px;
+    padding-top: 2px;
+    border-radius: 5px;
+    margin: 1px;
+    width: 40px;
+    height: 40px;
+    transition: 100ms ease-in-out border-color;
+    text-align: center;
+    font-size: 1rem;
+}
+
+input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0px;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+}
+

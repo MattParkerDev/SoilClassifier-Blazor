@@ -80,9 +80,9 @@ else
             <InputText id="PreparedDate" @bind-Value="listState.PreparedDate" />
         </div>
         <div class="reportInputContainer">
-            <label for="GroupedSamples">Grouped Samples</label>
-            <ValidationMessage For="() => listState.GroupedSamples" />
-            <InputText id="GroupedSamples" @bind-Value="listState.GroupedSamples" />
+            <label for="GroupedSamplesString">Grouped Samples</label>
+            <ValidationMessage For="() => listState.GroupedSamplesString" />
+            <InputText id="GroupedSamplesString" @bind-Value="listState.GroupedSamplesString" />
         </div>
         <div class="reportInputContainer">
             <label for="SignatoryName">Signatory</label>
@@ -170,7 +170,7 @@ else
         listState.SampledDate = "21/07/22";
         listState.PreparedBy = "CH";
         listState.PreparedDate = "02/08/22";
-        listState.GroupedSamples = "2,5,17  8,12";
+        listState.GroupedSamplesString = "2,5,17  8,12";
         listState.Notes = "";
         listState.SignatoryName = "John Smith";
         listState.NataNumber = "1234";
