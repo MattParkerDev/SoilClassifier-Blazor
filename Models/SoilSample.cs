@@ -5,6 +5,7 @@ namespace SoilClassifier_Blazor.Models;
 public class SoilSample
 {
     public string? SampleID { get; set; }
+    public int? SampleInteger { get; set; }
     public string? Chainage { get; set; }
     public string? BoreNumber { get; set; }
     public string? Offset { get; set; }

@@ -136,8 +136,42 @@
 
     private void ApplyGroupedSamples()
     {
+        // TODO: Convert to LINQ
+        foreach (var group in listState.GroupedSamples)
+        {
+            //get base sample classification
+            if (listState.soilSamples != null)
+            {
+                foreach (var sample in listState.soilSamples)
+                {
+                    if (sample.SampleInteger == group.BaseSample)
+                    {
+                        group.Classification = sample.SoilClassification;
 
+                    }
+                }
+            }
+        }
+        //apply to each matched sample classification
+        foreach (var group in listState.GroupedSamples)
+        {
+            foreach (var groupedSample in group.MatchedSamples)
+            {
+                if (listState.soilSamples != null)
+                {
+                    foreach (var sample in listState.soilSamples)
+                    {
+                        if (groupedSample.SingleMatchedSample == sample.SampleInteger)
+                        {
+                            sample.SoilClassification = group.Classification;
 
+                        }
+                    }
+                }
+            }
+        }
+        //Re-sort the bores as new classifications have been added
+        SortBores();
         GroupedModalStateToggle();
     }
 
@@ -192,6 +226,11 @@
             //TODO: Implement grouped samples
             foreach (var sample in listState.soilSamples)
             {
+                if (sample.SampleID != null)
+                {
+                    sample.SampleInteger = int.Parse(sample.SampleID.Split("-")[1]);
+                }
+
                 if (string.IsNullOrEmpty(sample.Sieve53)
                  && string.IsNullOrEmpty(sample.Sieve19)
                  && string.IsNullOrEmpty(sample.Sieve475)
@@ -252,8 +291,7 @@
 
     private void SortBores()
     {
-        //TODO: Consider A/B Holes
-        //TODO: Input DCP Values
+        //TODO: Consider A/B Holes (int vs string)
         //TODO: Catch layout exception if sample depths are not correct
         listState.BoreHoleList.Clear();
 
