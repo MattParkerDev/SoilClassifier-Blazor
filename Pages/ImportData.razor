@@ -22,7 +22,7 @@
                 <span>Matched Samples</span>
             </div>
 
-            <EditForm class="blazorForm" style="display:flex; flex-direction:column;" autocomplete="off" Model="@listState.GroupedSamples" OnValidSubmit="OpenVisualSamples">
+            <EditForm class="blazorForm" style="display:flex; flex-direction:column;" autocomplete="off" Model="@listState.GroupedSamples" OnValidSubmit="ApplyGroupedSamples">
 
                 @foreach (var group in listState.GroupedSamples)
                 {
@@ -32,11 +32,11 @@
                         {
                             <InputNumber class="groupedSampleInput"  inputmode="decimal" id="MatchedSample" @bind-Value="@sample.SingleMatchedSample" />
                         }
-                        <button class="btn btn-primary" style="height: 40px; width: 40px; margin:1px;" @onclick="() => group.MatchedSamples.Add(new MatchedSample())">+</button>
+                        <button class="btn btn-primary" type="button" style="height: 40px; width: 40px; margin:1px;" @onclick="() => group.MatchedSamples.Add(new MatchedSample())">+</button>
                     </div>
                 }
-                <button class="btn btn-primary" style="margin: 1px; margin-bottom:20px; height:40px; width:40px;" @onclick="AddGroup">+</button>
-                <button class="btn btn-primary" type="submit" @onclick="GroupedModalStateToggle">Save</button>
+                <button class="btn btn-primary" type="button" style="margin: 1px; margin-bottom:20px; height:40px; width:40px;" @onclick="AddGroup">+</button>
+                <button class="btn btn-primary" type="submit">Save</button>
             </EditForm>
         </div>
     </div>
@@ -134,6 +134,13 @@
         listState.GroupedSamples.Add(groupedSample);
     }
 
+    private void ApplyGroupedSamples()
+    {
+
+
+        GroupedModalStateToggle();
+    }
+
     private async Task LoadFiles(InputFileChangeEventArgs e)
     {
         status = "File Loaded";
@@ -156,6 +163,7 @@
         }
         var imageData = await Http.GetByteArrayAsync("assets/NATA.jpg");
         listState.NataLogo = imageData;
+        listState.GroupedSamples.Clear();
         HandleSamples();
         SortBores();
     }
@@ -173,6 +181,7 @@
         }
         var imageData = await Http.GetByteArrayAsync("assets/NATA.jpg");
         listState.NataLogo = imageData;
+        listState.GroupedSamples.Clear();
         HandleSamples();
         SortBores();
     }
