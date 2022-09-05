@@ -9,11 +9,35 @@
 @inject ListState listState
 
 <PageTitle>Soil Classifier Import</PageTitle>
+
+@if (showGroupedModal == true)
+{
+    <div class="ModalContainer">
+        <div class="backgroundModal" @onclick="GroupedModalStateToggle" />
+
+        <div class="groupedSamplesModal">
+            <h4>Grouped Samples</h4>
+            <button class="btn btn-primary" @onclick="GroupedModalStateToggle">Save</button>
+        </div>
+    </div>
+}
+
 <div class="fileInputContainer">
     <h1>Import Data</h1>
     <InputFile OnChange="@LoadFiles" />
-    <button class="btn btn-primary" @onclick="LoadDemoData">Load Demo Data</button>
+
+    <div style="display:flex; flex-direction: row; gap: 20px;">
+        <button class="btn btn-primary" @onclick="LoadDemoData">Load Demo Data</button>
+        @if (listState.soilSamples != null)
+        {
+            <button class="btn btn-primary" @onclick="GroupedModalStateToggle">Group Samples</button>
+            <button class="btn btn-primary" @onclick="OpenVisualSamples">Visual only Samples</button>
+        }
+    </div>
+
     <div>@status</div>
+
+    
 
     @if (listState.soilSamples != null)
     {
@@ -70,8 +94,18 @@
 
 
 @code {
-
+    bool showGroupedModal = false;
     string status = "Waiting for file";
+
+    private void GroupedModalStateToggle()
+    {
+        showGroupedModal = !showGroupedModal;
+    }
+
+    private void OpenVisualSamples()
+    {
+
+    }
 
     private async Task LoadFiles(InputFileChangeEventArgs e)
     {

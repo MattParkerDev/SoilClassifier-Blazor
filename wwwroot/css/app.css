@@ -309,3 +309,40 @@ input.invalid {
     border-color: black;
     background-color: lightgray;
 }
+
+.ModalContainer {
+    display: block;
+    position: fixed;
+    z-index: 10;
+    width: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.backgroundModal {
+    position: fixed;
+    width: auto;
+    background-color: rgba(0,0,0, .6);
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.groupedSamplesModal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -75%);
+    background-color: aliceblue;
+    padding: 20px;
+    border-style: solid;
+    border-color: aliceblue;
+    border-radius: 10px;
+}
