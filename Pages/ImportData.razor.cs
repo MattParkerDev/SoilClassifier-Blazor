@@ -4,9 +4,9 @@ namespace SoilClassifier_Blazor.Pages
     public partial class ImportData
     {
         static string Classification(double finePercent, double gravelPercent,
-                                double plasticLimit, double liquidLimit)
+                                double plasticLimit, double liquidLimit, bool nonPlastic)
         {
-            
+
             double sandPercent = 100 - gravelPercent - finePercent;
             double plasticityIndex = liquidLimit - plasticLimit;
 
@@ -25,52 +25,60 @@ namespace SoilClassifier_Blazor.Pages
 
             void CalcPlasticitySymbol()
             {
-                switch (liquidLimit)
+                if (nonPlastic == true)
                 {
-                    case <= 26:
-                        if (plasticityIndex < 8)
-                        {
-                            fineMaterial = "silt";
-                            plasticitySymbol = "ML";
+                    fineMaterial = "silt";
+                    plasticitySymbol = "ML";
+                }
+                else
+                {
+                    switch (liquidLimit)
+                    {
+                        case <= 26:
+                            if (plasticityIndex < 8)
+                            {
+                                fineMaterial = "silt";
+                                plasticitySymbol = "ML";
 
-                        }
-                        else
-                        {
-                            fineMaterial = "clay";
-                            plasticitySymbol = "CL";
-                        }
-                        break;
-                    case > 26 and <= 50:
-                        if (plasticityIndex < 0.73 * (liquidLimit - 20))
-                        {
-                            fineMaterial = "silt";
-                            plasticitySymbol = "ML";
-                        }
-                        else if (plasticityIndex > 0.73 * (liquidLimit - 20) && liquidLimit <= 35)
-                        {
-                            fineMaterial = "clay";
-                            plasticitySymbol = "CL";
-                        }
-                        else if (plasticityIndex > 0.73 * (liquidLimit - 20) && liquidLimit > 35)
-                        {
-                            fineMaterial = "clay";
-                            plasticitySymbol = "CI";
-                        }
-                        break;
-                    case > 50:
-                        if (plasticityIndex < 0.73 * (liquidLimit - 20))
-                        {
-                            fineMaterial = "silt";
-                            plasticitySymbol = "MH";
-                        }
-                        else if (plasticityIndex > 0.73 * (liquidLimit - 20))
-                        {
-                            fineMaterial = "clay";
-                            plasticitySymbol = "CH";
-                        }
-                        break;
-                    default:
-                        break;
+                            }
+                            else
+                            {
+                                fineMaterial = "clay";
+                                plasticitySymbol = "CL";
+                            }
+                            break;
+                        case > 26 and <= 50:
+                            if (plasticityIndex < 0.73 * (liquidLimit - 20))
+                            {
+                                fineMaterial = "silt";
+                                plasticitySymbol = "ML";
+                            }
+                            else if (plasticityIndex > 0.73 * (liquidLimit - 20) && liquidLimit <= 35)
+                            {
+                                fineMaterial = "clay";
+                                plasticitySymbol = "CL";
+                            }
+                            else if (plasticityIndex > 0.73 * (liquidLimit - 20) && liquidLimit > 35)
+                            {
+                                fineMaterial = "clay";
+                                plasticitySymbol = "CI";
+                            }
+                            break;
+                        case > 50:
+                            if (plasticityIndex < 0.73 * (liquidLimit - 20))
+                            {
+                                fineMaterial = "silt";
+                                plasticitySymbol = "MH";
+                            }
+                            else if (plasticityIndex > 0.73 * (liquidLimit - 20))
+                            {
+                                fineMaterial = "clay";
+                                plasticitySymbol = "CH";
+                            }
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
 

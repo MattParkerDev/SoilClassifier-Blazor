@@ -25,13 +25,14 @@ public class SoilSample
     public string? PlasticityIndex { get; set; }
     public string? LinearShrinkage { get; set; }
     public string? LiquidLimit { get; set; }
-    public string? WetPlasticityIndex { get; set; }
+    public string? WeightedPlasticityIndex { get; set; }
 
     public string? Colour { get; set; }
     public string? ClientName { get; set; }
     public string? ProjectName { get; set; }
     public string? ProjectNumber { get; set; }
     public string? SoilClassification { get; set; }
+    public string? PIRemarks { get; set; }
 }
 
 public sealed class SampleMap : ClassMap<SoilSample>

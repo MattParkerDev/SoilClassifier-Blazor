@@ -252,6 +252,7 @@
                     double liquidLimit;
                     double gravelPercent = 0.0;
                     double sieve236;
+                    bool nonPlastic = false;
 
                     if (!double.TryParse(sample.Sieve236, out sieve236))
                     {
@@ -266,13 +267,24 @@
                     {
                         validSample = false;
                     }
-                    if (!double.TryParse(sample.PlasticLimit, out plasticLimit))
+                    double.TryParse(sample.PlasticLimit, out plasticLimit);
+                    double.TryParse(sample.LiquidLimit, out liquidLimit);
+
+
+                    if (sample.PlasticLimit == "Not Obtainable" && sample.LiquidLimit == "Not Obtainable" && sample.PlasticityIndex == "Non Plastic")
                     {
-                        validSample = false;
+                        nonPlastic = true;
+                        sample.PIRemarks = "NP";
+                        sample.PlasticLimit = "";
+                        sample.LiquidLimit = "";
+                        sample.PlasticityIndex = "";
                     }
-                    if (!double.TryParse(sample.LiquidLimit, out liquidLimit))
+                    else
                     {
-                        validSample = false;
+                        if (sample.PlasticityIndex != null && double.Parse(sample.PlasticityIndex) != 0 && sample.Sieve425 != null)
+                        {
+                            sample.WeightedPlasticityIndex = Convert.ToString(double.Parse(sample.Sieve425) * double.Parse(sample.PlasticityIndex));
+                        }
                     }
 
                     if (validSample == false)
@@ -282,11 +294,9 @@
                     else
                     {
                         sample.SoilClassification = Classification(finePercent, gravelPercent,
-                                plasticLimit, liquidLimit);
-                        if (sample.PlasticityIndex != null && double.Parse(sample.PlasticityIndex) != 0 && sample.Sieve425 != null)
-                        {
-                            sample.WetPlasticityIndex = Convert.ToString(double.Parse(sample.Sieve425) * double.Parse(sample.PlasticityIndex));
-                        }
+                                plasticLimit, liquidLimit, nonPlastic);
+
+                        
                     }
                 }
             }
