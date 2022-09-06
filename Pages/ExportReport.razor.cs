@@ -217,10 +217,10 @@ namespace SoilClassifier_Blazor.Pages
                             table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.LinearShrinkage).Style(headerStyle);
                             table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.LiquidLimit).Style(headerStyle);
                             table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text("").Style(headerStyle);
-                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text("").Style(headerStyle);
+                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.WetPlasticityIndex).Style(headerStyle);
                             if (sample.SoilClassification != "")
                             {
-                                table.Cell().Element(CellStyle).AlignLeft().PaddingLeft(4).PaddingVertical(2).Text(sample.SoilClassification + "," + sample.Colour + ", moist").Style(headerStyle);
+                                table.Cell().Element(CellStyle).AlignLeft().PaddingLeft(4).PaddingVertical(2).Text(sample.SoilClassification + ", " + sample.Colour + ", moist").Style(headerStyle);
                             }
                             else if (sample.SurfaceType == "AC")
                             {

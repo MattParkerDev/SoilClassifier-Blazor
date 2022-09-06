@@ -25,6 +25,7 @@ public class SoilSample
     public string? PlasticityIndex { get; set; }
     public string? LinearShrinkage { get; set; }
     public string? LiquidLimit { get; set; }
+    public string? WetPlasticityIndex { get; set; }
 
     public string? Colour { get; set; }
     public string? ClientName { get; set; }

@@ -283,6 +283,10 @@
                     {
                         sample.SoilClassification = Classification(finePercent, gravelPercent,
                                 plasticLimit, liquidLimit);
+                        if (sample.PlasticityIndex != null && double.Parse(sample.PlasticityIndex) != 0 && sample.Sieve425 != null)
+                        {
+                            sample.WetPlasticityIndex = Convert.ToString(double.Parse(sample.Sieve425) * double.Parse(sample.PlasticityIndex));
+                        }
                     }
                 }
             }
