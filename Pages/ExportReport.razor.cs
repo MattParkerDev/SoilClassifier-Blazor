@@ -109,7 +109,22 @@ namespace SoilClassifier_Blazor.Pages
                                 row.AutoItem().AlignRight().PaddingLeft(5).Text($"Date: {Model.PreparedDate}").FontSize(9);
                             });
 
-                            Column.Item().Text($"\nGrouped Samples: {Model.GroupedSamplesString}").FontSize(9);
+                            Column.Item().Text(text =>
+                            {
+                                text.Span($"\nGrouped Samples: ").FontSize(9);
+                                foreach (var group in Model.GroupedSamples)
+                                {
+                                    text.Span(Convert.ToString(group.BaseSample)).FontSize(9).SemiBold();
+                                    foreach (var matched in group.MatchedSamples)
+                                    {
+                                        if (matched != null)
+                                        {
+                                            text.Span($",{Convert.ToString(matched.SingleMatchedSample)} ").FontSize(9);
+                                        }
+                                    }
+                                    text.Span(" ").FontSize(9);
+                                }
+                            });
                         });
                     });
                 });
@@ -229,6 +244,14 @@ namespace SoilClassifier_Blazor.Pages
                             else if (sample.SurfaceType == "Service")
                             {
                                 table.Cell().Element(CellStyle).AlignLeft().PaddingLeft(4).PaddingVertical(2).Text("Service").Style(headerStyle);
+                            }
+                            else if (sample.SurfaceType == "CON")
+                            {
+                                table.Cell().Element(CellStyle).AlignLeft().PaddingLeft(4).PaddingVertical(2).Text("Concrete").Style(headerStyle);
+                            }
+                            else if (sample.SurfaceType == "CTB")
+                            {
+                                table.Cell().Element(CellStyle).AlignLeft().PaddingLeft(4).PaddingVertical(2).Text("CTB").Style(headerStyle);
                             }
                             else
                             {
