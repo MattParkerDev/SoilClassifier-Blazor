@@ -30,7 +30,7 @@
                         <InputNumber class="groupedSampleInput" style="margin-right:80px; height: 40px;" inputmode="decimal" id="BaseSample" @bind-Value="@group.BaseSample" />
                         @foreach (var sample in group.MatchedSamples)
                         {
-                            <InputNumber class="groupedSampleInput"  inputmode="decimal" id="MatchedSample" @bind-Value="@sample.SingleMatchedSample" />
+                            <InputNumber class="groupedSampleInput" inputmode="decimal" id="MatchedSample" @bind-Value="@sample.SingleMatchedSample" />
                         }
                         <button class="btn btn-primary" type="button" style="height: 40px; width: 40px; margin:1px;" @onclick="() => group.MatchedSamples.Add(new MatchedSample())">+</button>
                     </div>
@@ -56,15 +56,17 @@
             </div>
             <EditForm class="blazorForm" style="display:flex; flex-direction:column;" autocomplete="off" Model="@listState.soilSamples" OnValidSubmit="VisualModalStateToggle">
 
-                @foreach (var sample in listState.soilSamples)
+                @if (listState.soilSamples != null)
                 {
-                    <div style="display:flex; flex-direction:row; justify-content:space-between; width: 100%;">
-                        <label>@sample.SampleID</label>
-                        <InputText class="visualSampleInput" style="margin-left:40px;" inputmode="decimal" id="BaseSample" @bind-Value="@sample.SoilClassification" />
-                        
-                    </div>
+                    @foreach (var sample in listState.soilSamples)
+                    {
+                        <div style="display:flex; flex-direction:row; justify-content:space-between; width: 100%;">
+                            <label>@sample.SampleID</label>
+                            <InputText class="visualSampleInput" style="margin-left:40px;" inputmode="decimal" id="BaseSample" @bind-Value="@sample.SoilClassification" />
+                        </div>
+                    }
                 }
-                <button class="btn btn-primary" type="submit">Save</button>
+                <button class="btn btn-primary" style="margin-top: 20px;" type="submit">Save</button>
             </EditForm>
         </div>
     </div>
