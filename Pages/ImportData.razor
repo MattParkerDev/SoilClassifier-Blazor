@@ -308,6 +308,10 @@
                         sample.LiquidLimit = "";
                         sample.PlasticityIndex = "";
                     }
+                    else if (validSample == false)
+                    {
+                        sample.SoilClassification = "Invalid Data";
+                    }
                     else
                     {
                         // Parse issue?
@@ -315,18 +319,9 @@
                         {
                             sample.WeightedPlasticityIndex = Convert.ToString(double.Parse(sample.Sieve425) * double.Parse(sample.PlasticityIndex));
                         }
-                    }
 
-                    if (validSample == false)
-                    {
-                        sample.SoilClassification = "Invalid Data";
-                    }
-                    else
-                    {
                         sample.SoilClassification = Classification(finePercent, gravelPercent,
                                 plasticLimit, liquidLimit, nonPlastic);
-
-                        
                     }
                 }
             }
