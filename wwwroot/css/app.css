@@ -311,14 +311,10 @@ input.invalid {
 }
 
 .ModalContainer {
-    display: block;
-    position: fixed;
+    display: flex;
+    flex-direction: column;
     z-index: 10;
     width: auto;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
 }
 
 .backgroundModal {
@@ -334,12 +330,11 @@ input.invalid {
 .groupedSamplesModal {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    position: absolute;
+    position: fixed;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -75%);
+    transform: translate(-50%, -50%);
     background-color: aliceblue;
     padding: 20px;
     border-style: solid;
@@ -370,3 +365,35 @@ input[type=number] {
     -moz-appearance: textfield;
 }
 
+.visualSamplesModal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    max-height: calc(100vh - 40px);
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    background-color: aliceblue;
+    padding: 20px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    border-style: solid;
+    border-color: aliceblue;
+    border-radius: 10px;
+    overflow-y: auto;
+}
+
+.visualSampleInput {
+    border-style: solid;
+    border-color: grey;
+    padding-bottom: 2px;
+    padding-top: 2px;
+    border-radius: 5px;
+    margin: 1px;
+    width: 350px;
+    
+    transition: 100ms ease-in-out border-color;
+    text-align: center;
+    font-size: 1rem;
+}

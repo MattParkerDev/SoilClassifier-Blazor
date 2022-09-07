@@ -42,6 +42,34 @@
     </div>
 }
 
+@if (showVisualModal == true)
+{
+    <div class="ModalContainer">
+        <div class="backgroundModal" @onclick="VisualModalStateToggle" />
+
+        <div class="visualSamplesModal">
+            <h2>Visual Only Samples</h2>
+            <span style="margin-bottom:10px;">Modifying these will overwrite the calculated classifications</span>
+            <div style="display:flex; flex-direction:row; gap:25px; font-weight:600; justify-content:space-between; width:100%">
+                <span>Sample Number</span>
+                <span>Classification</span>
+            </div>
+            <EditForm class="blazorForm" style="display:flex; flex-direction:column;" autocomplete="off" Model="@listState.soilSamples" OnValidSubmit="VisualModalStateToggle">
+
+                @foreach (var sample in listState.soilSamples)
+                {
+                    <div style="display:flex; flex-direction:row; justify-content:space-between; width: 100%;">
+                        <label>@sample.SampleID</label>
+                        <InputText class="visualSampleInput" style="margin-left:40px;" inputmode="decimal" id="BaseSample" @bind-Value="@sample.SoilClassification" />
+                        
+                    </div>
+                }
+                <button class="btn btn-primary" type="submit">Save</button>
+            </EditForm>
+        </div>
+    </div>
+}
+
 <div class="fileInputContainer">
     <h1>Import Data</h1>
     <InputFile OnChange="@LoadFiles" />
@@ -51,7 +79,7 @@
         @if (listState.soilSamples != null)
         {
             <button class="btn btn-primary" @onclick="GroupedModalStateToggle">Group Samples</button>
-            <button class="btn btn-primary" @onclick="OpenVisualSamples">Visual only Samples</button>
+            <button class="btn btn-primary" @onclick="VisualModalStateToggle">Visual only Samples</button>
         }
     </div>
 
@@ -115,6 +143,7 @@
 
 @code {
     bool showGroupedModal = false;
+    bool showVisualModal = false;
     string status = "Waiting for file";
 
     private void GroupedModalStateToggle()
@@ -122,9 +151,9 @@
         showGroupedModal = !showGroupedModal;
     }
 
-    private void OpenVisualSamples()
+    private void VisualModalStateToggle()
     {
-
+        showVisualModal = !showVisualModal;
     }
 
     private void AddGroup()
@@ -281,6 +310,7 @@
                     }
                     else
                     {
+                        // Parse issue?
                         if (sample.PlasticityIndex != null && double.Parse(sample.PlasticityIndex) != 0 && sample.Sieve425 != null)
                         {
                             sample.WeightedPlasticityIndex = Convert.ToString(double.Parse(sample.Sieve425) * double.Parse(sample.PlasticityIndex));

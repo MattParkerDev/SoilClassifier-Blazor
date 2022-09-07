@@ -32,6 +32,7 @@ public class SoilSample
     public string? ProjectName { get; set; }
     public string? ProjectNumber { get; set; }
     public string? SoilClassification { get; set; }
+    public bool VisualOnly { get; set; } = false;
     public string? PIRemarks { get; set; }
 }
 
