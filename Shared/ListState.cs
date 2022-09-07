@@ -17,7 +17,6 @@ namespace SoilClassifier_Blazor.Shared
         public string? SampledDate { get; set; }
         public string? PreparedBy { get; set; }
         public string? PreparedDate { get; set; }
-        public string? GroupedSamplesString { get; set; }
         public string? Notes { get; set; }
         public string? SignatoryName { get; set; }
         public string? NataNumber { get; set; }

@@ -54,7 +54,7 @@
                 <span>Sample Number</span>
                 <span>Classification</span>
             </div>
-            <EditForm class="blazorForm" style="display:flex; flex-direction:column;" autocomplete="off" Model="@listState.soilSamples" OnValidSubmit="VisualModalStateToggle">
+            <EditForm class="blazorForm" style="display:flex; flex-direction:column;" autocomplete="off" Model="@listState.soilSamples" OnValidSubmit="HandleVisualSamples">
 
                 @if (listState.soilSamples != null)
                 {
@@ -62,7 +62,7 @@
                     {
                         <div style="display:flex; flex-direction:row; justify-content:space-between; width: 100%;">
                             <label>@sample.SampleID</label>
-                            <InputText class="visualSampleInput" style="margin-left:40px;" inputmode="decimal" id="BaseSample" @bind-Value="@sample.SoilClassification" />
+                            <InputText class="visualSampleInput" style="margin-left:40px;" inputmode="decimal" id="BaseSample" @bind-Value="@sample.SoilClassification" @oninput="() => sample.VisualOnly = true" />
                         </div>
                     }
                 }
@@ -163,6 +163,25 @@
         var groupedSample = new GroupedSample();
         groupedSample.MatchedSamples.Add(new MatchedSample());
         listState.GroupedSamples.Add(groupedSample);
+    }
+
+    private void HandleVisualSamples()
+    {
+        List<string> VisualSampleList = new List<string>();
+        if (listState.soilSamples != null)
+        {
+            foreach (var sample in listState.soilSamples)
+            {
+                if (sample.VisualOnly == true && sample.SampleInteger != null)
+                {
+                    VisualSampleList.Add(Convert.ToString(sample.SampleInteger));
+                }
+            }
+        }
+        listState.Notes = "Sample " + String.Join(", ", VisualSampleList) + " visual only";
+
+
+        VisualModalStateToggle();
     }
 
     private void ApplyGroupedSamples()

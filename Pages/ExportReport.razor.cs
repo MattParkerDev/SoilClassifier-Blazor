@@ -235,7 +235,15 @@ namespace SoilClassifier_Blazor.Pages
                             table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.WeightedPlasticityIndex).Style(headerStyle);
                             if (sample.SoilClassification != "")
                             {
-                                table.Cell().Element(CellStyle).AlignLeft().PaddingLeft(4).PaddingVertical(2).Text(sample.SoilClassification + ", " + sample.Colour + ", moist").Style(headerStyle);
+                                if (sample.VisualOnly == false)
+                                {
+                                    table.Cell().Element(CellStyle).AlignLeft().PaddingLeft(4).PaddingVertical(2).Text(sample.SoilClassification + ", " + sample.Colour + ", moist").Style(headerStyle);
+                                }
+                                else
+                                {
+                                    table.Cell().Element(CellStyle).AlignLeft().PaddingLeft(4).PaddingVertical(2).Text(sample.SoilClassification + ", " + sample.Colour + ", moist").Style(headerStyle).Italic();
+
+                                }
                             }
                             else if (sample.SurfaceType == "AC")
                             {

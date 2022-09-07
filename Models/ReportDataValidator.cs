@@ -27,8 +27,6 @@ namespace SoilClassifier_Blazor.Models
                 .NotEmpty().WithMessage("This field is required.");
             RuleFor(listState => listState.PreparedDate)
                 .NotEmpty().WithMessage("This field is required.");
-            RuleFor(listState => listState.GroupedSamplesString)
-                .NotEmpty().WithMessage("This field is required.");
             RuleFor(listState => listState.SignatoryName)
                 .NotEmpty().WithMessage("This field is required.");
             RuleFor(listState => listState.NataNumber)
