@@ -50,9 +50,10 @@
         <div class="visualSamplesModal">
             <h2>Visual Only Samples</h2>
             <span style="margin-bottom:10px;">Modifying these will overwrite the calculated classifications</span>
-            <div style="display:flex; flex-direction:row; gap:25px; font-weight:600; justify-content:space-between; width:100%">
+            <div style="display:flex; flex-direction:row; gap:25px; font-weight:600; justify-content:left; width:100%">
                 <span>Sample Number</span>
-                <span>Classification</span>
+                <span style="margin-left:110px;">Classification</span>
+                <span style="margin-left:200px;">Colour</span>
             </div>
             <EditForm class="blazorForm" style="display:flex; flex-direction:column;" autocomplete="off" Model="@listState.soilSamples" OnValidSubmit="HandleVisualSamples">
 
@@ -61,8 +62,9 @@
                     @foreach (var sample in listState.soilSamples)
                     {
                         <div style="display:flex; flex-direction:row; justify-content:space-between; width: 100%;">
-                            <label>@sample.SampleID</label>
-                            <InputText class="visualSampleInput" style="margin-left:40px;" inputmode="decimal" id="BaseSample" @bind-Value="@sample.SoilClassification" @oninput="() => sample.VisualOnly = true" />
+                            <label style="width:130px;">@sample.SampleID</label>
+                            <InputText class="visualSampleInput" inputmode="decimal" @bind-Value="@sample.SoilClassification" @oninput="() => sample.VisualOnly = true" />
+                            <InputText class="visualSampleInput" style="width:180px; margin-left: 40px;" inputmode="decimal" @bind-Value="@sample.Colour" @oninput="() => sample.VisualOnly = true" />
                         </div>
                     }
                 }
@@ -179,8 +181,8 @@
             }
         }
         listState.Notes = "Sample " + String.Join(", ", VisualSampleList) + " visual only";
-
-
+        // Re-evaluate bores as new classifications have been added
+        SortBores();
         VisualModalStateToggle();
     }
 
@@ -197,6 +199,7 @@
                     if (sample.SampleInteger == group.BaseSample)
                     {
                         group.Classification = sample.SoilClassification;
+                        group.Colour = sample.Colour;
 
                     }
                 }
@@ -214,13 +217,14 @@
                         if (groupedSample.SingleMatchedSample == sample.SampleInteger)
                         {
                             sample.SoilClassification = group.Classification;
+                            sample.Colour = group.Colour;
 
                         }
                     }
                 }
             }
         }
-        //Re-sort the bores as new classifications have been added
+        // Re-evaluate bores as new classifications have been added
         SortBores();
         GroupedModalStateToggle();
     }

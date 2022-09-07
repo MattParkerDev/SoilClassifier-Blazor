@@ -4,6 +4,7 @@
     {
         public int? BaseSample { get; set; }
         public string? Classification { get; set; }
+        public string? Colour { get; set; }
         public List<MatchedSample> MatchedSamples { get; set; } = new List<MatchedSample>();
     }
 
