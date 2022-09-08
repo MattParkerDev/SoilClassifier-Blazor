@@ -86,7 +86,6 @@ namespace SoilClassifier_Blazor.Models
             {
                 tempList.Add(i);
             }
-            Console.WriteLine(String.Join(", ",tempList));
             GraphDepthLabels = tempList;
             GraphMaxDepth = maxDepth;
             switch (maxDepth)
