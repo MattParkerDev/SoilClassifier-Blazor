@@ -308,8 +308,13 @@
                     double gravelPercent = 0.0;
                     double sieve236;
                     bool nonPlastic = false;
-
-                    if (!double.TryParse(sample.Sieve236, out sieve236))
+                    
+                    // Assumes if 2.36mm sieve is blank, 100% passing
+                    if (sample.Sieve236 == "")
+                    {
+                        sieve236 = 100.0;    
+                    }
+                    else if (!double.TryParse(sample.Sieve236, out sieve236))
                     {
                         validSample = false;
                     }
@@ -318,6 +323,7 @@
                         gravelPercent = 100.0 - sieve236;
                     }
 
+                    // TODO: Potential issue, review valid sample data validation
                     if (!double.TryParse(sample.Sieve075, out finePercent))
                     {
                         validSample = false;
