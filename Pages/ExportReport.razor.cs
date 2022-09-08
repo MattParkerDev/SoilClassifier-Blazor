@@ -6,6 +6,7 @@ using QuestPDF.Elements;
 using System.Reflection;
 using SoilClassifier_Blazor.Shared;
 using SoilClassifier_Blazor.Models;
+using System.Reflection.Emit;
 
 namespace SoilClassifier_Blazor.Pages
 {
@@ -155,8 +156,8 @@ namespace SoilClassifier_Blazor.Pages
                         columns.ConstantColumn(40);
                         columns.ConstantColumn(40);
                         columns.ConstantColumn(40);
-                        columns.ConstantColumn(30);
-                        columns.ConstantColumn(35);
+                        columns.ConstantColumn(25);
+                        columns.ConstantColumn(40);
                         columns.ConstantColumn(32);
 
                         columns.ConstantColumn(22);
@@ -338,39 +339,52 @@ namespace SoilClassifier_Blazor.Pages
                             column.Item().AlignCenter().PaddingBottom(10).Text($"Offset {boreHole.Offset}").FontSize(9);
                             column.Item().Row(row =>
                             {
-                                row.ConstantItem(48).BorderRight((float)0.5).Column(column =>
+                                row.ConstantItem(48).Column(column =>
                                 {
-                                    column.Spacing(16);
-                                    column.Item().AlignRight().Text("0 -").FontSize(9);
-                                    column.Item().AlignRight().Text("100 -").FontSize(9);
-                                    column.Item().AlignRight().Text("200 -").FontSize(9);
-                                    column.Item().AlignRight().Text("300 -").FontSize(9);
-                                    column.Item().AlignRight().Text("400 -").FontSize(9);
-                                    column.Item().AlignRight().Text("500 -").FontSize(9);
-                                    column.Item().AlignRight().Text("600 -").FontSize(9);
-                                    column.Item().AlignRight().Text("700 -").FontSize(9);
-                                    column.Item().AlignRight().Text("800 -").FontSize(9);
-                                    column.Item().AlignRight().Text("900 -").FontSize(9);
-                                    column.Item().AlignRight().Text("1000 -").FontSize(9);
+                                    foreach (var label in boreHole.GraphDepthLabels)
+                                    {
+                                        float translation = Convert.ToSingle(label) / boreHole.GraphScalingUnit;
+                                        column.Item().Unconstrained().Width(70).TranslateY(translation).TranslateX(-22).AlignRight().Text($"{label} -").FontSize(9);
+                                    }
+                                });
+                                row.ConstantItem(1).Column(column =>
+                                {
+                                    column.Item().Unconstrained().Height((boreHole.GraphMaxDepth / boreHole.GraphScalingUnit) + 13).LineVertical((float)0.7).LineColor(Colors.Black);
                                 });
                                 row.ConstantItem(35).Column(column =>
                                 {
                                     foreach (var layer in boreHole.DCPData)
                                     {
-                                        //TODO: Handle 20mm refusal translation overlap
-                                        float translation = Convert.ToSingle(layer.Depth) / 100 * 28;
+                                        float translation = Convert.ToSingle(layer.Depth) / boreHole.GraphScalingUnit;
                                         column.Item().Unconstrained().Width(35).AlignRight().TranslateY(translation).Text($"{layer.CBR} -").FontSize(9).FontColor(Colors.Red.Medium);
                                     }
                                 });
                                 row.ConstantItem(180).Column(column =>
                                 {
                                     column.Item().PaddingTop(7);
+                                    bool hasRun = false;
                                     foreach (var layer in boreHole.LayerList)
                                     {
+                                        if (!hasRun)
+                                        {
+                                            if (layer.StartingDepth != 0)
+                                            {
+                                                float tempHeight = Convert.ToSingle(layer.StartingDepth) / boreHole.GraphScalingUnit;
+                                                column.Item().Row(row => 
+                                                { 
+                                                    row.ConstantItem(45).MaxHeight(tempHeight).MinHeight(tempHeight).Background("FFFFFF").Border((float)0.7).BorderColor("FFFFFF").Height(tempHeight);
+                                                });
+                                                hasRun = true;
+                                            }
+                                            else
+                                            {
+                                                hasRun = true;
+                                            }
+                                        }
+
                                         column.Item().Row(row =>
                                         {
-                                            float height = Convert.ToSingle(layer.Height) / (float)1000 * (float)280;
-                                            
+                                            float height = Convert.ToSingle(layer.Height) / boreHole.GraphScalingUnit;
                                             row.ConstantItem(45).MaxHeight(height).MinHeight(height).Background(layer.GraphColor).Border((float)0.7).Height(height);
                                             var translation = -11;
                                             var moistureLabel = "";

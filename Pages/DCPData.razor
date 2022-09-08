@@ -21,7 +21,7 @@ else
         {
             <div class="boreContainer">
                 <h4>BH @boreHole.BoreNumber</h4>
-                <EditForm style="display:flex; flex-direction:column;" autocomplete="off" Model="@boreHole" OnValidSubmit="boreHole.GenerateDepths">
+                <EditForm style="display:flex; flex-direction:column;" autocomplete="off" Model="@boreHole" OnValidSubmit="boreHole.GenerateDCPDepths">
                     <DataAnnotationsValidator />
                     @*TODO: Dynamic Input validation >0*@
                     <ValidationMessage For="() => boreHole.DCPStartingDepth" />
@@ -116,7 +116,7 @@ else
         {
             boreHole.DCPStartingDepth = 100;
             boreHole.DCPEndingDepth = 1000;
-            boreHole.GenerateDepths();
+            boreHole.GenerateDCPDepths();
             var randomGen = new Random();
             for (var i = 1; i < boreHole.DCPData.Count(); i++)
             {

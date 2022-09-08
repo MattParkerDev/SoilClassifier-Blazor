@@ -364,7 +364,7 @@
 
         var graphColors = new Dictionary<int, string>()
         {
-            {1, "973104"},
+            {1, "4b1803"},
             {2, "fdca99"},
             {3, "973104"},
             {4, "666697"},
@@ -380,7 +380,6 @@
             select newGroup;
         foreach (var group in groupBoresQuery)
         {
-            //Console.WriteLine(group.Key);
             var hasRun = false;
             int count = 1;
             var tempBoreHole = new BoreHole();
@@ -388,7 +387,6 @@
 
             foreach (var sample in group)
             {
-                //Console.WriteLine(sample.Depth);
                 if (!hasRun)
                 {
                     tempBoreHole.Chainage = sample.Chainage;
@@ -396,14 +394,15 @@
                     hasRun = true;
                 }
 
-
-
                 var tempLayer = new Layer();
                 tempLayer.GraphColor = "fdca99";
                 if (sample.Depth != null)
                 {
                     string[] depthRange = sample.Depth.Split("-");
-                    tempLayer.Height = float.Parse(depthRange[1]) - float.Parse(depthRange[0]);
+
+                    tempLayer.StartingDepth = float.Parse(depthRange[0]);
+                    tempLayer.EndingDepth = float.Parse(depthRange[1]);
+                    tempLayer.Height = tempLayer.EndingDepth - tempLayer.StartingDepth;
                 }
                 tempLayer.SurfaceType = sample.SurfaceType;
                 tempLayer.MoistureContent = sample.MoistureContent;
@@ -422,6 +421,7 @@
                 tempLayer.SoilClassification = sample.SoilClassification;
                 tempBoreHole.LayerList.Add(tempLayer);
             }
+            tempBoreHole.DepthLabelGenerator();
             listState.BoreHoleList.Add(tempBoreHole);
         }
     }

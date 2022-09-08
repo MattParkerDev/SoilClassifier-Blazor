@@ -20,7 +20,11 @@ namespace SoilClassifier_Blazor.Models
         [Range(0, int.MaxValue, ErrorMessage = "Value must be >= 0")]
         public int? DCPEndingDepth { get; set; }
 
-        public void GenerateDepths()
+        public List<int> GraphDepthLabels { get; set; } = new List<int>();
+        public float GraphScalingUnit { get; set; }
+        public float GraphMaxDepth { get; set; }
+
+        public void GenerateDCPDepths()
         {
             var tempList = new List<int>();
 
@@ -46,6 +50,73 @@ namespace SoilClassifier_Blazor.Models
                 var tempLayer = new DCPLayer();
                 tempLayer.Depth = depth;
                 DCPData.Add(tempLayer);
+            }
+        }
+
+        public void DepthLabelGenerator()
+        {
+            var tempList = new List<int>();
+
+            float maxDepth = 0;
+            foreach(var layer in LayerList)
+            {
+                if (layer.EndingDepth > maxDepth)
+                {
+                    maxDepth = layer.EndingDepth;
+                }
+            }
+            if (maxDepth % 100 != 0)
+            {
+                //Round maxDepth up to next hundred
+                maxDepth = (float)Math.Ceiling(maxDepth / 100) * 100;
+            }
+
+            int increment = 100;
+            if (maxDepth > 1400)
+            {
+                maxDepth = (float)Math.Ceiling(maxDepth / 200) * 200;
+                increment = 200;
+            }
+            if (maxDepth < 1000)
+            {
+                maxDepth = 1000;
+            }
+
+            for (int i = 0; i <= maxDepth; i += increment)
+            {
+                tempList.Add(i);
+            }
+            Console.WriteLine(String.Join(", ",tempList));
+            GraphDepthLabels = tempList;
+            GraphMaxDepth = maxDepth;
+            switch (maxDepth)
+            {
+                case 1000:
+                    GraphScalingUnit = (float)increment / 28;
+                    break;
+                case 1100:
+                    GraphScalingUnit = (float)increment / 26;
+                    break;
+                case 1200:
+                    GraphScalingUnit = (float)increment / 26;
+                    break;
+                case 1300:
+                    GraphScalingUnit = (float)increment / 24;
+                    break;
+                case 1400:
+                    GraphScalingUnit = (float)increment / 24;
+                    break;
+                case 1600:
+                    GraphScalingUnit = (float)increment / (float)35.7;
+                    break;
+                case 1800:
+                    GraphScalingUnit = (float)increment / 29;
+                    break;
+                case 2000:
+                    GraphScalingUnit = (float)increment / 28;
+                    break;
+                default:
+                    break;
             }
         }
     }
