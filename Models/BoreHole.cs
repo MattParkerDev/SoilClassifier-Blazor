@@ -88,35 +88,8 @@ namespace SoilClassifier_Blazor.Models
             }
             GraphDepthLabels = tempList;
             GraphMaxDepth = maxDepth;
-            switch (maxDepth)
-            {
-                case 1000:
-                    GraphScalingUnit = (float)increment / 28;
-                    break;
-                case 1100:
-                    GraphScalingUnit = (float)increment / 26;
-                    break;
-                case 1200:
-                    GraphScalingUnit = (float)increment / 26;
-                    break;
-                case 1300:
-                    GraphScalingUnit = (float)increment / 24;
-                    break;
-                case 1400:
-                    GraphScalingUnit = (float)increment / 24;
-                    break;
-                case 1600:
-                    GraphScalingUnit = (float)increment / (float)35.7;
-                    break;
-                case 1800:
-                    GraphScalingUnit = (float)increment / 29;
-                    break;
-                case 2000:
-                    GraphScalingUnit = (float)increment / 28;
-                    break;
-                default:
-                    break;
-            }
+            float divisor = (float)308.0 / (float)GraphDepthLabels.Count();
+            GraphScalingUnit = (float)increment / divisor;
         }
     }
 }
