@@ -55,19 +55,17 @@
                 <span style="margin-left:110px;">Classification</span>
                 <span style="margin-left:200px;">Colour</span>
             </div>
-            <EditForm class="blazorForm" style="display:flex; flex-direction:column;" autocomplete="off" Model="@listState.soilSamples" OnValidSubmit="HandleVisualSamples">
+            <EditForm class="blazorForm" style="display:flex; flex-direction:column;" autocomplete="off" Model="@listState.SoilSamples" OnValidSubmit="HandleVisualSamples">
 
-                @if (listState.soilSamples != null)
+                @foreach (var sample in listState.SoilSamples)
                 {
-                    @foreach (var sample in listState.soilSamples)
-                    {
-                        <div style="display:flex; flex-direction:row; justify-content:space-between; width: 100%;">
-                            <label style="width:130px;">@sample.SampleID</label>
-                            <InputText class="visualSampleInput" inputmode="decimal" @bind-Value="@sample.SoilClassification" @oninput="() => sample.VisualOnly = true" />
-                            <InputText class="visualSampleInput" style="width:180px; margin-left: 40px;" inputmode="decimal" @bind-Value="@sample.Colour" @oninput="() => sample.VisualOnly = true" />
-                        </div>
-                    }
+                    <div style="display:flex; flex-direction:row; justify-content:space-between; width: 100%;">
+                        <label style="width:130px;">@sample.SampleID</label>
+                        <InputText class="visualSampleInput" inputmode="decimal" @bind-Value="@sample.SoilClassification" @oninput="() => sample.VisualOnly = true" />
+                        <InputText class="visualSampleInput" style="width:180px; margin-left: 40px;" inputmode="decimal" @bind-Value="@sample.Colour" @oninput="() => sample.VisualOnly = true" />
+                    </div>
                 }
+
                 <button class="btn btn-primary" style="margin-top: 20px;" type="submit">Save</button>
             </EditForm>
         </div>
@@ -82,7 +80,7 @@
             <InputFile OnChange="@LoadFiles" />
         </label>
         <button class="btn btn-primary" @onclick="LoadDemoData">Load Demo Data</button>
-        @if (listState.soilSamples != null)
+        @if (listState.SoilSamples.Count() != 0)
         {
             <button class="btn btn-primary" @onclick="GroupedModalStateToggle">Group Samples</button>
             <button class="btn btn-primary" @onclick="VisualModalStateToggle">Visual only Samples</button>
@@ -91,7 +89,7 @@
 
     <span style="font-weight:600; font-size:1.2rem; margin-top:10px;">@status</span>
 
-    @if (listState.soilSamples != null)
+    @if (listState.SoilSamples.Count() != 0)
     {
         <table style="margin-top:10px;">
             <tr>
@@ -116,7 +114,7 @@
                 <th>Soil Classification</th>
             </tr>
 
-            @foreach (var sample in listState.soilSamples)
+            @foreach (var sample in listState.SoilSamples)
             {
                 <tr>
                     <td>@sample.SampleID</td>
@@ -170,16 +168,15 @@
     private void HandleVisualSamples()
     {
         List<string> VisualSampleList = new List<string>();
-        if (listState.soilSamples != null)
+
+        foreach (var sample in listState.SoilSamples)
         {
-            foreach (var sample in listState.soilSamples)
+            if (sample.VisualOnly == true && sample.SampleInteger != null)
             {
-                if (sample.VisualOnly == true && sample.SampleInteger != null)
-                {
-                    VisualSampleList.Add(Convert.ToString(sample.SampleInteger));
-                }
+                VisualSampleList.Add(Convert.ToString(sample.SampleInteger)!);
             }
         }
+
         listState.Notes = "Sample " + String.Join(", ", VisualSampleList) + " visual only";
         // Re-evaluate bores as new classifications have been added
         SortBores();
@@ -192,16 +189,13 @@
         foreach (var group in listState.GroupedSamples)
         {
             //get base sample classification
-            if (listState.soilSamples != null)
+            foreach (var sample in listState.SoilSamples)
             {
-                foreach (var sample in listState.soilSamples)
+                if (sample.SampleInteger == group.BaseSample)
                 {
-                    if (sample.SampleInteger == group.BaseSample)
-                    {
-                        group.Classification = sample.SoilClassification;
-                        group.Colour = sample.Colour;
+                    group.Classification = sample.SoilClassification;
+                    group.Colour = sample.Colour;
 
-                    }
                 }
             }
         }
@@ -210,18 +204,16 @@
         {
             foreach (var groupedSample in group.MatchedSamples)
             {
-                if (listState.soilSamples != null)
+                foreach (var sample in listState.SoilSamples)
                 {
-                    foreach (var sample in listState.soilSamples)
+                    if (groupedSample.SingleMatchedSample == sample.SampleInteger)
                     {
-                        if (groupedSample.SingleMatchedSample == sample.SampleInteger)
-                        {
-                            sample.SoilClassification = group.Classification;
-                            sample.Colour = group.Colour;
+                        sample.SoilClassification = group.Classification;
+                        sample.Colour = group.Colour;
 
-                        }
                     }
                 }
+
             }
         }
         // Re-evaluate bores as new classifications have been added
@@ -231,7 +223,7 @@
 
     private async Task LoadFiles(InputFileChangeEventArgs e)
     {
-        
+
         IBrowserFile loadedFile = e.File;
 
         using (var memoryStream = new MemoryStream())
@@ -245,7 +237,7 @@
                 using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                 {
                     csv.Context.RegisterClassMap<SampleMap>();
-                    listState.soilSamples = csv.GetRecords<SoilSample>().ToList();
+                    listState.SoilSamples = csv.GetRecords<SoilSample>().ToList();
                 }
             }
         }
@@ -265,7 +257,7 @@
             using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
             {
                 csv.Context.RegisterClassMap<SampleMap>();
-                listState.soilSamples = csv.GetRecords<SoilSample>().ToList();
+                listState.SoilSamples = csv.GetRecords<SoilSample>().ToList();
             }
         }
         var imageData = await Http.GetByteArrayAsync("assets/NATA.jpg");
@@ -277,88 +269,85 @@
     }
     private void HandleSamples()
     {
-        if (listState.soilSamples != null)
+        //TODO: Implement grouped samples
+        foreach (var sample in listState.SoilSamples)
         {
-            //TODO: Implement grouped samples
-            foreach (var sample in listState.soilSamples)
+            if (sample.SampleID != null)
             {
-                if (sample.SampleID != null)
-                {
-                    sample.SampleInteger = int.Parse(sample.SampleID.Split("-")[1]);
-                }
+                sample.SampleInteger = int.Parse(sample.SampleID.Split("-")[1]);
+            }
 
-                if (string.IsNullOrEmpty(sample.Sieve53)
-                 && string.IsNullOrEmpty(sample.Sieve19)
-                 && string.IsNullOrEmpty(sample.Sieve475)
-                 && string.IsNullOrEmpty(sample.Sieve236)
-                 && string.IsNullOrEmpty(sample.Sieve425)
-                 && string.IsNullOrEmpty(sample.Sieve075)
-                 && string.IsNullOrEmpty(sample.PlasticLimit)
-                 && string.IsNullOrEmpty(sample.LiquidLimit)
-                 && string.IsNullOrEmpty(sample.PlasticityIndex)
-                 && string.IsNullOrEmpty(sample.LinearShrinkage))
+            if (string.IsNullOrEmpty(sample.Sieve53)
+             && string.IsNullOrEmpty(sample.Sieve19)
+             && string.IsNullOrEmpty(sample.Sieve475)
+             && string.IsNullOrEmpty(sample.Sieve236)
+             && string.IsNullOrEmpty(sample.Sieve425)
+             && string.IsNullOrEmpty(sample.Sieve075)
+             && string.IsNullOrEmpty(sample.PlasticLimit)
+             && string.IsNullOrEmpty(sample.LiquidLimit)
+             && string.IsNullOrEmpty(sample.PlasticityIndex)
+             && string.IsNullOrEmpty(sample.LinearShrinkage))
+            {
+                sample.SoilClassification = "";
+            }
+            else
+            {
+                bool validSample = true;
+                double finePercent;
+                double plasticLimit;
+                double liquidLimit;
+                double plasticityIndex;
+                double gravelPercent = 0.0;
+                double sieve236;
+                bool nonPlastic = false;
+
+                // Assumes if 2.36mm sieve is blank, 100% passing
+                if (sample.Sieve236 == "")
                 {
-                    sample.SoilClassification = "";
+                    sieve236 = 100.0;
+                }
+                else if (!double.TryParse(sample.Sieve236, out sieve236))
+                {
+                    validSample = false;
                 }
                 else
                 {
-                    bool validSample = true;
-                    double finePercent;
-                    double plasticLimit;
-                    double liquidLimit;
-                    double plasticityIndex;
-                    double gravelPercent = 0.0;
-                    double sieve236;
-                    bool nonPlastic = false;
-                    
-                    // Assumes if 2.36mm sieve is blank, 100% passing
-                    if (sample.Sieve236 == "")
+                    gravelPercent = 100.0 - sieve236;
+                }
+
+                // TODO: Potential issue, review valid sample data validation
+                if (!double.TryParse(sample.Sieve075, out finePercent))
+                {
+                    validSample = false;
+                }
+
+                double.TryParse(sample.PlasticLimit, out plasticLimit);
+                double.TryParse(sample.LiquidLimit, out liquidLimit);
+                double.TryParse(sample.PlasticityIndex, out plasticityIndex);
+
+                if (sample.PlasticLimit == "Not Obtainable" && sample.LiquidLimit == "Not Obtainable" && sample.PlasticityIndex == "Non Plastic")
+                {
+                    nonPlastic = true;
+                    sample.PIRemarks = "NP";
+                    sample.PlasticLimit = "";
+                    sample.LiquidLimit = "";
+                    sample.PlasticityIndex = "";
+                }
+
+                if (validSample == false)
+                {
+                    sample.SoilClassification = "Invalid Data";
+                }
+                else
+                {
+                    // Parse issue?
+                    if (plasticityIndex != 0 && sample.Sieve425 != null)
                     {
-                        sieve236 = 100.0;    
-                    }
-                    else if (!double.TryParse(sample.Sieve236, out sieve236))
-                    {
-                        validSample = false;
-                    }
-                    else
-                    {
-                        gravelPercent = 100.0 - sieve236;
+                        sample.WeightedPlasticityIndex = Convert.ToString(double.Parse(sample.Sieve425) * plasticityIndex);
                     }
 
-                    // TODO: Potential issue, review valid sample data validation
-                    if (!double.TryParse(sample.Sieve075, out finePercent))
-                    {
-                        validSample = false;
-                    }
-
-                    double.TryParse(sample.PlasticLimit, out plasticLimit);
-                    double.TryParse(sample.LiquidLimit, out liquidLimit);
-                    double.TryParse(sample.PlasticityIndex, out plasticityIndex);
-
-                    if (sample.PlasticLimit == "Not Obtainable" && sample.LiquidLimit == "Not Obtainable" && sample.PlasticityIndex == "Non Plastic")
-                    {
-                        nonPlastic = true;
-                        sample.PIRemarks = "NP";
-                        sample.PlasticLimit = "";
-                        sample.LiquidLimit = "";
-                        sample.PlasticityIndex = "";
-                    }
-
-                    if (validSample == false)
-                    {
-                        sample.SoilClassification = "Invalid Data";
-                    }
-                    else
-                    {
-                        // Parse issue?
-                        if (plasticityIndex != 0 && sample.Sieve425 != null)
-                        {
-                            sample.WeightedPlasticityIndex = Convert.ToString(double.Parse(sample.Sieve425) * plasticityIndex);
-                        }
-
-                        sample.SoilClassification = Classification(finePercent, gravelPercent,
-                                plasticLimit, liquidLimit, nonPlastic);
-                    }
+                    sample.SoilClassification = Classification(finePercent, gravelPercent,
+                            plasticLimit, liquidLimit, nonPlastic);
                 }
             }
         }
@@ -382,7 +371,7 @@
         };
 
         var groupBoresQuery =
-            from sample in listState.soilSamples
+            from sample in listState.SoilSamples
             group sample by sample.BoreNumber into newGroup
             orderby int.Parse(newGroup.Key)
             select newGroup;

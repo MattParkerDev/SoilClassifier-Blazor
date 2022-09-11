@@ -211,66 +211,65 @@ namespace SoilClassifier_Blazor.Pages
                         header.Cell().Element(BoldCellStyle).AlignCenter().AlignBottom().Text("75\n\n\nμm").Style(subHeaderStyle);
 
                     });
-                    if (Model.soilSamples != null)
-                    {
-                        foreach (var sample in Model.soilSamples)
-                        {
-                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.SampleID).Style(headerStyle);
-                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.Chainage).Style(headerStyle);
-                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.Offset).Style(headerStyle);
-                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.BoreNumber).Style(headerStyle);
-                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.Depth).Style(headerStyle);
-                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.SurfaceType).Style(headerStyle);
-                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.Sieve53).Style(headerStyle);
-                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.Sieve19).Style(headerStyle);
-                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.Sieve475).Style(headerStyle);
-                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.Sieve236).Style(headerStyle);
-                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.Sieve425).Style(headerStyle);
-                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.Sieve075).Style(headerStyle);
-                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.MoistureContent).Style(headerStyle);
-                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.PlasticLimit).Style(headerStyle);
-                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.PlasticityIndex).Style(headerStyle);
-                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.LinearShrinkage).Style(headerStyle);
-                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.LiquidLimit).Style(headerStyle);
-                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.PIRemarks).Style(headerStyle);
-                            table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.WeightedPlasticityIndex).Style(headerStyle);
-                            if (sample.SoilClassification != "")
-                            {
-                                if (sample.VisualOnly == false)
-                                {
-                                    table.Cell().Element(CellStyle).AlignLeft().PaddingLeft(4).PaddingVertical(2).Text(sample.SoilClassification + ", " + sample.Colour + ", moist").Style(headerStyle);
-                                }
-                                else
-                                {
-                                    table.Cell().Element(CellStyle).AlignLeft().PaddingLeft(4).PaddingVertical(2).Text(sample.SoilClassification + ", " + sample.Colour + ", moist").Style(headerStyle).Italic();
 
-                                }
-                            }
-                            else if (sample.SurfaceType == "AC")
+                    foreach (var sample in Model.SoilSamples)
+                    {
+                        table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.SampleID).Style(headerStyle);
+                        table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.Chainage).Style(headerStyle);
+                        table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.Offset).Style(headerStyle);
+                        table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.BoreNumber).Style(headerStyle);
+                        table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.Depth).Style(headerStyle);
+                        table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.SurfaceType).Style(headerStyle);
+                        table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.Sieve53).Style(headerStyle);
+                        table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.Sieve19).Style(headerStyle);
+                        table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.Sieve475).Style(headerStyle);
+                        table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.Sieve236).Style(headerStyle);
+                        table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.Sieve425).Style(headerStyle);
+                        table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.Sieve075).Style(headerStyle);
+                        table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.MoistureContent).Style(headerStyle);
+                        table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.PlasticLimit).Style(headerStyle);
+                        table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.PlasticityIndex).Style(headerStyle);
+                        table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.LinearShrinkage).Style(headerStyle);
+                        table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.LiquidLimit).Style(headerStyle);
+                        table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.PIRemarks).Style(headerStyle);
+                        table.Cell().Element(CellStyle).AlignCenter().PaddingVertical(2).Text(sample.WeightedPlasticityIndex).Style(headerStyle);
+                        if (sample.SoilClassification != "")
+                        {
+                            if (sample.VisualOnly == false)
                             {
-                                table.Cell().Element(CellStyle).AlignLeft().PaddingLeft(4).PaddingVertical(2).Text("AC").Style(headerStyle);
-                            }
-                            else if (sample.SurfaceType == "Service")
-                            {
-                                table.Cell().Element(CellStyle).AlignLeft().PaddingLeft(4).PaddingVertical(2).Text("Service").Style(headerStyle);
-                            }
-                            else if (sample.SurfaceType == "CON")
-                            {
-                                table.Cell().Element(CellStyle).AlignLeft().PaddingLeft(4).PaddingVertical(2).Text("Concrete").Style(headerStyle);
-                            }
-                            else if (sample.SurfaceType == "CTB")
-                            {
-                                table.Cell().Element(CellStyle).AlignLeft().PaddingLeft(4).PaddingVertical(2).Text("CTB").Style(headerStyle);
+                                table.Cell().Element(CellStyle).AlignLeft().PaddingLeft(4).PaddingVertical(2).Text(sample.SoilClassification + ", " + sample.Colour + ", moist").Style(headerStyle);
                             }
                             else
                             {
-                                table.Cell().Element(CellStyle).AlignLeft().PaddingLeft(4).PaddingVertical(2).Text("").Style(headerStyle);
-                            }
-                            
+                                table.Cell().Element(CellStyle).AlignLeft().PaddingLeft(4).PaddingVertical(2).Text(sample.SoilClassification + ", " + sample.Colour + ", moist").Style(headerStyle).Italic();
 
+                            }
                         }
+                        else if (sample.SurfaceType == "AC")
+                        {
+                            table.Cell().Element(CellStyle).AlignLeft().PaddingLeft(4).PaddingVertical(2).Text("AC").Style(headerStyle);
+                        }
+                        else if (sample.SurfaceType == "Service")
+                        {
+                            table.Cell().Element(CellStyle).AlignLeft().PaddingLeft(4).PaddingVertical(2).Text("Service").Style(headerStyle);
+                        }
+                        else if (sample.SurfaceType == "CON")
+                        {
+                            table.Cell().Element(CellStyle).AlignLeft().PaddingLeft(4).PaddingVertical(2).Text("Concrete").Style(headerStyle);
+                        }
+                        else if (sample.SurfaceType == "CTB")
+                        {
+                            table.Cell().Element(CellStyle).AlignLeft().PaddingLeft(4).PaddingVertical(2).Text("CTB").Style(headerStyle);
+                        }
+                        else
+                        {
+                            table.Cell().Element(CellStyle).AlignLeft().PaddingLeft(4).PaddingVertical(2).Text("").Style(headerStyle);
+                        }
+
+
                     }
-                    
+
+
                     static IContainer CellStyle(IContainer container) => container.Border((float)0.5).BorderColor(Colors.Black);
                     static IContainer BoldCellStyle(IContainer container) => container.Border((float)1).BorderColor(Colors.Black);
                 });
@@ -370,8 +369,8 @@ namespace SoilClassifier_Blazor.Pages
                                             if (layer.StartingDepth != 0)
                                             {
                                                 float tempHeight = Convert.ToSingle(layer.StartingDepth) / boreHole.GraphScalingUnit;
-                                                column.Item().Row(row => 
-                                                { 
+                                                column.Item().Row(row =>
+                                                {
                                                     row.ConstantItem(45).MaxHeight(tempHeight).MinHeight(tempHeight).Background("FFFFFF").Border((float)0.7).BorderColor("FFFFFF").Height(tempHeight);
                                                 });
                                                 hasRun = true;
@@ -391,15 +390,18 @@ namespace SoilClassifier_Blazor.Pages
                                             if (layer.SurfaceType == "AC")
                                             {
                                                 moistureLabel = "  AC";
-                                            } else if (layer.SurfaceType == "AR")
+                                            }
+                                            else if (layer.SurfaceType == "AR")
                                             {
                                                 moistureLabel = "  AR";
                                                 translation = -6;
-                                            } else if (layer.SurfaceType == "Service")
+                                            }
+                                            else if (layer.SurfaceType == "Service")
                                             {
                                                 moistureLabel = "  Service";
                                                 translation = -6;
-                                            } else if (layer.MoistureContent != "")
+                                            }
+                                            else if (layer.MoistureContent != "")
                                             {
                                                 moistureLabel = "- " + layer.MoistureContent + "%";
                                             }
@@ -411,7 +413,8 @@ namespace SoilClassifier_Blazor.Pages
                                             if (layer.SoilClassification == "")
                                             {
                                                 row.ConstantItem(95).AlignMiddle().Unconstrained().PaddingLeft(5).Text("").FontSize(7);
-                                            } else
+                                            }
+                                            else
                                             {
                                                 row.ConstantItem(95).AlignMiddle().Unconstrained().Width(95).Height(30).TranslateY(-15).AlignMiddle().Text($"{layer.SoilClassification}, {layer.SoilColor}, moist").FontSize(7);
                                             }

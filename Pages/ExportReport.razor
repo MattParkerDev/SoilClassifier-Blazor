@@ -13,7 +13,7 @@
 <PageTitle>Export Report</PageTitle>
 
 <h1>Export Report</h1>
-@if (listState.soilSamples != null)
+@if (listState.SoilSamples.Count() != 0)
 {
     <p>Please enter details about the project.</p>
     <button class="btn btn-primary" @onclick="LoadDemoData">Load Demo Data</button>
@@ -95,7 +95,7 @@ else
             <InputText id="Notes" @bind-Value="listState.Notes" />
         </div>
     </div>
-    @if (listState.soilSamples != null)
+    @if (listState.SoilSamples.Count() != 0)
     {
         <button class="calcButton" type="submit" style="background-color:@buttonColor;
                     border-color:@buttonBorderColor; color:@buttonTextColor">

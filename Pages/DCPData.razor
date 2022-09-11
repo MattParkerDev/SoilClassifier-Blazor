@@ -7,7 +7,7 @@
 @inject ListState listState
 
 
-@if (listState.soilSamples == null)
+@if (listState.SoilSamples.Count() == 0)
 {
     <h4>Please import data before entering DCP Values</h4>
 }
