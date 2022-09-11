@@ -157,6 +157,10 @@ section {
     border-color: gray;
 }
 
+.fileInputContainer input[type=file] {
+    display: none;
+}
+
 table, th, td {
     border: 1px solid lightgrey;
     border-collapse: collapse;
