@@ -152,24 +152,52 @@ section {
     display:flex;
     flex-direction:column;
     padding: 20px;
-    border-style: solid;
-    border-radius: 10px;
-    border-color: gray;
 }
 
 .fileInputContainer input[type=file] {
     display: none;
 }
 
+table {
+    border-radius: 12px;
+    padding: 1px;
+    background-color: #bebebe;
+    border-spacing: 1.5px;
+}
+
 table, th, td {
-    border: 1px solid lightgrey;
-    border-collapse: collapse;
+    border-collapse: separate;
     font-size: 0.88rem;
 }
 
 td, th {
     white-space: nowrap;
+    background-color: #f2f2f2;
+    border-width: 0px;
+    border-color: transparent;
 }
+
+th {
+    text-align: center;
+}
+
+th:first-of-type {
+    border-top-left-radius: 10px;
+    padding: 10px;
+}
+
+th:last-of-type {
+    border-top-right-radius: 10px;
+}
+
+tr:last-of-type td:first-of-type {
+    border-bottom-left-radius: 10px;
+}
+
+tr:last-of-type td:last-of-type {
+    border-bottom-right-radius: 10px;
+}
+
 
 .reportInputContainer input {
     border-style: solid;
