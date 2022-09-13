@@ -236,8 +236,17 @@
             {
                 using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
                 {
-                    csv.Context.RegisterClassMap<SampleMap>();
-                    listState.SoilSamples = csv.GetRecords<SoilSample>().ToList();
+                    try
+                    {
+                        csv.Context.RegisterClassMap<SampleMap>();
+                        listState.SoilSamples = csv.GetRecords<SoilSample>().ToList();
+                    }
+                    catch (CsvHelper.HeaderValidationException)
+                    {
+                        status = "Headers were not found in imported file - ensure headers are on first line of file";
+                        StateHasChanged();
+                        throw;
+                    }
                 }
             }
         }
@@ -369,57 +378,66 @@
             {6, "973104"},
             {7, "666697"}
         };
-
-        var groupBoresQuery =
-            from sample in listState.SoilSamples
-            group sample by sample.BoreNumber into newGroup
-            orderby int.Parse(newGroup.Key)
-            select newGroup;
-        foreach (var group in groupBoresQuery)
+        try
         {
-            var hasRun = false;
-            int count = 1;
-            var tempBoreHole = new BoreHole();
-            tempBoreHole.BoreNumber = group.Key;
-
-            foreach (var sample in group)
+            var groupBoresQuery =
+                from sample in listState.SoilSamples
+                group sample by sample.BoreNumber into newGroup
+                orderby int.Parse(newGroup.Key)
+                select newGroup;
+            foreach (var group in groupBoresQuery)
             {
-                if (!hasRun)
-                {
-                    tempBoreHole.Chainage = sample.Chainage;
-                    tempBoreHole.Offset = sample.Offset;
-                    hasRun = true;
-                }
+                var hasRun = false;
+                int count = 1;
+                var tempBoreHole = new BoreHole();
+                tempBoreHole.BoreNumber = group.Key;
 
-                var tempLayer = new Layer();
-                tempLayer.GraphColor = "fdca99";
-                if (sample.Depth != null)
+                foreach (var sample in group)
                 {
-                    string[] depthRange = sample.Depth.Split("-");
+                    if (!hasRun)
+                    {
+                        tempBoreHole.Chainage = sample.Chainage;
+                        tempBoreHole.Offset = sample.Offset;
+                        hasRun = true;
+                    }
 
-                    tempLayer.StartingDepth = float.Parse(depthRange[0]);
-                    tempLayer.EndingDepth = float.Parse(depthRange[1]);
-                    tempLayer.Height = tempLayer.EndingDepth - tempLayer.StartingDepth;
-                }
-                tempLayer.SurfaceType = sample.SurfaceType;
-                tempLayer.MoistureContent = sample.MoistureContent;
+                    var tempLayer = new Layer();
+                    tempLayer.GraphColor = "fdca99";
+                    if (sample.Depth != null)
+                    {
+                        string[] depthRange = sample.Depth.Split("-");
 
-                if (sample.SurfaceType == "AC")
-                {
-                    tempLayer.GraphColor = "000000";
-                    count += 1;
+                        tempLayer.StartingDepth = float.Parse(depthRange[0]);
+                        tempLayer.EndingDepth = float.Parse(depthRange[1]);
+                        tempLayer.Height = tempLayer.EndingDepth - tempLayer.StartingDepth;
+                    }
+                    tempLayer.SurfaceType = sample.SurfaceType;
+                    tempLayer.MoistureContent = sample.MoistureContent;
+
+                    if (sample.SurfaceType == "AC")
+                    {
+                        tempLayer.GraphColor = "000000";
+                        count += 1;
+                    }
+                    else
+                    {
+                        tempLayer.GraphColor = graphColors[count];
+                        count += 1;
+                    }
+                    tempLayer.SoilColor = sample.Colour;
+                    tempLayer.SoilClassification = sample.SoilClassification;
+                    tempBoreHole.LayerList.Add(tempLayer);
                 }
-                else
-                {
-                    tempLayer.GraphColor = graphColors[count];
-                    count += 1;
-                }
-                tempLayer.SoilColor = sample.Colour;
-                tempLayer.SoilClassification = sample.SoilClassification;
-                tempBoreHole.LayerList.Add(tempLayer);
+                tempBoreHole.DepthLabelGenerator();
+                listState.BoreHoleList.Add(tempBoreHole);
             }
-            tempBoreHole.DepthLabelGenerator();
-            listState.BoreHoleList.Add(tempBoreHole);
+        }
+        catch (System.FormatException)
+        {
+            status = "Format Exception: Ensure borehole numbers are integers";
+            listState.SoilSamples.Clear();
+            StateHasChanged();
+            throw;
         }
     }
 }
